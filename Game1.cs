@@ -39,9 +39,7 @@ namespace Info2021
 
         protected override void Update(GameTime gameTime)
         {
-            var keyboardState = Keyboard.GetState();
-
-            if (keyboardState.IsKeyDown(Keys.Escape))
+            if (InputManager.IsActive(InputEvent.Escape))
                 Exit();
 
             // TODO: Add your update logic here

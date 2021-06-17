@@ -2,12 +2,23 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 namespace Info2021
 {
-    public class InputManager
+    public static class InputManager
     {
-        private List<(InputEvent, Action)> Responses = new List<(InputEvent, Action)>();
-        
+        public static Dictionary<Keys, InputEvent> Translator {get;} = new Dictionary<Keys, InputEvent>()
+            {{Keys.Left, InputEvent.Left},
+             {Keys.Right, InputEvent.Right},
+             {Keys.Up, InputEvent.Up},
+             {Keys.Down, InputEvent.Down},
+             {Keys.X, InputEvent.Jump},
+             {Keys.Escape, InputEvent.Escape}};
+
+        public static bool IsActive(InputEvent input) {
+            var keys = Translator.Where(x => x.Value == input).Select(x => x.Key);
+            return keys.Any(Keyboard.GetState().IsKeyDown);
+        }       
         
     }
 }

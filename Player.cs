@@ -16,9 +16,9 @@ namespace Info2021 {
 
             // Movement logic
             bool directionalMovement = true;
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            if (InputManager.IsActive(InputEvent.Right))
                 velPos = velPos.Accelerate(new Vector2(40f, 0));
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            else if (InputManager.IsActive(InputEvent.Left))
                 velPos = velPos.Accelerate(new Vector2(-40f, 0));
             else
                 directionalMovement = false;
