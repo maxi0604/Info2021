@@ -3,13 +3,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Info2021 {
     class Player : IUpdateable, IHasPosition {
-
         VelPos velPos = new VelPos();
-
+        public Collider col = new Collider(new Vector2(0,0), new Vector2(0,0));
+        public static readonly Vector2 Box = new Vector2(32, 32);
         public Vector2 Position => velPos.P;
 
         public void Update(float dt) {
-
+            col.Lower = Position - (Box / 2);
+            col.Upper = Position + (Box / 2);
             velPos = velPos.Accelerate(new Vector2(0, 9.81f));
             bool directionalMovement = true;
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
