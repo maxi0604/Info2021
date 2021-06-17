@@ -1,0 +1,15 @@
+.vs
+.vscode
+
+obj
+bin
+
+Content/obj
+Content/bin
+
+*.xdv
+*.pdf
+*.aux
+*.fdb_latexmk
+*.log
+*.fls

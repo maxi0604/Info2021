@@ -1,0 +1,38 @@
+% MBeezy#6739
+\documentclass[a4paper]{scrartcl}
+\begin{document}
+\frenchspacing
+    \section{Lastenheft}
+    Implementiert wird ein Plattformer-Spiel, vom Spielverlauf ähnlich zu anderen Spielen des Genres wie z. B. \emph{Celeste} oder \emph{N++}.
+    Folgende Komponenten sind dabei inbegriffen:
+    \begin{itemize}
+        \item Spielmenü
+        \item Pausemenü
+        \item rudimentärer Level-Editor
+        \item Mehrere Level, die sich über mehrere Bildschirme hinweg erstrecken.
+        \item Speicherung des Spielstandes
+        \item Angemessene Bewegung
+        \item Animierte 2D-Grafik
+        \item Musik und Soundeffekte
+        \item Dynamische Elemente
+    \end{itemize}
+
+    \section{Pflichtenheft}
+    Implementiert wird das Spiel in der Sprache C\# mithilfe der Bibliothek \emph{MonoGame}, welche folgende Funktionen bereits bereitstellt:
+    \begin{itemize}
+        \item Zeichnen von Bildern auf dem Bildschirm
+        \item Fensterlogik
+        \item Eingabeverarbeitung
+    \end{itemize}
+
+    Eigens wird implementiert:
+    \begin{itemize}
+        \item Physikalische Simulation mit \begin{itemize}
+            \item Impuls und Beschleunigung
+            \item Kollision (z. B. mit dem Boden)
+            \item Bewegung durch Spielereingabe
+        \end{itemize}
+        \item Steuerung (z. B. mit den Pfeiltasten)
+        \item Verknüpfung von Eingabe, Logik und grafischer Darstellung
+    \end{itemize}
+\end{document}
