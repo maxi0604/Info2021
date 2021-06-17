@@ -56,9 +56,10 @@ namespace Info2021
                 var attached = attachedColliders[i];
                 for (int j = 0; j < staticColliders.Count; j++) {
                     var result = attached.Collider.CollideWith(staticColliders[j].Collider);
-                    attached.VelPos = attached.VelPos
-                        .Accelerate(result)
-                        .ApplyVelocity((float)gameTime.ElapsedGameTime.TotalSeconds);
+                    if (result is Vector2 actualResult)
+                        attached.VelPos = new VelPos(attached.VelPos.P, Vector2.Multiply(attached.VelPos.V, actualResult));
+
+                    attached.VelPos = attached.VelPos.ApplyVelocity((float)gameTime.ElapsedGameTime.TotalSeconds);
                 }
             }
             base.Update(gameTime);

@@ -14,6 +14,6 @@ namespace Info2021 {
             BottomRight = br;
         }
 
-        public Vector2 CollideWith(ICollider other) => new Vector2();
+        public Vector2? CollideWith(ICollider other) => new Vector2();
     }
 }

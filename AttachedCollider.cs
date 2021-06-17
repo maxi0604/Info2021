@@ -12,13 +12,18 @@ namespace Info2021
             tl_to_br = tlbr;
         }
 
-        public Vector2 CollideWith(ICollider other) {
-            if (this.TopLeft.X <= other.TopLeft.X && this.TopLeft.Y <= other.TopLeft.Y
-                && this.BottomRight.X >= other.TopLeft.X && this.BottomRight.Y >= other.TopLeft.Y) {
-
-                return  this.BottomRight - other.TopLeft;
+        public Vector2? CollideWith(ICollider other) {
+            if (this.TopLeft.X <= other.BottomRight.X && this.BottomRight.X >= other.TopLeft.X &&
+                this.TopLeft.Y <= other.BottomRight.Y && this.BottomRight.Y >= other.TopLeft.Y) {
+                
+                float xExit = this.BottomRight.X - other.TopLeft.X;
+                float yExit = this.BottomRight.Y - other.TopLeft.Y;
+                if (xExit < yExit)
+                    return new Vector2(-1, 1);
+                else
+                    return new Vector2(1, -1);
             }
-            return new Vector2();
+            return null;
         }
     }
 }
