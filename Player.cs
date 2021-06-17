@@ -11,7 +11,10 @@ namespace Info2021 {
         public void Update(float dt) {
             col.Lower = Position - (Box / 2);
             col.Upper = Position + (Box / 2);
+            // Gravity
             velPos = velPos.Accelerate(new Vector2(0, 9.81f));
+
+            // Movement logic
             bool directionalMovement = true;
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 velPos = velPos.Accelerate(new Vector2(40f, 0));
@@ -20,16 +23,18 @@ namespace Info2021 {
             else
                 directionalMovement = false;
             
+            // Air resistance
             if (directionalMovement)
                 velPos = velPos.Accelerate(new Vector2(-0.05f * velPos.V.X, 0));
             else
                 velPos = velPos.Accelerate(new Vector2(-0.2f * velPos.V.X, 0));
 
-
+            // Ground test. Remove this
             if (velPos.P.Y > 200) {
                 velPos = velPos.Accelerate(new Vector2(0, -velPos.V.Y));
             }
 
+            // Finalize physics by actually changing the position
             velPos = velPos.ApplyVelocity(dt);
         }
 
