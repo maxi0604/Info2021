@@ -9,8 +9,8 @@ namespace Info2021 {
         public Vector2 Position => velPos.P;
 
         public void Update(float dt) {
-            col.Lower = Position - (Box / 2);
-            col.Upper = Position + (Box / 2);
+            col.LowerRight = Position - (Box / 2);
+            col.UpperLeft = Position + (Box / 2);
             // Gravity
             velPos = velPos.Accelerate(new Vector2(0, 9.81f));
 
