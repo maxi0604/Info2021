@@ -3,9 +3,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Info2021 {
     class Player : IUpdateable, IHasPosition {
+
         VelPos velPos = new VelPos();
 
         public Vector2 Position => velPos.P;
+
         public void Update(float dt) {
 
             velPos = velPos.Accelerate(new Vector2(0, 9.81f));
@@ -18,9 +20,9 @@ namespace Info2021 {
                 directionalMovement = false;
             
             if (directionalMovement)
-                velPos = velPos.Accelerate(new Vector2(-0.1f * velPos.V.X, 0));
+                velPos = velPos.Accelerate(new Vector2(-0.05f * velPos.V.X, 0));
             else
-                velPos = velPos.Accelerate(new Vector2(-0.5f * velPos.V.X, 0));
+                velPos = velPos.Accelerate(new Vector2(-0.2f * velPos.V.X, 0));
 
 
             if (velPos.P.Y > 200) {
@@ -29,5 +31,7 @@ namespace Info2021 {
 
             velPos = velPos.ApplyVelocity(dt);
         }
+
+        
     }
 }

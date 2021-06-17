@@ -10,7 +10,7 @@ namespace Info2021 {
             P = p;
         }
 
-        public VelPos ApplyVelocity (float t) {
+        public VelPos ApplyVelocity(float t) {
             return new VelPos(V, P + t * V);
         }
 
