@@ -13,6 +13,8 @@ namespace Info2021
         Player player;
 
         private List<IUpdateable> updateables = new List<IUpdateable>();
+        private List<ICollidable> attachedColliders = new List<ICollidable>();
+        private List<ICollidable> staticColliders = new List<ICollidable>();
         
         public Game1()
         {
@@ -27,6 +29,9 @@ namespace Info2021
 
             player = new Player();
             updateables.Add(player);
+            attachedColliders.Add(player);
+            var statictest = new StaticCollider(new Vector2(0f, 200f), new Vector2(200f, 400f));
+            staticColliders.Add(statictest);
             base.Initialize();
         }
 
@@ -47,7 +52,15 @@ namespace Info2021
                 updateables[i].Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
-
+            for (int i = 0; i < attachedColliders.Count; i++) {
+                var attached = attachedColliders[i];
+                for (int j = 0; j < staticColliders.Count; j++) {
+                    var result = attached.Collider.CollideWith(staticColliders[j].Collider);
+                    attached.VelPos = attached.VelPos
+                        .Accelerate(result)
+                        .ApplyVelocity((float)gameTime.ElapsedGameTime.TotalSeconds);
+                }
+            }
             base.Update(gameTime);
         }
 
