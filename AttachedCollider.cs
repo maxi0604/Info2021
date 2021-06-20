@@ -36,14 +36,20 @@ namespace Info2021
             float alongX = this.Center.X > other.Center.X ? other.BottomRight.X - TopLeft.X : other.TopLeft.X - BottomRight.X;
             float alongY = this.Center.Y > other.Center.Y ? other.BottomRight.Y - TopLeft.Y : other.TopLeft.Y - BottomRight.Y;
             bool resolveAlongX = Abs(alongX) < Abs(alongY);
+            bool aboveOther = this.Center.Y < other.Center.Y;
+            bool leftOfOther = this.Center.Y < other.Center.Y;
 
             Vector2 oldVel = Parent.VelPos.V;
-            Vector2 accelVel;
+            Vector2 accelVel = Vector2.Zero;
 
-            if (resolveAlongX)
-                accelVel = new Vector2(-oldVel.X, 0);
-            else
-                accelVel = new Vector2(0, -oldVel.Y);
+            if (resolveAlongX) {
+                if (leftOfOther && oldVel.X > 0 || !leftOfOther && oldVel.X < 0)
+                    accelVel = new Vector2(-oldVel.X, 0);
+            }
+            else {
+                if (aboveOther && oldVel.Y > 0 || !aboveOther && oldVel.Y < 0)
+                    accelVel = new Vector2(0, -oldVel.Y);
+            }
 
             // The collision is going to resolve itself anyway since the objects are separating.
             
