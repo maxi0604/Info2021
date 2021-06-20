@@ -22,7 +22,10 @@ namespace Info2021 {
         }
         public void Update(float dt) {
             // Gravity
-            
+            timeSinceGround += dt;
+            timeSinceJump += dt;
+            timeSinceInAirJumpPress += dt;
+            timeSinceNoJumpPress += dt;
             VelPos = VelPos.Accelerate(new Vector2(0, (fastFalling ? 3 : 1) * gravity));
 
             // Movement logic
@@ -55,7 +58,8 @@ namespace Info2021 {
                 VelPos = VelPos.Accelerate(new Vector2(0, -0.05f * VelPos.V.Y));
             else if(VelPos.V.Y > 400)
                 VelPos = VelPos.Accelerate(new Vector2(0, -0.02f * VelPos.V.Y));
-            // Ground test. Remove this
+
+            
             if(InputManager.IsActive(InputEvent.Jump) && !OnGround() ) {
                 timeSinceInAirJumpPress = 0;
             }
@@ -67,12 +71,9 @@ namespace Info2021 {
                 Jump();
             }
             // Finalize physics by actually changing the position
-            VelPos = VelPos.ApplyVelocity(dt);
+            
             if(Position.Y > 1000) VelPos = new VelPos(VelPos.V, new Vector2(Position.X, 10));
-            timeSinceGround += dt;
-            timeSinceJump += dt;
-            timeSinceInAirJumpPress += dt;
-            timeSinceNoJumpPress += dt;
+            
             if(timeSinceGround > 0.1f && timeSinceJump > 0.14f) {
                 jumping = false;
             }
@@ -91,7 +92,7 @@ namespace Info2021 {
             VelPos = new VelPos(new Vector2(0, OldVelocity.Y), VelPos.P);
         }
         public bool OnGround() {
-            return VelPos.P.Y >= 224;
+            return timeSinceGround < 1/50;
         }
 
         public void OnInitialGroundCollision() {
@@ -104,6 +105,10 @@ namespace Info2021 {
             
         }
 
+        void IAttachedColliderParent.OnCollision(float alongX, float alongY, Vector2 accelVel)
+        {
+            if(accelVel.Y < 0) OnGroundCollision();
+        }
         public void Jump() {
             
             if(!jumping) {
@@ -121,5 +126,7 @@ namespace Info2021 {
 
 
         }
+
+        
     }
 }

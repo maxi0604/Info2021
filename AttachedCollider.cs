@@ -48,6 +48,7 @@ namespace Info2021
             // The collision is going to resolve itself anyway since the objects are separating.
             
             // We want to uncollide, so we move opposite of the collision direction.
+            Parent.OnCollision(alongX, alongY, accelVel);
             Parent.VelPos = Parent.VelPos.Accelerate(accelVel);
 
             // A collision took place and was resolved.
