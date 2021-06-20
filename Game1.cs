@@ -61,11 +61,7 @@ namespace Info2021
             if (InputManager.IsActive(InputEvent.Escape))
                 Exit();
 
-              for (int i = 0; i < updateables.Count; i++) {
-                // Do normal physics...
-                updateables[i].Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-            }
-
+           
             // Then resolve collisions as suggested in https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
             // TODO: Generalize to multiple dynamic colliders and possibly even dynamic collider - dynamic collider collision.
             for (int i = 0; i < staticColliders.Count; i++) {
@@ -89,6 +85,11 @@ namespace Info2021
                 camPos.X -= 360;
             }
             player.VelPos = player.VelPos.ApplyVelocity((float)gameTime.ElapsedGameTime.TotalSeconds);
+               for (int i = 0; i < updateables.Count; i++) {
+                // Do normal physics...
+                updateables[i].Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
             base.Update(gameTime);
         }
 

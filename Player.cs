@@ -92,7 +92,7 @@ namespace Info2021 {
             VelPos = new VelPos(new Vector2(0, OldVelocity.Y), VelPos.P);
         }
         public bool OnGround() {
-            return timeSinceGround < 1/50;
+            return timeSinceGround < (1f/50f);
         }
 
         public void OnInitialGroundCollision() {
