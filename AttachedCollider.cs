@@ -20,9 +20,11 @@ namespace Info2021
         }
 
         // https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
-        public bool CollideWith(StaticCollider other) {
+        public bool CollideWith(StaticCollider other)
+        {
             if (BottomRight.X <= other.TopLeft.X || TopLeft.X >= other.BottomRight.X
-                || BottomRight.Y <= other.TopLeft.Y || TopLeft.Y >= other.BottomRight.Y) {
+                || BottomRight.Y <= other.TopLeft.Y || TopLeft.Y >= other.BottomRight.Y)
+            {
                 // No collision took place.
                 return false;
             }
@@ -42,23 +44,30 @@ namespace Info2021
             Vector2 oldVel = Parent.VelPos.V;
             Vector2 accelVel = Vector2.Zero;
 
-            if (resolveAlongX) {
+            if (resolveAlongX)
+            {
                 if (leftOfOther && oldVel.X > 0 || !leftOfOther && oldVel.X < 0)
                     accelVel = new Vector2(-oldVel.X, 0);
             }
-            else {
+            else
+            {
                 if (aboveOther && oldVel.Y > 0 || !aboveOther && oldVel.Y < 0)
                     accelVel = new Vector2(0, -oldVel.Y);
             }
 
             // The collision is going to resolve itself anyway since the objects are separating.
-            
+
             // We want to uncollide, so we move opposite of the collision direction.
             Parent.OnCollision(alongX, alongY, accelVel);
             Parent.VelPos = Parent.VelPos.Accelerate(accelVel);
-
-            // A collision took place and was resolved.
-            return true;
+            if (BottomRight.X > other.TopLeft.X && TopLeft.X < other.BottomRight.X
+                && BottomRight.Y > other.TopLeft.Y && TopLeft.Y < other.BottomRight.Y)
+            {
+                // A collision took place and was resolved.
+                return true;
+            }
+            CollideWith(other);
+            return false;
         }
     }
 }

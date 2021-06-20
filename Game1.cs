@@ -38,7 +38,7 @@ namespace Info2021
             _graphics.PreferredBackBufferWidth = 1280;
             _graphics.ApplyChanges();
             // TODO: Remove test.
-            staticColliders.Add(new StaticCollider(new Vector2(0f, 200f), new Vector2(200f, 300f)));
+            
             base.Initialize();
 
         }
@@ -52,6 +52,11 @@ namespace Info2021
             background = new Background(Content.Load<Texture2D>("640x360"));
             for(int i = 0; i < 30; i++) {
                 tiles.Add(new Tile(new TileInfo(this, "Character"), i, 15));
+                staticColliders.Add(new StaticCollider(new Vector2(i*16, 15*16), new Vector2(i*16+15, 16*16)));
+            }
+             for(int i = 0; i < 30; i++) {
+                tiles.Add(new Tile(new TileInfo(this, "Character"), 15, i));
+                staticColliders.Add(new StaticCollider(new Vector2(15*16, i*16), new Vector2(16*16, i*16+15)));
             }
             // TODO: use this.Content to load your game content here
         }
@@ -63,31 +68,32 @@ namespace Info2021
 
            
             // Then resolve collisions as suggested in https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
-            // TODO: Generalize to multiple dynamic colliders and possibly even dynamic collider - dynamic collider collision.
-            for (int i = 0; i < staticColliders.Count; i++) {
-                player.Collider.CollideWith(staticColliders[i]);
-            }
+            
              
             if(player.Position.X - camPos.X > 640) {
-                System.Threading.Thread.Sleep(100);
+                
                 camPos.X += 640;
             }
             if(player.Position.X - camPos.X < -16) {
-                System.Threading.Thread.Sleep(100);
+                
                 camPos.X -= 640;
             }
             if(player.Position.Y - camPos.Y > 376) {
-                System.Threading.Thread.Sleep(100);
+                
                 camPos.X += 360;
             }
             if(player.Position.Y - camPos.Y < -16) {
-                System.Threading.Thread.Sleep(100);
+                
                 camPos.X -= 360;
             }
             player.VelPos = player.VelPos.ApplyVelocity((float)gameTime.ElapsedGameTime.TotalSeconds);
                for (int i = 0; i < updateables.Count; i++) {
                 // Do normal physics...
                 updateables[i].Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+            // TODO: Generalize to multiple dynamic colliders and possibly even dynamic collider - dynamic collider collision.
+            for (int i = 0; i < staticColliders.Count; i++) {
+                player.Collider.CollideWith(staticColliders[i]);
             }
 
             base.Update(gameTime);
