@@ -20,6 +20,7 @@ namespace Info2021
         }
 
         // https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
+        // https://www.metanetsoftware.com/2016/n-tutorial-a-collision-detection-and-response#section1
         public bool CollideWith(StaticCollider other) {
             if (BottomRight.X <= other.TopLeft.X || TopLeft.X >= other.BottomRight.X
                 || BottomRight.Y <= other.TopLeft.Y || TopLeft.Y >= other.BottomRight.Y) {
@@ -27,14 +28,11 @@ namespace Info2021
                 return false;
             }
 
-            Vector2 collisionVec = other.Center - this.Center;
-            // The general relative velocity is other.V - this.V.
-            // However, we know that we are colliding with a static collider, so the other
-            // velocity is by definition 0.
-            Vector2 relativeV = Parent.VelPos.V;
-
+            // How far we need to travel along the respective axes to uncollide.
             float alongX = this.Center.X > other.Center.X ? other.BottomRight.X - TopLeft.X : other.TopLeft.X - BottomRight.X;
             float alongY = this.Center.Y > other.Center.Y ? other.BottomRight.Y - TopLeft.Y : other.TopLeft.Y - BottomRight.Y;
+
+            // We resolve along the shortest axis.
             bool resolveAlongX = Abs(alongX) < Abs(alongY);
             bool aboveOther = this.Center.Y < other.Center.Y;
             bool leftOfOther = this.Center.Y < other.Center.Y;
@@ -43,17 +41,17 @@ namespace Info2021
             Vector2 accelVel = Vector2.Zero;
 
             if (resolveAlongX) {
+                // If we are already moving in the correct direction, don't negate current velocity...
                 if (leftOfOther && oldVel.X > 0 || !leftOfOther && oldVel.X < 0)
+                    // Otherwise do it...
                     accelVel = new Vector2(-oldVel.X, 0);
             }
             else {
+                // Same as above.
                 if (aboveOther && oldVel.Y > 0 || !aboveOther && oldVel.Y < 0)
                     accelVel = new Vector2(0, -oldVel.Y);
             }
-
-            // The collision is going to resolve itself anyway since the objects are separating.
             
-            // We want to uncollide, so we move opposite of the collision direction.
             Parent.OnCollision(alongX, alongY, accelVel);
             Parent.VelPos = Parent.VelPos.Accelerate(accelVel);
 
