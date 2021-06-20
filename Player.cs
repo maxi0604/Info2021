@@ -78,7 +78,7 @@ namespace Info2021 {
             if(timeSinceGround > 0.1f && timeSinceJump > 0.14f) {
                 jumping = false;
             }
-            Console.WriteLine(Position.X);
+            
         }
         public void StartFalling() {
             if(OnGround()) return;
