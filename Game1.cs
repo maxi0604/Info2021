@@ -13,6 +13,7 @@ namespace Info2021
         Player player;
 
         private List<IUpdateable> updateables = new List<IUpdateable>();
+        private List<StaticCollider> staticColliders = new List<StaticCollider>();
         
         public Game1()
         {
@@ -24,10 +25,12 @@ namespace Info2021
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             player = new Player();
             updateables.Add(player);
+            // TODO: Remove test.
+            staticColliders.Add(new StaticCollider(new Vector2(0f, 200f), new Vector2(200f, 300f)));
             base.Initialize();
+
         }
 
         protected override void LoadContent()
@@ -42,12 +45,17 @@ namespace Info2021
             if (InputManager.IsActive(InputEvent.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
             for (int i = 0; i < updateables.Count; i++) {
+                // Do normal physics...
                 updateables[i].Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
+            // Then resolve collisions as suggested in https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
+            // TODO: Generalize to multiple dynamic colliders and possibly even dynamic collider - dynamic collider collision.
+            for (int i = 0; i < staticColliders.Count; i++) {
+                player.Collider.CollideWith(staticColliders[i]);
+            }
 
-
+            player.VelPos = player.VelPos.ApplyVelocity(1/60f);
             base.Update(gameTime);
         }
 
