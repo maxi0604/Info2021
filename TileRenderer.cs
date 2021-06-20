@@ -17,7 +17,9 @@ namespace Info2021
         {
             int x, y;
             (x, y) = CamTranslator.Translator(cameraPosition, position);
-            spriteBatch.Draw(texture, new Vector2(x, y), null, Color.White, rotation, origin, 2 * scale, SpriteEffects.None, layerDepth);
+            if(x > -20 && x < 1320 && y > -20 && y < 760) {
+                spriteBatch.Draw(texture, new Vector2(x, y), null, Color.White, rotation, origin, 2 * scale, SpriteEffects.None, layerDepth);
+            }
         }
 
         public void Begin() { 

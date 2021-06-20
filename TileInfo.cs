@@ -13,9 +13,9 @@ namespace Info2021
                 width = Texture.Width;
         }
         public TileInfo(Game1 game, string texturePath, int width, int height) :
-            this(game.Content.Load<Texture2D>(texturePath), 0, width, height) { }
+            this(game.Content.Load<Texture2D>(texturePath), 0.1f, width, height) { }
         public TileInfo(Game1 game, string texturePath) : 
-            this(game.Content.Load<Texture2D>(texturePath), 0, 0, 0) {
+            this(game.Content.Load<Texture2D>(texturePath), 0.1f, 0, 0) {
                 height = Texture.Height;
                 width = Texture.Width;
         }

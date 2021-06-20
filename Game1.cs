@@ -14,8 +14,10 @@ namespace Info2021
         private List<Tile> tiles = new List<Tile>();
         private List<IUpdateable> updateables = new List<IUpdateable>();
         TileRenderer tileRenderer;
+        BackgroundRenderer backgroundRenderer;
         ResourceAccessor resourceAccessor;
         private Vector2 camPos = Vector2.Zero;
+        private Background background;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -43,6 +45,8 @@ namespace Info2021
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             ballTexture = Content.Load<Texture2D>("Character");
             tileRenderer = new TileRenderer(_spriteBatch);
+            backgroundRenderer = new BackgroundRenderer(_spriteBatch);
+            background = new Background(Content.Load<Texture2D>("640x360"));
             for(int i = 0; i < 30; i++) {
                 tiles.Add(new Tile(new TileInfo(this, "Character"), i, 15));
             }
@@ -80,19 +84,21 @@ namespace Info2021
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
             Texture2D SimpleTexture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 
             int[] pixel = {0xFFFFFF}; 
             SimpleTexture.SetData<int> (pixel, 0, SimpleTexture.Width * SimpleTexture.Height);
-            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
-    
+            
+            _spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
+            
             foreach(Tile tile in tiles) {
                 tile.Draw(tileRenderer, resourceAccessor, camPos);
             }
             
+            background.Draw(backgroundRenderer, resourceAccessor, camPos);
+            _spriteBatch.Draw(ballTexture, 2 * player.Position, null, Color.White, 0, camPos, 2, SpriteEffects.None, 0);
             
-            _spriteBatch.Draw(ballTexture, 2 * player.Position, null, Color.White, 0, camPos, 2, SpriteEffects.None, 1);
             _spriteBatch.End();
             base.Draw(gameTime);
             
