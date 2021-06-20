@@ -2,10 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 namespace Info2021 {
-    class Player : IUpdateable, IHasPosition {
-        VelPos velPos = new VelPos();
+    class Player : IUpdateable, IHasPosition, IAttachedColliderParent {
+        public VelPos VelPos { get; set; }
         public static readonly Vector2 Box = new Vector2(32, 32);
-        public Vector2 Position => velPos.P;
+        public Vector2 Position => VelPos.P;
         private Vector2 OldVelocity = new Vector2(0, 0);
         private bool fastFalling = false;
         private float timeSinceGround = 0;
@@ -15,17 +15,22 @@ namespace Info2021 {
         private float timeSinceNoJumpPress = 0;
         private bool jumping = false;
         const float gravity = 9.81f;
+        public AttachedCollider Collider { get; }
+
+        public Player() {
+            Collider = new AttachedCollider(this, new Vector2(16f, 16f));
+        }
         public void Update(float dt) {
             // Gravity
             
-            velPos = velPos.Accelerate(new Vector2(0, (fastFalling ? 3 : 1) * gravity));
+            VelPos = VelPos.Accelerate(new Vector2(0, (fastFalling ? 3 : 1) * gravity));
 
             // Movement logic
             bool directionalMovement = true;
-            if (InputManager.IsActive(InputEvent.Right) && !fastFalling)
-                velPos = velPos.Accelerate(new Vector2(40f, 0));
-            else if (InputManager.IsActive(InputEvent.Left) && !fastFalling)
-                velPos = velPos.Accelerate(new Vector2(-40f, 0));
+            if (InputManager.IsActive(InputEvent.Right))
+                VelPos = VelPos.Accelerate(new Vector2(40f, 0));
+            else if (InputManager.IsActive(InputEvent.Left))
+                VelPos = VelPos.Accelerate(new Vector2(-40f, 0));
             else
                 directionalMovement = false;
             
@@ -38,22 +43,18 @@ namespace Info2021 {
             if(oldTimeSinceGround > 0 && timeSinceGround == 0) {
                 OnInitialGroundCollision();
             }
-            if (velPos.P.Y > 224) {
-                velPos = velPos.Accelerate(new Vector2(0, -velPos.V.Y));
-                velPos = new VelPos(velPos.V, new Vector2(Position.X, 224));
-                OnGroundCollision();
-            }
+         
             // Air resistance
             if (directionalMovement)
-                velPos = velPos.Accelerate(new Vector2(-0.05f * velPos.V.X, 0));
+                VelPos = VelPos.Accelerate(new Vector2(-0.05f * VelPos.V.X, 0));
             else
-                velPos = velPos.Accelerate(new Vector2(-0.2f * velPos.V.X, 0));
+                VelPos = VelPos.Accelerate(new Vector2(-0.2f * VelPos.V.X, 0));
 
             // Vertical air resistance
-            if (velPos.V.Y > 300 && !fastFalling)
-                velPos = velPos.Accelerate(new Vector2(0, -0.05f * velPos.V.Y));
-            else if(velPos.V.Y > 400)
-                velPos = velPos.Accelerate(new Vector2(0, -0.02f * velPos.V.Y));
+            if (VelPos.V.Y > 300 && !fastFalling)
+                VelPos = VelPos.Accelerate(new Vector2(0, -0.05f * VelPos.V.Y));
+            else if(VelPos.V.Y > 400)
+                VelPos = VelPos.Accelerate(new Vector2(0, -0.02f * VelPos.V.Y));
             // Ground test. Remove this
             if(InputManager.IsActive(InputEvent.Jump) && !OnGround() ) {
                 timeSinceInAirJumpPress = 0;
@@ -66,8 +67,8 @@ namespace Info2021 {
                 Jump();
             }
             // Finalize physics by actually changing the position
-            velPos = velPos.ApplyVelocity(dt);
-            if(Position.Y > 1000) velPos = new VelPos(velPos.V, new Vector2(Position.X, 10));
+            VelPos = VelPos.ApplyVelocity(dt);
+            if(Position.Y > 1000) VelPos = new VelPos(VelPos.V, new Vector2(Position.X, 10));
             timeSinceGround += dt;
             timeSinceJump += dt;
             timeSinceInAirJumpPress += dt;
@@ -80,17 +81,17 @@ namespace Info2021 {
         public void StartFalling() {
             if(OnGround()) return;
             fastFalling = true;
-            OldVelocity = velPos.V;
-            velPos = new VelPos(new Vector2(0, velPos.V.Y + 50), velPos.P);
+            OldVelocity = VelPos.V;
+            VelPos = new VelPos(new Vector2(0, VelPos.V.Y + 50), VelPos.P);
         }
         public void StopFalling() {
             fastFalling = false;
-            velPos = new VelPos(OldVelocity, velPos.P);
+            VelPos = new VelPos(OldVelocity, VelPos.P);
             if(OnGround())
-            velPos = new VelPos(new Vector2(0, OldVelocity.Y), velPos.P);
+            VelPos = new VelPos(new Vector2(0, OldVelocity.Y), VelPos.P);
         }
         public bool OnGround() {
-            return velPos.P.Y >= 224;
+            return VelPos.P.Y >= 224;
         }
 
         public void OnInitialGroundCollision() {
@@ -106,7 +107,7 @@ namespace Info2021 {
         public void Jump() {
             
             if(!jumping) {
-                velPos = velPos.Accelerate(new Vector2(0, -50));
+                VelPos = VelPos.Accelerate(new Vector2(0, -50));
             }
             jumping = true;
             timeSinceJump = timeSinceGround;
@@ -115,7 +116,7 @@ namespace Info2021 {
                 jumping = false;
                 return;
             }
-            velPos = velPos.Accelerate(new Vector2(0, accel - gravity));
+            VelPos = VelPos.Accelerate(new Vector2(0, accel - gravity));
             
 
 

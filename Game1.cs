@@ -18,6 +18,8 @@ namespace Info2021
         ResourceAccessor resourceAccessor;
         private Vector2 camPos = Vector2.Zero;
         private Background background;
+        private List<StaticCollider> staticColliders = new List<StaticCollider>();
+        
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -30,12 +32,13 @@ namespace Info2021
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             player = new Player();
             updateables.Add(player);
             _graphics.PreferredBackBufferHeight = 720;
             _graphics.PreferredBackBufferWidth = 1280;
             _graphics.ApplyChanges();
+            // TODO: Remove test.
+            staticColliders.Add(new StaticCollider(new Vector2(0f, 200f), new Vector2(200f, 300f)));
             base.Initialize();
 
         }
@@ -58,9 +61,14 @@ namespace Info2021
             if (InputManager.IsActive(InputEvent.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
             for (int i = 0; i < updateables.Count; i++) {
+                // Do normal physics...
                 updateables[i].Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+            // Then resolve collisions as suggested in https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
+            // TODO: Generalize to multiple dynamic colliders and possibly even dynamic collider - dynamic collider collision.
+            for (int i = 0; i < staticColliders.Count; i++) {
+                player.Collider.CollideWith(staticColliders[i]);
             }
 
             if(player.Position.X - camPos.X > 640) {
@@ -79,6 +87,7 @@ namespace Info2021
                 System.Threading.Thread.Sleep(100);
                 camPos.X -= 360;
             }
+            player.VelPos = player.VelPos.ApplyVelocity(1/60f);
             base.Update(gameTime);
         }
 
