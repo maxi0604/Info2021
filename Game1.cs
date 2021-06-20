@@ -50,13 +50,15 @@ namespace Info2021
             tileRenderer = new TileRenderer(_spriteBatch);
             backgroundRenderer = new BackgroundRenderer(_spriteBatch);
             background = new Background(Content.Load<Texture2D>("640x360"));
+            staticColliders.Add(new StaticCollider(new Vector2(0, 15*16), new Vector2(450, 16*16)));
+            staticColliders.Add(new StaticCollider(new Vector2(15*16, 0), new Vector2(17*16, 450)));
             for(int i = 0; i < 30; i++) {
                 tiles.Add(new Tile(new TileInfo(this, "Character"), i, 15));
-                staticColliders.Add(new StaticCollider(new Vector2(i*16, 15*16), new Vector2(i*16+15, 16*16)));
+                
             }
              for(int i = 0; i < 30; i++) {
                 tiles.Add(new Tile(new TileInfo(this, "Character"), 15, i));
-                staticColliders.Add(new StaticCollider(new Vector2(15*16, i*16), new Vector2(16*16, i*16+15)));
+                
             }
             // TODO: use this.Content to load your game content here
         }

@@ -49,7 +49,7 @@ namespace Info2021 {
          
             // Air resistance
             if (directionalMovement)
-                VelPos = VelPos.Accelerate(new Vector2(-0.05f * VelPos.V.X, 0));
+                VelPos = VelPos.Accelerate(new Vector2(-0.1f * VelPos.V.X, 0));
             else
                 VelPos = VelPos.Accelerate(new Vector2(-0.2f * VelPos.V.X, 0));
 
