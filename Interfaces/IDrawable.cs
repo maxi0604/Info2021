@@ -1,8 +1,8 @@
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 namespace Info2021.Interfaces
 {
     public interface IDrawable
     {
-        Texture2D Texture { get; }
+        void Draw(IRenderer renderer, ResourceAccessor accessor, Vector2 camPos);
     }
 }

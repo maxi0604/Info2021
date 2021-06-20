@@ -11,29 +11,41 @@ namespace Info2021
         private SpriteBatch _spriteBatch;
         Texture2D ballTexture;
         Player player;
-
+        private List<Tile> tiles = new List<Tile>();
         private List<IUpdateable> updateables = new List<IUpdateable>();
-        
+        TileRenderer tileRenderer;
+        ResourceAccessor resourceAccessor;
+        private Vector2 camPos = Vector2.Zero;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            resourceAccessor = new ResourceAccessor(this);
         }
 
+       
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
 
             player = new Player();
             updateables.Add(player);
+            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.PreferredBackBufferWidth = 1280;
+            _graphics.ApplyChanges();
             base.Initialize();
+
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             ballTexture = Content.Load<Texture2D>("Character");
+            tileRenderer = new TileRenderer(_spriteBatch);
+            for(int i = 0; i < 30; i++) {
+                tiles.Add(new Tile(new TileInfo(this, "Character"), i, 15));
+            }
             // TODO: use this.Content to load your game content here
         }
 
@@ -47,20 +59,47 @@ namespace Info2021
                 updateables[i].Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             }
 
-
+            if(player.Position.X - camPos.X > 640) {
+                System.Threading.Thread.Sleep(100);
+                camPos.X += 640;
+            }
+            if(player.Position.X - camPos.X < -16) {
+                System.Threading.Thread.Sleep(100);
+                camPos.X -= 640;
+            }
+            if(player.Position.Y - camPos.Y > 376) {
+                System.Threading.Thread.Sleep(100);
+                camPos.X += 360;
+            }
+            if(player.Position.Y - camPos.Y < -16) {
+                System.Threading.Thread.Sleep(100);
+                camPos.X -= 360;
+            }
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(ballTexture, player.Position, Color.White);
-            _spriteBatch.End();
-            // TODO: Add your drawing code here
+            Texture2D SimpleTexture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 
+            int[] pixel = {0xFFFFFF}; 
+            SimpleTexture.SetData<int> (pixel, 0, SimpleTexture.Width * SimpleTexture.Height);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
+    
+            foreach(Tile tile in tiles) {
+                tile.Draw(tileRenderer, resourceAccessor, camPos);
+            }
+            
+            
+            _spriteBatch.Draw(ballTexture, 2 * player.Position, null, Color.White, 0, camPos, 2, SpriteEffects.None, 1);
+            _spriteBatch.Draw(SimpleTexture, new Rectangle(0, 216, 1920, 1), Color.Red);
+            _spriteBatch.Draw(SimpleTexture, new Rectangle(0, 92, 1920, 1), Color.Red);
+            _spriteBatch.End();
             base.Draw(gameTime);
+            
         }
+
+
     }
 }
