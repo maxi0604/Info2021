@@ -93,8 +93,6 @@ namespace Info2021
             
             
             _spriteBatch.Draw(ballTexture, 2 * player.Position, null, Color.White, 0, camPos, 2, SpriteEffects.None, 1);
-            _spriteBatch.Draw(SimpleTexture, new Rectangle(0, 216, 1920, 1), Color.Red);
-            _spriteBatch.Draw(SimpleTexture, new Rectangle(0, 92, 1920, 1), Color.Red);
             _spriteBatch.End();
             base.Draw(gameTime);
             
