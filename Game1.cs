@@ -9,7 +9,6 @@ namespace Info2021
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        Texture2D ballTexture;
         Player player;
         private List<Tile> tiles = new List<Tile>();
         private List<IUpdateable> updateables = new List<IUpdateable>();
@@ -47,7 +46,6 @@ namespace Info2021
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            ballTexture = Content.Load<Texture2D>("Character");
             tileRenderer = new TileRenderer(_spriteBatch);
             backgroundRenderer = new BackgroundRenderer(_spriteBatch);
             background = new Background(Content.Load<Texture2D>("640x360"));
@@ -106,10 +104,6 @@ namespace Info2021
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
-            Texture2D SimpleTexture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-
-            int[] pixel = {0xFFFFFF}; 
-            SimpleTexture.SetData<int> (pixel, 0, SimpleTexture.Width * SimpleTexture.Height);
             
             _spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
             
