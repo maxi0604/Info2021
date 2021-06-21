@@ -84,11 +84,11 @@ namespace Info2021
             }
             if(player.Position.Y - camPos.Y > 376) {
                 
-                camPos.X += 360;
+                camPos.Y += 360;
             }
             if(player.Position.Y - camPos.Y < -16) {
                 
-                camPos.X -= 360;
+                camPos.Y -= 360;
             }
             player.VelPos = player.VelPos.ApplyVelocity((float)gameTime.ElapsedGameTime.TotalSeconds);
                for (int i = 0; i < updateables.Count; i++) {
