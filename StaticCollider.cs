@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Info2021
 {
-    class StaticCollider {
+    public class StaticCollider {
         public StaticCollider(Vector2 topLeft, Vector2 bottomRight)
         {
             Console.WriteLine("we do a little trolling");

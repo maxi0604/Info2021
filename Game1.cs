@@ -9,12 +9,12 @@ namespace Info2021
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        Texture2D ballTexture;
         Player player;
         private List<Tile> tiles = new List<Tile>();
         private List<IUpdateable> updateables = new List<IUpdateable>();
         TileRenderer tileRenderer;
         BackgroundRenderer backgroundRenderer;
+        DynamicRenderer playerRenderer;
         ResourceAccessor resourceAccessor;
         private Vector2 camPos = Vector2.Zero;
         private Background background;
@@ -46,10 +46,10 @@ namespace Info2021
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            ballTexture = Content.Load<Texture2D>("Character");
             tileRenderer = new TileRenderer(_spriteBatch);
             backgroundRenderer = new BackgroundRenderer(_spriteBatch);
-            background = new Background(Content.Load<Texture2D>("640x360"));
+            background = new Background(Content.Load<Texture2D>("background1"));
+            playerRenderer = new DynamicRenderer(_spriteBatch);
             staticColliders.Add(new StaticCollider(new Vector2(0, 15*16), new Vector2(450, 16*16)));
             staticColliders.Add(new StaticCollider(new Vector2(15*16, 0), new Vector2(17*16, 450)));
             for(int i = 0; i < 30; i++) {
@@ -82,11 +82,11 @@ namespace Info2021
             }
             if(player.Position.Y - camPos.Y > 376) {
                 
-                camPos.X += 360;
+                camPos.Y += 360;
             }
             if(player.Position.Y - camPos.Y < -16) {
                 
-                camPos.X -= 360;
+                camPos.Y -= 360;
             }
             player.VelPos = player.VelPos.ApplyVelocity((float)gameTime.ElapsedGameTime.TotalSeconds);
                for (int i = 0; i < updateables.Count; i++) {
@@ -104,10 +104,6 @@ namespace Info2021
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
-            Texture2D SimpleTexture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-
-            int[] pixel = {0xFFFFFF}; 
-            SimpleTexture.SetData<int> (pixel, 0, SimpleTexture.Width * SimpleTexture.Height);
             
             _spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
             
@@ -116,7 +112,7 @@ namespace Info2021
             }
             
             background.Draw(backgroundRenderer, resourceAccessor, camPos);
-            _spriteBatch.Draw(ballTexture, 2 * player.Position, null, Color.White, 0, camPos, 2, SpriteEffects.None, 0);
+            player.Draw(playerRenderer, resourceAccessor, camPos);
             
             _spriteBatch.End();
             base.Draw(gameTime);

@@ -1,11 +1,13 @@
+using Info2021.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 namespace Info2021 {
-    class Player : IUpdateable, IHasPosition, IAttachedColliderParent {
+    class Player : DynamicObject, IUpdateable, IHasPosition, IAttachedColliderParent, Interfaces.IDrawable {
         public VelPos VelPos { get; set; }
         public static readonly Vector2 Box = new Vector2(32, 32);
-        public Vector2 Position => VelPos.P;
+        public override Vector2 Position => VelPos.P;
         private Vector2 OldVelocity = new Vector2(0, 0);
         private bool fastFalling = false;
         private float timeSinceGround = 0;
@@ -16,6 +18,7 @@ namespace Info2021 {
         private bool jumping = false;
         const float gravity = 9.81f;
         public AttachedCollider Collider { get; }
+
 
         public Player() {
             Collider = new AttachedCollider(this, new Vector2(16f, 16f));
@@ -127,6 +130,9 @@ namespace Info2021 {
 
         }
 
-        
+        public override Texture2D GetTexture(ResourceAccessor resourceAccessor)
+        {
+            return resourceAccessor.LoadContent<Texture2D>("Character");
+        }
     }
 }
