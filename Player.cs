@@ -20,10 +20,11 @@ namespace Info2021 {
         public AttachedCollider Collider { get; }
 
 
-        public Player() {
-            Collider = new AttachedCollider(this, new Vector2(16f, 16f));
+        public Player(Vector2 position) {
+            Collider = new AttachedCollider(this, new Vector2(10f, 10f));
+            VelPos = new VelPos(Vector2.Zero, position);
         }
-        public void Update(float dt) {
+        public override void Update(float dt) {
             // Gravity
             timeSinceGround += dt;
             timeSinceJump += dt;
