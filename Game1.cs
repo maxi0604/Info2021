@@ -14,7 +14,7 @@ namespace Info2021
         private List<IUpdateable> updateables = new List<IUpdateable>();
         TileRenderer tileRenderer;
         BackgroundRenderer backgroundRenderer;
-        PlayerRenderer playerRenderer;
+        DynamicRenderer playerRenderer;
         ResourceAccessor resourceAccessor;
         private Vector2 camPos = Vector2.Zero;
         private Background background;
@@ -49,7 +49,7 @@ namespace Info2021
             tileRenderer = new TileRenderer(_spriteBatch);
             backgroundRenderer = new BackgroundRenderer(_spriteBatch);
             background = new Background(Content.Load<Texture2D>("640x360"));
-            playerRenderer = new PlayerRenderer(_spriteBatch);
+            playerRenderer = new DynamicRenderer(_spriteBatch);
             staticColliders.Add(new StaticCollider(new Vector2(0, 15*16), new Vector2(450, 16*16)));
             staticColliders.Add(new StaticCollider(new Vector2(15*16, 0), new Vector2(17*16, 450)));
             for(int i = 0; i < 30; i++) {

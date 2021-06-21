@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
-    public class PlayerRenderer : Renderer, IRenderer
+    public class DynamicRenderer : Renderer, IRenderer
     {
-        public PlayerRenderer(SpriteBatch sprite) : base(sprite) {
+        public DynamicRenderer(SpriteBatch sprite) : base(sprite) {
             
         }
         public void Draw(Vector2 cameraPosition, Texture2D texture, Vector2 position, float rotation, Vector2 origin, float scale, float layerDepth)
