@@ -56,13 +56,13 @@ namespace Info2021
             
             Parent.OnCollision(alongX, alongY, accelVel);
             Parent.VelPos = Parent.VelPos.Accelerate(accelVel);
+            //Parent.VelPos = Parent.VelPos.Translate(accelVel);
             if (BottomRight.X > other.TopLeft.X && TopLeft.X < other.BottomRight.X
                 && BottomRight.Y > other.TopLeft.Y && TopLeft.Y < other.BottomRight.Y)
             {
                 // A collision took place and was resolved.
                 return true;
             }
-            CollideWith(other);
             return false;
         }
     }
