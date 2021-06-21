@@ -6,16 +6,19 @@ namespace Info2021
 {
     class AttachedCollider {
         public IAttachedColliderParent Parent { get; }
-        public Vector2 TopLeft { get => Parent.VelPos.P; }
+        public Vector2 TopLeft { get => Parent.VelPos.P + offset; }
         Vector2 diagonal;
+        Vector2 offset;
         public Vector2 BottomRight { get => TopLeft + diagonal; }
         public Vector2 Center { get => TopLeft + diagonal / 2; }
 
-        public AttachedCollider(IAttachedColliderParent parent, Vector2 diagonal) {
+        public AttachedCollider(IAttachedColliderParent parent, Vector2 diagonal) : this(parent, diagonal, Vector2.Zero) {}
+        public AttachedCollider(IAttachedColliderParent parent, Vector2 diagonal, Vector2 offset) {
             if (diagonal.X < 0 || diagonal.Y < 0)
                 throw new ArgumentOutOfRangeException("Diagonal vector has to be pointing from the top left to the bottom right.");
             
             this.diagonal = diagonal;
+            this.offset = offset;
             this.Parent = parent;
         }
 
