@@ -48,7 +48,7 @@ namespace Info2021
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             tileRenderer = new TileRenderer(_spriteBatch);
             backgroundRenderer = new BackgroundRenderer(_spriteBatch);
-            background = new Background(Content.Load<Texture2D>("640x360"));
+            background = new Background(Content.Load<Texture2D>("background1"));
             playerRenderer = new DynamicRenderer(_spriteBatch);
             staticColliders.Add(new StaticCollider(new Vector2(0, 15*16), new Vector2(450, 16*16)));
             staticColliders.Add(new StaticCollider(new Vector2(15*16, 0), new Vector2(17*16, 450)));
