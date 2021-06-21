@@ -15,6 +15,7 @@ namespace Info2021
         private List<IUpdateable> updateables = new List<IUpdateable>();
         TileRenderer tileRenderer;
         BackgroundRenderer backgroundRenderer;
+        PlayerRenderer playerRenderer;
         ResourceAccessor resourceAccessor;
         private Vector2 camPos = Vector2.Zero;
         private Background background;
@@ -50,6 +51,7 @@ namespace Info2021
             tileRenderer = new TileRenderer(_spriteBatch);
             backgroundRenderer = new BackgroundRenderer(_spriteBatch);
             background = new Background(Content.Load<Texture2D>("640x360"));
+            playerRenderer = new PlayerRenderer(_spriteBatch);
             staticColliders.Add(new StaticCollider(new Vector2(0, 15*16), new Vector2(450, 16*16)));
             staticColliders.Add(new StaticCollider(new Vector2(15*16, 0), new Vector2(17*16, 450)));
             for(int i = 0; i < 30; i++) {
@@ -116,7 +118,7 @@ namespace Info2021
             }
             
             background.Draw(backgroundRenderer, resourceAccessor, camPos);
-            _spriteBatch.Draw(ballTexture, 2 * player.Position, null, Color.White, 0, camPos, 2, SpriteEffects.None, 0);
+            player.Draw(playerRenderer, resourceAccessor, camPos);
             
             _spriteBatch.End();
             base.Draw(gameTime);

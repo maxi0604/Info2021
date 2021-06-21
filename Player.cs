@@ -1,8 +1,10 @@
+using Info2021.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 namespace Info2021 {
-    class Player : IUpdateable, IHasPosition, IAttachedColliderParent {
+    class Player : IUpdateable, IHasPosition, IAttachedColliderParent, Interfaces.IDrawable {
         public VelPos VelPos { get; set; }
         public static readonly Vector2 Box = new Vector2(32, 32);
         public Vector2 Position => VelPos.P;
@@ -127,6 +129,9 @@ namespace Info2021 {
 
         }
 
-        
+        public void Draw(IRenderer renderer, ResourceAccessor accessor, Vector2 camPos)
+        {
+            renderer.Draw(camPos, accessor.LoadContent<Texture2D>("Character"), Position, 0, Vector2.Zero, 1, 0.1f);
+        }
     }
 }

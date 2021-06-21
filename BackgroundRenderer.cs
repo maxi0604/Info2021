@@ -3,13 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
-    public class BackgroundRenderer : Interfaces.IRenderer
+    public class BackgroundRenderer : Renderer, Interfaces.IRenderer
     {
-        private SpriteBatch spriteBatch;
 
-        public BackgroundRenderer(SpriteBatch spriteBatch)
-        {
-            this.spriteBatch = spriteBatch;
+
+        public BackgroundRenderer(SpriteBatch sprite) : base(sprite) {
+            
         }
         public void Draw(Vector2 cameraPosition, Texture2D texture, Vector2 position, float rotation, Vector2 origin, float scale, float layerDepth)
         {
