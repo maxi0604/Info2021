@@ -75,7 +75,7 @@ namespace Info2021 {
                 Jump();
             }
             // Finalize physics by actually changing the position
-            
+            VelPos = VelPos.ApplyVelocity(1/60f);
             //if(Position.Y > 1000) VelPos = new VelPos(VelPos.V, new Vector2(Position.X, 10));
             
             if(timeSinceGround > 0.1f && timeSinceJump > 0.14f) {
