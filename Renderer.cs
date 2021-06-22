@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 namespace Info2021
 {
-    public abstract class Renderer
+    abstract class Renderer
     {
         protected Renderer(SpriteBatch sprite) {
             spriteBatch = sprite;

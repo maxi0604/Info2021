@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Info2021.Interfaces;
 namespace Info2021
 {
-    public class CinematicCollider
+    class CinematicCollider
     {
         public ICinematicColliderParent Parent { get; }
         public Vector2 TopLeft;

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
-    public class BackgroundRenderer : Renderer, Interfaces.IRenderer
+    class BackgroundRenderer : Renderer, Interfaces.IRenderer
     {
 
 

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
-    public class TileRenderer : Renderer, IRenderer
+    class TileRenderer : Renderer, IRenderer
     {
         public TileRenderer(SpriteBatch sprite) : base(sprite)
         {

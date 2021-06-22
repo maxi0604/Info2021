@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 namespace Info2021
 {
-    public record TileInfo(Texture2D Texture, float layer, int width, int height)
+    record TileInfo(Texture2D Texture, float layer, int width, int height)
     {
         public TileInfo(Game1 game, string texturePath, float layer, int width, int height) : 
             this(game.Content.Load<Texture2D>(texturePath), layer, width, height)

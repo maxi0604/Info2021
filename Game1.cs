@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Info2021
 {
-    public class Game1 : Game
+    class Game1 : Game
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;

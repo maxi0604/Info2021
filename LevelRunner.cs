@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Info2021
 {
-    public class LevelRunner
+    class LevelRunner
     {
         ResourceAccessor resourceAccessor;
         SpriteBatch spriteBatch;

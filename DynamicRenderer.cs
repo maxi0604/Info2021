@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
-    public class DynamicRenderer : Renderer, IRenderer
+    class DynamicRenderer : Renderer, IRenderer
     {
         public DynamicRenderer(SpriteBatch sprite) : base(sprite) {
             

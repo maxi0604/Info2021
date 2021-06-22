@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Info2021
 {
-    public class StaticCollider {
+    class StaticCollider {
         public StaticCollider(Vector2 topLeft, Vector2 bottomRight)
         {
             if (topLeft.X > bottomRight.X || topLeft.Y > bottomRight.Y)

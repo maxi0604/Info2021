@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Info2021
 {
-    public class AttachedCollider {
+    class AttachedCollider {
         public IAttachedColliderParent Parent { get; }
         public Vector2 TopLeft { get => Parent.VelPos.P + offset; }
         Vector2 diagonal;

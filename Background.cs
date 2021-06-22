@@ -4,7 +4,7 @@ using Info2021.Interfaces;
 
 namespace Info2021
 {
-    public class Background : Interfaces.IDrawable
+    class Background : Interfaces.IDrawable
     {
         public Texture2D texture;
 
