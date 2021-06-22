@@ -26,7 +26,8 @@ namespace Info2021
             staticColliders.Add(new StaticCollider(new Vector2(0, 15*16), new Vector2(450, 16*16)));
             staticColliders.Add(new StaticCollider(new Vector2(15*16, 0), new Vector2(17*16, 450)));
             return new Level(Vector2.Zero, Vector2.Zero, tiles, staticColliders, new List<DynamicObject>(),
-            new List<CinematicObject>() {new Spikes(new Vector2(5*16,14*16), 3), new Spikes(new Vector2(6*16,14*16), 3)},
+            new List<CinematicObject>() {new Spikes(new Vector2(5*16,14*16), 3), new Spikes(new Vector2(6*16,14*16), 3),
+            new Spikes(new Vector2(5*16,13*16), 1), new Spikes(new Vector2(6*16,13*16), 1)},
                 new Background(game.resourceAccessor.LoadContent<Texture2D>("background1")));
         }
 
