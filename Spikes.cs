@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
-    public class Spikes : CinematicObject
+    class Spikes : CinematicObject
     {
         public override Vector2 Position { get; }
         // 0 = face left, 1 = face upwards, etc

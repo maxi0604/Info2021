@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 namespace Info2021
 {
-    public static class FirstLevel
+    static class FirstLevel
     {
         public static Level GetLevel(Game1 game) {
             List<Tile> tiles = new List<Tile>();

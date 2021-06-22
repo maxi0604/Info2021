@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 namespace Info2021
 {
-    public abstract class DynamicObject : IHasPosition, Interfaces.IDrawable, IUpdateable
+    abstract class DynamicObject : IHasPosition, Interfaces.IDrawable, IUpdateable
     {
         public abstract Vector2 Position { get; }
         public abstract Texture2D GetTexture(ResourceAccessor resourceAccessor);
