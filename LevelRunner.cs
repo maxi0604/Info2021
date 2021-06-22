@@ -17,6 +17,8 @@ namespace Info2021
         List<Tile> tiles;
         List<StaticCollider> staticColliders;
         List<DynamicObject> dynamicObjects;
+
+        List<CinematicObject> cinematicObjects;
         Background background;
         public Vector2 CamPos { get => camPos; set => camPos = value; }
 
@@ -36,6 +38,7 @@ namespace Info2021
             camPos = level.camPos;
             dynamicObjects = level.dynamicObjects;
             staticColliders = level.staticColliders;
+            cinematicObjects = level.cinematicObjects;
             background = level.background;
             tiles = level.tiles;
             player = new Player(level.spawnPosition);
@@ -71,6 +74,11 @@ namespace Info2021
             foreach(StaticCollider staticCollider in staticColliders) {
                 player.Collider.CollideWith(staticCollider);
             }
+
+            foreach(CinematicObject cinematicObject in cinematicObjects) {
+                cinematicObject.Update(gameTime);
+                cinematicObject.Collider.CollideWith(player);
+            }
              
         }
 
@@ -85,7 +93,15 @@ namespace Info2021
             foreach(DynamicObject dynamicObject in dynamicObjects) {
                 dynamicObject.Draw(dynamicRenderer, resourceAccessor, camPos);
             }
+            foreach(CinematicObject cinematicObject in cinematicObjects) {
+                cinematicObject.Draw(dynamicRenderer, resourceAccessor, camPos);
+            }
             spriteBatch.End();
         }
+        public bool IsAlive() {
+            return player.IsAlive();
+        }
     }
+
+    
 }

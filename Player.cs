@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 namespace Info2021 {
-    class Player : DynamicObject, IUpdateable, IAttachedColliderParent, Interfaces.IDrawable {
+    public class Player : DynamicObject, IUpdateable, IAttachedColliderParent, Interfaces.IDrawable {
         // Position data
         public VelPos VelPos { get; set; }
         public override Vector2 Position => VelPos.P;
@@ -23,6 +23,7 @@ namespace Info2021 {
         // Gravity
         const float gravity = 9.81f;
 
+        bool isAlive = true;
 
         public Player(Vector2 position) {
             Collider = new AttachedCollider(this, hitbox);
@@ -136,7 +137,17 @@ namespace Info2021 {
 
         public override Texture2D GetTexture(ResourceAccessor resourceAccessor)
         {
+            // TODO: Animation depending on state
             return resourceAccessor.LoadContent<Texture2D>("Character");
+        }
+
+        public bool IsAlive() {
+            // might need change for special cases
+            return isAlive;
+        }
+
+        public void Die() {
+            isAlive = false;
         }
     }
 }
