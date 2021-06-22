@@ -44,11 +44,15 @@ namespace Info2021
 
         protected override void Update(GameTime gameTime)
         {
-            if (InputManager.IsActive(InputEvent.Escape))
-                Exit();
+
 
             switch (gameState)
             {
+                case GameState.Menu:
+                    //TODO: menu
+                    if(InputManager.IsActive(InputEvent.Jump))
+                        gameState = GameState.Init;
+                    break;
                 case GameState.Init:
                     Level firstLevel = FirstLevel.GetLevel(this);
                     levelRunner.Initialize(firstLevel);
@@ -56,6 +60,14 @@ namespace Info2021
                     break;
                 case GameState.InLevel:
                     levelRunner.Update((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    if(InputManager.IsActive(InputEvent.Escape))
+                        gameState = GameState.Menu;
+                    if(!levelRunner.IsAlive())
+                        gameState = GameState.Dead;
+                    break;
+                case GameState.Dead:
+                    System.Threading.Thread.Sleep(500);
+                    gameState = GameState.Menu;
                     break;
                 default:
                     break;
@@ -70,9 +82,10 @@ namespace Info2021
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.White);
             switch (gameState)
             {
+                case GameState.Menu:
+                    break;
                 case GameState.Init:
                     break;
                 case GameState.InLevel:

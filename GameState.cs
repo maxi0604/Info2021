@@ -2,6 +2,6 @@ namespace Info2021
 {
     public enum GameState
     {
-        Init, InLevel
+        Menu, Init, InLevel, Dead
     }
 }
