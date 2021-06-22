@@ -45,20 +45,25 @@ namespace Info2021
             Vector2 oldVel = Parent.VelPos.V;
             Vector2 accelVel;
 
+            // Set in which direction we need to go.
             if (resolveAlongX) {
                 accelVel = new Vector2(-oldVel.X, 0);
-                Parent.VelPos = Parent.VelPos.Translate(new Vector2(alongX, 0));
             }
             else {
                 accelVel = new Vector2(0, -oldVel.Y);
-                Parent.VelPos = Parent.VelPos.Translate(new Vector2(0, alongY));
-
             }
             
-            // Only change the velocity if we aren't moving outside of the object already anyway
+            // Only resolve the collision if we aren't moving outside of the object already anyway
             // i. e. the resolution velocity doesn't point in the same direction as the current velocity.
-            if (Vector2.Dot(oldVel, accelVel) < 0)
+            if (Vector2.Dot(oldVel, accelVel) < 0) {
                 Parent.VelPos = Parent.VelPos.Accelerate(accelVel);
+
+                // Push this collider out of the other one.
+                if (resolveAlongX)
+                    Parent.VelPos = Parent.VelPos.Translate(new Vector2(alongX, 0));
+                else
+                    Parent.VelPos = Parent.VelPos.Translate(new Vector2(0, alongY));
+            }
 
             Parent.OnCollision(alongX, alongY, accelVel);
 
