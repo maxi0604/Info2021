@@ -18,19 +18,19 @@ namespace Info2021
             switch(rotation) {
                 case 0:
                     topLeft = position + Vector2.UnitX * 12;
-                    diag = new Vector2(4, 16);
+                    diag = new Vector2(2, 16);
                     break;
                 case 1:
                     topLeft = position;
-                    diag = new Vector2(16, 4);
+                    diag = new Vector2(16, 2);
                     break;
                 case 2:
                     topLeft = position;
-                    diag = new Vector2(4, 16);
+                    diag = new Vector2(2, 16);
                     break;
                 case 3:
                     topLeft = position + Vector2.UnitY * 12;
-                    diag = new Vector2(16,4);
+                    diag = new Vector2(16,2);
                     break;
                 default:
                     throw new System.InvalidOperationException();

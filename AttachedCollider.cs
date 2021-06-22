@@ -47,6 +47,13 @@ namespace Info2021
             // leading to an unjustified loss of vertical momentum.
             bool resolveAlongX = Abs(alongX + oldVel.X / 60) < Abs(alongY + oldVel.Y / 60);
             Vector2 accelVel;
+            // Set in which direction we need to go.
+            if (resolveAlongX) {
+                accelVel = new Vector2(-oldVel.X, 0);
+            }
+            else {
+                accelVel = new Vector2(0, -oldVel.Y);
+            }
 
             // Set in which direction we need to go.
             if (resolveAlongX) {
