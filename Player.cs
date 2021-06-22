@@ -74,6 +74,7 @@ namespace Info2021 {
             }
             if(!InputManager.IsActive(InputEvent.Jump)) {
                 timeSinceNoJumpPress = 0;
+                timeSinceInAirJumpPress = 100;
             }
             if((timeSinceNoJumpPress < 0.15 && OnGround() && oldTimeSinceGround >= timeSinceNoJumpPress && (timeSinceInAirJumpPress < 0.15 || InputManager.IsActive(InputEvent.Jump))) ||
             (InputManager.IsActive(InputEvent.Jump) && jumping)) {
