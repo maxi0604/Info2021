@@ -40,7 +40,7 @@ namespace Info2021
 
         public override Texture2D GetTexture(ResourceAccessor resourceAccessor)
         {
-            return resourceAccessor.LoadContent<Texture2D>("Character");//("spikes" + rotation.ToString());
+            return resourceAccessor.LoadContent<Texture2D>("spikes" + rotation.ToString());
         }
 
         public override void OnCollision(Player player)
