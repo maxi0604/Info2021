@@ -39,8 +39,6 @@ namespace Info2021
 
             // We resolve along the shortest axis.
             bool resolveAlongX = Abs(alongX) < Abs(alongY);
-            bool aboveOther = this.Center.Y < other.Center.Y;
-            bool leftOfOther = this.Center.Y < other.Center.Y;
 
             Vector2 oldVel = Parent.VelPos.V;
             Vector2 accelVel;
