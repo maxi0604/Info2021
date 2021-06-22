@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 namespace Info2021
 {
-    struct Level
+    class Level
     {
         public Level(Vector2 spawnPosition, Vector2 camPos, List<Tile> tiles, List<StaticCollider> staticColliders,
                 List<DynamicObject> dynamicObjects, List<CinematicObject> cinematicObjects, Background background)
