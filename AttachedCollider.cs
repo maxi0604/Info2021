@@ -4,8 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Info2021
 {
-    class AttachedCollider {
-        const float EPSILON = 1e-2f;
+    public class AttachedCollider {
         public IAttachedColliderParent Parent { get; }
         public Vector2 TopLeft { get => Parent.VelPos.P + offset; }
         Vector2 diagonal;
@@ -47,7 +46,6 @@ namespace Info2021
             // This will make the program falsely attempt to resolve the collision in the y direction,
             // leading to an unjustified loss of vertical momentum.
             bool resolveAlongX = Abs(alongX + oldVel.X / 60) < Abs(alongY + oldVel.Y / 60);
-            bool cornerCollision = Abs(alongX - alongY) < EPSILON;
             Vector2 accelVel;
 
             // Set in which direction we need to go.
@@ -64,12 +62,10 @@ namespace Info2021
                 Parent.VelPos = Parent.VelPos.Accelerate(accelVel);
 
                 // Push this collider out of the other one.
-                if (!cornerCollision) {
-                    if (resolveAlongX)
-                        Parent.VelPos = Parent.VelPos.Translate(new Vector2(alongX, 0));
-                    else
-                        Parent.VelPos = Parent.VelPos.Translate(new Vector2(0, alongY));
-                }
+                if (resolveAlongX)
+                    Parent.VelPos = Parent.VelPos.Translate(new Vector2(alongX, 0));
+                else
+                    Parent.VelPos = Parent.VelPos.Translate(new Vector2(0, alongY));
             }
 
             Parent.OnCollision(alongX, alongY, accelVel);
