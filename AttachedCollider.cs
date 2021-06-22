@@ -48,6 +48,14 @@ namespace Info2021
             bool resolveAlongX = Abs(alongX + oldVel.X / 60) < Abs(alongY + oldVel.Y / 60);
             Vector2 accelVel;
 
+            // Set in which direction we need to go.
+            if (resolveAlongX) {
+                accelVel = new Vector2(-oldVel.X, 0);
+            }
+            else {
+                accelVel = new Vector2(0, -oldVel.Y);
+            }
+            
             // Only resolve the collision if we aren't moving outside of the object already anyway
             // i. e. if our velocity in the direction we are moving in isn't already pointing out of the other object
             if (Vector2.Dot(oldVel, accelVel) < 0) {
