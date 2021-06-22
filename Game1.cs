@@ -18,7 +18,6 @@ namespace Info2021
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            resourceAccessor = new ResourceAccessor(this);
         }
 
        
@@ -30,6 +29,11 @@ namespace Info2021
             graphics.ApplyChanges();
             // TODO: Remove test.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Texture2D spriteSheet = Content.Load<Texture2D>("spritesheet");
+            int xc, yc;
+            Texture2D[] textures = TextureHelper.Split(spriteSheet, 16, 16, out xc, out yc);
+            
+            resourceAccessor = new ResourceAccessor(this, textures, xc, yc);
             levelRunner = new LevelRunner(resourceAccessor, spriteBatch);
             base.Initialize();
 
