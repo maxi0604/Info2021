@@ -6,7 +6,6 @@ namespace Info2021
     public class StaticCollider {
         public StaticCollider(Vector2 topLeft, Vector2 bottomRight)
         {
-            Console.WriteLine("we do a little trolling");
             if (topLeft.X > bottomRight.X || topLeft.Y > bottomRight.Y)
                 throw new ArgumentOutOfRangeException("Top left vector has to actually be to the left and above bottom right vector.");
 
