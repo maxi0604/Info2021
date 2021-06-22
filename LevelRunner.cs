@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 
 namespace Info2021
@@ -82,6 +83,8 @@ namespace Info2021
              
         }
 
+        
+
         public void Draw(float dt) {
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
             
@@ -100,6 +103,10 @@ namespace Info2021
         }
         public bool IsAlive() {
             return player.IsAlive();
+        }
+        public bool HasReachedGoal()
+        {
+            return player.HasBeatLevel();
         }
     }
 

@@ -24,6 +24,7 @@ namespace Info2021 {
         const float gravity = 9.81f;
 
         bool isAlive = true;
+        bool hasBeatLevel = false;
 
         public Player(Vector2 position) {
             Collider = new AttachedCollider(this, hitbox);
@@ -150,5 +151,14 @@ namespace Info2021 {
         public void Die() {
             isAlive = false;
         }
+
+        public bool HasBeatLevel() {
+            return hasBeatLevel;
+        }
+
+        public void BeatLevel() {
+            hasBeatLevel = true;
+        }
+
     }
 }

@@ -68,18 +68,20 @@ namespace Info2021
                         gameState = GameState.Menu;
                     if(!levelRunner.IsAlive())
                         gameState = GameState.Dead;
+                    if(levelRunner.HasReachedGoal())
+                        gameState = GameState.BeatLevel;
                     break;
                 case GameState.Dead:
                     System.Threading.Thread.Sleep(500);
                     gameState = GameState.Menu;
                     break;
+                case GameState.BeatLevel:
+                    System.Threading.Thread.Sleep(500);
+                    gameState = GameState.Menu;
+                    break;
                 default:
                     break;
-            }
-            
-            
-             
-            
+            }        
 
             base.Update(gameTime);
         }
@@ -94,6 +96,8 @@ namespace Info2021
                     break;
                 case GameState.InLevel:
                     levelRunner.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    break;
+                case GameState.BeatLevel:
                     break;
                 default:
                     break;
