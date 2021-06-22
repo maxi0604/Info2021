@@ -43,30 +43,26 @@ namespace Info2021
             bool leftOfOther = this.Center.Y < other.Center.Y;
 
             Vector2 oldVel = Parent.VelPos.V;
-            Vector2 accelVel = Vector2.Zero;
+            Vector2 accelVel;
 
             if (resolveAlongX) {
-                // If we are already moving in the correct direction, don't negate current velocity...
-                if (leftOfOther && oldVel.X > 0 || !leftOfOther && oldVel.X < 0)
-                    // Otherwise do it...
-                    accelVel = new Vector2(-oldVel.X, 0);
+                accelVel = new Vector2(-oldVel.X, 0);
+                Parent.VelPos = Parent.VelPos.Translate(new Vector2(alongX, 0));
             }
             else {
-                // Same as above.
-                if (aboveOther && oldVel.Y > 0 || !aboveOther && oldVel.Y < 0)
-                    accelVel = new Vector2(0, -oldVel.Y);
+                accelVel = new Vector2(0, -oldVel.Y);
+                Parent.VelPos = Parent.VelPos.Translate(new Vector2(0, alongY));
+
             }
             
+            // Only change the velocity if we aren't moving outside of the object already anyway
+            // i. e. the resolution velocity doesn't point in the same direction as the current velocity.
+            if (Vector2.Dot(oldVel, accelVel) < 0)
+                Parent.VelPos = Parent.VelPos.Accelerate(accelVel);
+
             Parent.OnCollision(alongX, alongY, accelVel);
-            Parent.VelPos = Parent.VelPos.Accelerate(accelVel);
-            //Parent.VelPos = Parent.VelPos.Translate(accelVel);
-            if (BottomRight.X > other.TopLeft.X && TopLeft.X < other.BottomRight.X
-                && BottomRight.Y > other.TopLeft.Y && TopLeft.Y < other.BottomRight.Y)
-            {
-                // A collision took place and was resolved.
-                return true;
-            }
-            return false;
+
+            return true;
         }
     }
 }
