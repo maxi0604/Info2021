@@ -4,10 +4,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 namespace Info2021 {
-    class Player : DynamicObject, IUpdateable, IHasPosition, IAttachedColliderParent, Interfaces.IDrawable {
+    class Player : DynamicObject, IUpdateable, IAttachedColliderParent, Interfaces.IDrawable {
+        // Position data
         public VelPos VelPos { get; set; }
-        public static readonly Vector2 Box = new Vector2(32, 32);
         public override Vector2 Position => VelPos.P;
+        // Collision
+        readonly Vector2 hitbox = new Vector2(14, 16);
+        public AttachedCollider Collider { get; }
+        // Jump-related data
         private Vector2 OldVelocity = new Vector2(0, 0);
         private bool fastFalling = false;
         private float timeSinceGround = 0;
@@ -16,12 +20,12 @@ namespace Info2021 {
         private float timeSinceInAirJumpPress = 1E10f;
         private float timeSinceNoJumpPress = 0;
         private bool jumping = false;
+        // Gravity
         const float gravity = 9.81f;
-        public AttachedCollider Collider { get; }
 
 
         public Player(Vector2 position) {
-            Collider = new AttachedCollider(this, new Vector2(10f, 10f));
+            Collider = new AttachedCollider(this, hitbox);
             VelPos = new VelPos(Vector2.Zero, position);
         }
         public override void Update(float dt) {
@@ -106,12 +110,12 @@ namespace Info2021 {
         public void OnGroundCollision() {
             oldTimeSinceGround = timeSinceGround;
             timeSinceGround = 0;
-            
         }
 
         void IAttachedColliderParent.OnCollision(float alongX, float alongY, Vector2 accelVel)
         {
-            if(accelVel.Y < 0) OnGroundCollision();
+            if(accelVel.Y < 0) 
+                OnGroundCollision();
         }
         public void Jump() {
             
