@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 
 namespace Info2021 {
-    readonly struct VelPos {
+    public readonly struct VelPos {
         public Vector2 V { get; }
         public Vector2 P { get; }
         public VelPos(Vector2 v, Vector2 p) {

@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 namespace Info2021
 {
-    interface IAttachedColliderParent {
+    public interface IAttachedColliderParent {
         VelPos VelPos { get; set; }
         AttachedCollider Collider { get; }
 
