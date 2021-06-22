@@ -61,8 +61,8 @@ namespace Info2021
                 
                 camPos.Y -= 360;
             }
-            player.VelPos = player.VelPos.ApplyVelocity(gameTime);
-               for (int i = 0; i < dynamicObjects.Count; i++) {
+            
+            for (int i = 0; i < dynamicObjects.Count; i++) {
                 // Do normal physics...
                 dynamicObjects[i].Update(gameTime);
             }
