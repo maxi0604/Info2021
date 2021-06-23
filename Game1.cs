@@ -12,6 +12,7 @@ namespace Info2021
         public ResourceAccessor resourceAccessor;
         
         private Menu menu;
+        private PauseMenu pauseMenu;
         private GameState gameState = GameState.Menu;
         private LevelRunner levelRunner;
         public Game1()
@@ -37,6 +38,7 @@ namespace Info2021
             resourceAccessor = new ResourceAccessor(this, textures, xc, yc);
             levelRunner = new LevelRunner(resourceAccessor, spriteBatch);
             menu = new Menu(spriteBatch, resourceAccessor);
+            pauseMenu = new PauseMenu(spriteBatch, resourceAccessor);
             base.Initialize();
 
         }
@@ -57,9 +59,9 @@ namespace Info2021
                 case GameState.Menu:
                     //TODO: menu
                     menu.Update();
-                    MenuItem? item = menu.HasBeenSelected();
-                    if(item.HasValue) {
-                        switch(item.Value) {
+                    MenuItem item;
+                    if(menu.HasBeenSelected(out item)) {
+                        switch(item) {
                             case MenuItem.LevelSelect:
                                 gameState = GameState.Init;
                                 break;
@@ -75,6 +77,27 @@ namespace Info2021
                             }
                     }
                     break;
+                case GameState.Pause:
+                    //TODO: menu
+                    pauseMenu.Update();
+                    PauseMenuItem pauseItem;
+                    if(pauseMenu.HasBeenSelected(out pauseItem)) {
+                        switch(pauseItem) {
+                            case PauseMenuItem.Unpause:
+                                gameState = GameState.InLevel;
+                                break;
+                            case PauseMenuItem.Retry:
+                                gameState = GameState.Init;
+                                break;
+                            case PauseMenuItem.Settings:
+                                //TODO
+                                break;
+                            case PauseMenuItem.MainMenu:
+                                gameState = GameState.Menu;
+                                break;
+                            }
+                    }
+                    break;
                 case GameState.Init:
                     Level firstLevel = FirstLevel.GetLevel(this);
                     levelRunner.Initialize(firstLevel);
@@ -83,14 +106,14 @@ namespace Info2021
                 case GameState.InLevel:
                     levelRunner.Update((float) gameTime.ElapsedGameTime.TotalSeconds);
                     if(InputManager.IsActive(InputEvent.Escape))
-                        gameState = GameState.Menu;
+                        gameState = GameState.Pause;
                     if(!levelRunner.IsAlive())
                         gameState = GameState.Dead;
                     if(levelRunner.HasReachedGoal())
                         gameState = GameState.BeatLevel;
                     break;
                 case GameState.Dead:
-                    gameState = GameState.Menu;
+                    gameState = GameState.Init;
                     break;
                 case GameState.BeatLevel:
                     gameState = GameState.Menu;
@@ -116,6 +139,9 @@ namespace Info2021
                     levelRunner.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 case GameState.BeatLevel:
+                    break;
+                case GameState.Pause:
+                    pauseMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 default:
                     break;
