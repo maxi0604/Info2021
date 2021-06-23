@@ -96,6 +96,7 @@ namespace Info2021 {
             VelPos = new VelPos(new Vector2(0, VelPos.V.Y + 50), VelPos.P);
         }
         public void StopFalling() {
+            if(!fastFalling) return;
             fastFalling = false;
             VelPos = new VelPos(OldVelocity, VelPos.P);
             if(OnGround())
