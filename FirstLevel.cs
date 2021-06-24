@@ -24,14 +24,16 @@ namespace Info2021
                 staticColliders.Add(staticCollider);
             }
             Tile tile1;
+            MovingPlatform platform = new MovingPlatform(new Vector2(22*16, 12*16), new Vector2(0,-4*16), 3);
             StaticCollider staticCollider1;
             (tile1, staticCollider1) = GroundHelper(new TileInfo(game, "Character"), 14, 11);
             staticColliders.Add(staticCollider1);
             tiles.Add(tile1);
             staticColliders.Add(new StaticCollider(new Vector2(0, 15*16), new Vector2(450, 16*16)));
             staticColliders.Add(new StaticCollider(new Vector2(30*16, 0), new Vector2(31*16, 450)));
+            staticColliders.Add(platform.Collider);
 
-            return new Level(Vector2.Zero, Vector2.Zero, tiles, staticColliders, new List<DynamicObject>(),
+            return new Level(Vector2.Zero, Vector2.Zero, tiles, staticColliders, new List<DynamicObject>() {platform},
             new List<CinematicObject>() {
                 new Spikes(new Vector2(5*16,14*16), 3),
                 new Spikes(new Vector2(6*16,14*16), 3),
@@ -39,7 +41,8 @@ namespace Info2021
                 new Spikes(new Vector2(6*16,13*16), 1),
                 new Goal(new Vector2(9*16, 10*16)),
                 new Spring(new Vector2(20*16, 12*16), 0),
-                new Spring(new Vector2(19*16, 14*16), 3)
+                new Spring(new Vector2(19*16, 14*16), 3),
+                
                 },
                 new Background(game.resourceAccessor.LoadContent<Texture2D>("background1")));
         }

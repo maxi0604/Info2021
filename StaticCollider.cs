@@ -13,8 +13,8 @@ namespace Info2021
             BottomRight = bottomRight;
         }
 
-        public Vector2 TopLeft { get; }
-        public Vector2 BottomRight { get; }
+        public Vector2 TopLeft { get; set; }
+        public Vector2 BottomRight { get; set; }
         public Vector2 Center { get => (TopLeft + BottomRight) / 2; }
     }
 }
