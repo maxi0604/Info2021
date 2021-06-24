@@ -12,6 +12,7 @@ namespace Info2021
         CinematicCollider cinematicCollider;
         CinematicCollider ICinematicColliderParent.CCollider => cinematicCollider;
 
+        Vector2 translationOnNextFrame = Vector2.Zero;
 
         public float MaxTime;
         private float movingTime;
@@ -34,10 +35,13 @@ namespace Info2021
 
         public override void Update(float dt, Player player)
         {
+            player.VelPos = player.VelPos.Translate(translationOnNextFrame);
+            translationOnNextFrame = Vector2.Zero;
+
             if(movingTime > MaxTime)
             {
                 movingTime = 0;
-                VelPos = new VelPos(-VelPos.V, VelPos.P);
+                VelPos = VelPos.WithVelocity(-VelPos.V);
             }
             VelPos = VelPos.ApplyVelocity(dt);
             Collider.TopLeft = Position;
@@ -50,7 +54,8 @@ namespace Info2021
         public override void OnCollision(Player player)
         {
             // move player with the platform
-            player.VelPos = player.VelPos.Translate(VelPos.V/60);
+            translationOnNextFrame = VelPos.V/60;
+            
         }
     }
 }

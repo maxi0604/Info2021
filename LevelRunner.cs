@@ -80,9 +80,6 @@ namespace Info2021
             foreach(StaticCollider staticCollider in staticColliders) {
                 player.Collider.CollideWith(staticCollider);
             }
-
-            
-             
         }
 
         

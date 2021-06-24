@@ -15,5 +15,7 @@ namespace Info2021 {
         public VelPos Translate(Vector2 tr, float factor = 1) => new VelPos(V, P + factor * tr);
 
         public VelPos Accelerate(Vector2 a, float factor = 1) => new VelPos(V + factor * a, P);
+        public VelPos WithPosition(Vector2 p) => new VelPos(V, p);
+        public VelPos WithVelocity(Vector2 v) => new VelPos(v, P);
     }
 }

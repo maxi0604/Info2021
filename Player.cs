@@ -100,15 +100,15 @@ namespace Info2021 {
             fastFalling = true;
             // save pre-fall velocity
             OldVelocity = VelPos.V;
-            VelPos = new VelPos(new Vector2(0, VelPos.V.Y + 50), VelPos.P); 
+            VelPos = VelPos.WithVelocity(new Vector2(0, VelPos.V.Y + 50));
         }
         public void StopFalling() {
             if(!fastFalling) return;
             fastFalling = false;
             // restore pre-fall velocity for some interesting gameplay effects
-            VelPos = new VelPos(OldVelocity, VelPos.P);
+            VelPos = VelPos.WithVelocity(OldVelocity);
             if(OnGround())
-                VelPos = new VelPos(new Vector2(0, OldVelocity.Y), VelPos.P);
+                VelPos = VelPos.WithVelocity(new Vector2(0, OldVelocity.Y));
         }
         public bool OnGround() {
             return timeSinceGround < (1f/50f);
