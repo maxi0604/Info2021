@@ -1,7 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.Xna.Framework;
 namespace Info2021
 {
+    [Serializable]
     class Level
     {
         public Level(Vector2 spawnPosition, Vector2 camPos, List<Tile> tiles, List<StaticCollider> staticColliders,
@@ -16,13 +21,13 @@ namespace Info2021
             this.background = background;
         }
 
-        public Vector2 spawnPosition { get; }
-        public Vector2 camPos { get; }
+        public Vector2 spawnPosition { get; set; }
+        public Vector2 camPos { get; set; }
         public List<Tile> tiles { get; }
         public List<StaticCollider> staticColliders { get; }
         public List<DynamicObject> dynamicObjects { get; }
         public List<CinematicObject> cinematicObjects { get; }
-        public Background background { get; }
+        public Background background { get; set; }
 
         
 
