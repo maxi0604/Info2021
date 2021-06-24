@@ -25,12 +25,12 @@ namespace Info2021
        
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // Fixed resolution to avoid scaling
             graphics.PreferredBackBufferHeight = 720;
             graphics.PreferredBackBufferWidth = 1280;
             graphics.ApplyChanges();
-            // TODO: Remove test.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            // Preloading sprite sheet for performance reasons
             Texture2D spriteSheet = Content.Load<Texture2D>("spritesheet");
             int xc, yc;
             Texture2D[] textures = TextureHelper.Split(spriteSheet, 16, 16, out xc, out yc);
@@ -41,13 +41,6 @@ namespace Info2021
             pauseMenu = new PauseMenu(spriteBatch, resourceAccessor);
             base.Initialize();
 
-        }
-
-        protected override void LoadContent()
-        {
-            
-            
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)

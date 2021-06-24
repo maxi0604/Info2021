@@ -49,6 +49,7 @@ namespace Info2021
         public void Update(float gameTime) {
             if(!initialized) throw new System.InvalidOperationException();
 
+            // change screen
             if(player.Position.X - camPos.X > 640) {
                 
                 camPos.X += 640;

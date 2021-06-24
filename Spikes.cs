@@ -15,6 +15,8 @@ namespace Info2021
             this.rotation = rotation;
             Vector2 topLeft;
             Vector2 diag;
+
+            // spikes are always "inside" the tile
             switch(rotation) {
                 case 0:
                     topLeft = position + Vector2.UnitX * 12;

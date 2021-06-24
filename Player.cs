@@ -22,7 +22,7 @@ namespace Info2021 {
         private bool jumping = false;
         // Gravity
         const float gravity = 9.81f;
-
+        // Game state
         bool isAlive = true;
         bool hasBeatLevel = false;
 
@@ -36,6 +36,8 @@ namespace Info2021 {
             timeSinceJump += dt;
             timeSinceInAirJumpPress += dt;
             timeSinceNoJumpPress += dt;
+
+            // gravity is higher when fast falling
             VelPos = VelPos.Accelerate(new Vector2(0, (fastFalling ? 3 : 1) * gravity));
 
             // Movement logic
@@ -77,30 +79,36 @@ namespace Info2021 {
                 timeSinceNoJumpPress = 0;
                 timeSinceInAirJumpPress = 100;
             }
-            if((timeSinceNoJumpPress < 0.15 && OnGround() && oldTimeSinceGround >= timeSinceNoJumpPress && (timeSinceInAirJumpPress < 0.15 || InputManager.IsActive(InputEvent.Jump))) ||
-            (InputManager.IsActive(InputEvent.Jump) && jumping)) {
+            if((timeSinceNoJumpPress < 0.15 && // jump was recently pressed
+                OnGround() && // the player is currently on ground
+                oldTimeSinceGround >= timeSinceNoJumpPress && // they have once let go of jump while in air
+                (timeSinceInAirJumpPress < 0.15 || InputManager.IsActive(InputEvent.Jump))) || // the jump press was somewhat recent
+            (InputManager.IsActive(InputEvent.Jump) && jumping)) { // alternatively, an existing jump gets extended
                 Jump();
             }
             // Finalize physics by actually changing the position
             VelPos = VelPos.ApplyVelocity(1/60f);
-                        
+            
+            // jumps have limited length
             if(timeSinceGround > 0.1f && timeSinceJump > 0.14f) {
                 jumping = false;
             }
             
         }
         public void StartFalling() {
-            if(OnGround()) return;
+            if(OnGround()) return; // fast falling on ground might lead to collision bugs
             fastFalling = true;
+            // save pre-fall velocity
             OldVelocity = VelPos.V;
-            VelPos = new VelPos(new Vector2(0, VelPos.V.Y + 50), VelPos.P);
+            VelPos = new VelPos(new Vector2(0, VelPos.V.Y + 50), VelPos.P); 
         }
         public void StopFalling() {
             if(!fastFalling) return;
             fastFalling = false;
+            // restore pre-fall velocity for some interesting gameplay effects
             VelPos = new VelPos(OldVelocity, VelPos.P);
             if(OnGround())
-            VelPos = new VelPos(new Vector2(0, OldVelocity.Y), VelPos.P);
+                VelPos = new VelPos(new Vector2(0, OldVelocity.Y), VelPos.P);
         }
         public bool OnGround() {
             return timeSinceGround < (1f/50f);
@@ -123,13 +131,13 @@ namespace Info2021 {
         public void Jump() {
             
             if(!jumping) {
-                VelPos = VelPos.Accelerate(new Vector2(0, -50));
+                VelPos = VelPos.Accelerate(new Vector2(0, -50)); // initial boost in velocity
             }
             jumping = true;
             timeSinceJump = timeSinceGround;
-            float accel = - (1 - timeSinceJump * 7) * 50;
+            float accel = - (1 - timeSinceJump * 7) * 50; // acceleration lowers the longer one jumps
             if(accel > 0) {
-                jumping = false;
+                jumping = false; // jump ends when falling
                 return;
             }
             VelPos = VelPos.Accelerate(new Vector2(0, accel - gravity));

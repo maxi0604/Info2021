@@ -57,17 +57,22 @@ namespace Info2021
         {
             float newVel = 0;
             if(player.OnGround())
+                // increase position by a bit to avoid ground issues
                 player.VelPos = new VelPos(player.VelPos.V, player.VelPos.P + direction * 3);
             
+            // don't bounce two times at once
             if(hasTouchedLastFrame) return;
+
+
             if(rotation % 2 == 0)
+                // if you're moving against the spring, reverse that velocity, otherwise gain some
                 if(Math.Sign(player.VelPos.V.X) == -Math.Sign(direction.X) && !player.OnGround())
                     newVel = - player.VelPos.V.X;
-                player.VelPos = new VelPos(new Vector2(direction.X * 200 + newVel, player.VelPos.V.Y), player.VelPos.P);
+                player.VelPos = new VelPos(new Vector2(MathF.MaxMagnitude(direction.X * 400, newVel), player.VelPos.V.Y), player.VelPos.P);
             if(rotation % 2 == 1) {
                 if(Math.Sign(player.VelPos.V.Y) == -Math.Sign(direction.Y) && !player.OnGround())
                     newVel = - player.VelPos.V.Y;
-                player.VelPos = new VelPos(new Vector2(player.VelPos.V.X, direction.Y * 200 + newVel), player.VelPos.P);
+                player.VelPos = new VelPos(new Vector2(player.VelPos.V.X, MathF.MaxMagnitude(direction.Y * 400, newVel)), player.VelPos.P);
             }
             
             hasTouchedThisFrame = true;

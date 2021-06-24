@@ -49,8 +49,8 @@ namespace Info2021
 
         public override void OnCollision(Player player)
         {
-            //if(player.Position.Y < Position.Y)
-                player.VelPos = player.VelPos.Translate(VelPos.V/60);
+            // move player with the platform
+            player.VelPos = player.VelPos.Translate(VelPos.V/60);
         }
     }
 }

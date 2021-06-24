@@ -27,8 +27,5 @@ namespace Info2021
                 Parent.OnCollision(player);
 
         }
-        // https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
-        // https://www.metanetsoftware.com/2016/n-tutorial-a-collision-detection-and-response#section1
-        // https://stackoverflow.com/questions/46172953/aabb-collision-resolution-slipping-sides
     }
 }
