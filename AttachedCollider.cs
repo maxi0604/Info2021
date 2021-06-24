@@ -58,6 +58,7 @@ namespace Info2021
 
             // Only resolve the collision if we aren't moving outside of the object already anyway
             // i. e. if our velocity in the direction we are moving in isn't already pointing out of the other object
+            // and we are moving fast enough to actually resolve the collision.
             if (Vector2.Dot(oldVel, accelVel) < (resolveAlongX ? MathF.Abs(alongX) : MathF.Abs(alongY))) {
                 Parent.VelPos = Parent.VelPos.Accelerate(accelVel);
 
