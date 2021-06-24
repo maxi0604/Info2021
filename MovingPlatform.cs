@@ -21,7 +21,7 @@ namespace Info2021
         {
             VelPos = new VelPos(velocity, position);
             Collider = new StaticCollider(VelPos.P, VelPos.P + Vector2.One * 16);
-            cinematicCollider = new CinematicCollider(this, position - Vector2.One * 2, Vector2.One * 20);
+            cinematicCollider = new CinematicCollider(this, VelPos.P - Vector2.UnitY * 2, new Vector2(16, 8));
             
             MaxTime = maxTime;
             movingTime = 0;
@@ -29,7 +29,7 @@ namespace Info2021
 
         public override Texture2D GetTexture(ResourceAccessor resourceAccessor)
         {
-            return resourceAccessor.GetSprite(0,12);
+            return resourceAccessor.GetSprite(0,13);
         }
 
         public override void Update(float dt, Player player)
@@ -42,7 +42,7 @@ namespace Info2021
             VelPos = VelPos.ApplyVelocity(dt);
             Collider.TopLeft = Position;
             Collider.BottomRight = Position + Vector2.One * 16;
-            cinematicCollider.TopLeft = Position;
+            cinematicCollider.TopLeft = VelPos.P - Vector2.UnitY * 2;
             CCollider = cinematicCollider;
             movingTime += dt;
         }
@@ -50,7 +50,7 @@ namespace Info2021
         public override void OnCollision(Player player)
         {
             //if(player.Position.Y < Position.Y)
-                player.VelPos = player.VelPos.Accelerate(VelPos.V * 10);
+                player.VelPos = player.VelPos.Translate(VelPos.V/60);
         }
     }
 }
