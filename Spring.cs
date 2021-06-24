@@ -62,12 +62,12 @@ namespace Info2021
             if(hasTouchedLastFrame) return;
             if(rotation % 2 == 0)
                 if(Math.Sign(player.VelPos.V.X) == -Math.Sign(direction.X) && !player.OnGround())
-                    newVel = - player.VelPos.V.X * 1.3f;
-                player.VelPos = new VelPos(new Vector2(direction.X * 60 + newVel, player.VelPos.V.Y), player.VelPos.P);
+                    newVel = - player.VelPos.V.X;
+                player.VelPos = new VelPos(new Vector2(direction.X * 200 + newVel, player.VelPos.V.Y), player.VelPos.P);
             if(rotation % 2 == 1) {
                 if(Math.Sign(player.VelPos.V.Y) == -Math.Sign(direction.Y) && !player.OnGround())
-                    newVel = - player.VelPos.V.Y * 1.3f;
-                player.VelPos = new VelPos(new Vector2(player.VelPos.V.X, direction.Y * 60 + newVel), player.VelPos.P);
+                    newVel = - player.VelPos.V.Y;
+                player.VelPos = new VelPos(new Vector2(player.VelPos.V.X, direction.Y * 200 + newVel), player.VelPos.P);
             }
             
             hasTouchedThisFrame = true;
