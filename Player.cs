@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 namespace Info2021 {
-     class Player : DynamicObject, IUpdateable, IAttachedColliderParent, Interfaces.IDrawable {
+     class Player : DynamicObject, IAttachedColliderParent, Interfaces.IDrawable {
         // Position data
         public VelPos VelPos { get; set; }
         public override Vector2 Position => VelPos.P;
@@ -30,7 +30,7 @@ namespace Info2021 {
             Collider = new AttachedCollider(this, hitbox);
             VelPos = new VelPos(Vector2.Zero, position);
         }
-        public override void Update(float dt) {
+        public override void Update(float dt, Player player) {
             // Gravity
             timeSinceGround += dt;
             timeSinceJump += dt;

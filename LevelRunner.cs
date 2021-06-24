@@ -68,7 +68,7 @@ namespace Info2021
             
             for (int i = 0; i < dynamicObjects.Count; i++) {
                 // Do normal physics...
-                dynamicObjects[i].Update(gameTime);
+                dynamicObjects[i].Update(gameTime, player);
             }
             // Then resolve collisions as suggested in https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
             // TODO: Generalize to multiple dynamic colliders and possibly even dynamic collider - dynamic collider collision.
@@ -77,8 +77,8 @@ namespace Info2021
             }
 
             foreach(CinematicObject cinematicObject in cinematicObjects) {
-                cinematicObject.Update(gameTime);
-                cinematicObject.Collider.CollideWith(player);
+                cinematicObject.Update(gameTime, player);
+                cinematicObject.CCollider.CollideWith(player);
             }
              
         }

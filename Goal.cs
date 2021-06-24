@@ -8,7 +8,7 @@ namespace Info2021
         public Goal(Vector2 position)
         {
             Position = position;
-            Collider = new CinematicCollider(this, position, Vector2.One * 16);
+            CCollider = new CinematicCollider(this, position, Vector2.One * 16);
         }
 
         public override Vector2 Position { get; }
@@ -22,7 +22,7 @@ namespace Info2021
             player.BeatLevel();
         }
 
-        public override void Update(float dt)
+        public override void Update(float dt, Player player)
         {
         }
     }

@@ -35,7 +35,7 @@ namespace Info2021
                 default:
                     throw new System.InvalidOperationException();
             }
-            Collider = new CinematicCollider(this, topLeft, diag);
+            CCollider = new CinematicCollider(this, topLeft, diag);
         }
 
         public override Texture2D GetTexture(ResourceAccessor resourceAccessor)
@@ -49,7 +49,7 @@ namespace Info2021
             player.Die();
         }
 
-        public override void Update(float dt)
+        public override void Update(float dt, Player player)
         { }
     }
 }
