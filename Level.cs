@@ -54,6 +54,9 @@ namespace Info2021
             using(Stream file = File.OpenWrite(path))
                 BinarySerializer.Serialize<Level>(this, file);
         }
-
+        public void AddSolidTile(TileInfo info, int x, int y) {
+            new Tile(info, x, y).Add(this);
+            new StaticCollider(new Vector2(16*x, 16*y), new Vector2(16*x+15, 16*y+15)).Add(this);
+        }
     }
 }

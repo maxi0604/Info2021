@@ -17,19 +17,12 @@ namespace Info2021
                 tiles.Add(new Tile(new TileInfo(0, 2), 30, i));
                 
             }
-            for(int i = 12; i < 15; i++) {
-                Tile tile;
-                StaticCollider staticCollider;
-                (tile, staticCollider) = GroundHelper(new TileInfo(17, 0), 12, i);
-                tiles.Add(tile);
-                staticColliders.Add(staticCollider);
-            }
+            
             Tile tile1;
             MovingPlatform platform = new MovingPlatform(new Vector2(22*16, 12*16), new Vector2(-4*16,0), 3);
             StaticCollider staticCollider1;
-            (tile1, staticCollider1) = GroundHelper(new TileInfo(17, 0), 14, 11);
-            staticColliders.Add(staticCollider1);
-            tiles.Add(tile1);
+            
+            
             staticColliders.Add(new StaticCollider(new Vector2(0, 15*16), new Vector2(450, 16*16)));
             staticColliders.Add(new StaticCollider(new Vector2(30*16, 0), new Vector2(31*16, 450)));
             
@@ -47,13 +40,15 @@ namespace Info2021
                 },
                 new Background("background1"));
             platform.Add(a);
+            a.AddSolidTile(new TileInfo(17, 0), 14, 11);
             // when the loading is funktioniering!!!!!1!!!!
+            for(int i = 12; i < 15; i++) {
+                a.AddSolidTile(new TileInfo(17, 0), 12, i);
+            }
             
             return Level.Load("testlevel");
         }
 
-        public static (Tile, StaticCollider) GroundHelper(TileInfo info, int x, int y) {
-            return (new Tile(info, x, y), new StaticCollider(new Vector2(16*x, 16*y), new Vector2(16*x+15, 16*y+15)));
-        }
+       
     }
 }

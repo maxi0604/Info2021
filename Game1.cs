@@ -15,6 +15,8 @@ namespace Info2021
         private PauseMenu pauseMenu;
         private GameState gameState = GameState.Menu;
         private LevelRunner levelRunner;
+        private Level level;
+        private LevelEditor levelEditor;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -39,6 +41,7 @@ namespace Info2021
             levelRunner = new LevelRunner(resourceAccessor, spriteBatch);
             menu = new Menu(spriteBatch, resourceAccessor);
             pauseMenu = new PauseMenu(spriteBatch, resourceAccessor);
+            levelEditor  = new LevelEditor(resourceAccessor, spriteBatch);
             base.Initialize();
 
         }
@@ -59,7 +62,8 @@ namespace Info2021
                                 gameState = GameState.Init;
                                 break;
                             case MenuItem.LevelEdit:
-                                //TODO
+                                gameState = GameState.Edit;
+                                levelEditor.Initialize();
                                 break;
                             case MenuItem.Settings:
                                 //TODO
@@ -92,8 +96,8 @@ namespace Info2021
                     }
                     break;
                 case GameState.Init:
-                    Level firstLevel = FirstLevel.GetLevel(this);
-                    levelRunner.Initialize(firstLevel);
+                    //Level firstLevel = FirstLevel.GetLevel(this);
+                    levelRunner.Initialize(level);
                     gameState = GameState.InLevel;
                     break;
                 case GameState.InLevel:
@@ -110,6 +114,13 @@ namespace Info2021
                     break;
                 case GameState.BeatLevel:
                     gameState = GameState.Menu;
+                    break;
+                case GameState.Edit:
+                    if(InputManager.IsActive(InputEvent.Escape)) {
+                        level = levelEditor.RetrieveLevel();
+                        gameState = GameState.Init;
+                    }
+                    levelEditor.Update((float) gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 default:
                     break;
@@ -135,6 +146,9 @@ namespace Info2021
                     break;
                 case GameState.Pause:
                     pauseMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    break;
+                case GameState.Edit:
+                    levelEditor.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 default:
                     break;
