@@ -4,7 +4,7 @@ using System;
 
 namespace Info2021
 {
-    class Spring : CinematicObject
+    class Spring : CinematicObject, ILevelElement
     {
         public override Vector2 Position { get; }
         private bool hasTouchedLastFrame, hasTouchedThisFrame;

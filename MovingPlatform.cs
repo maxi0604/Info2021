@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
-    class MovingPlatform : CinematicObject, ICinematicColliderParent
+    class MovingPlatform : CinematicObject, ICinematicColliderParent, ILevelElement
     {
         public VelPos VelPos { get; set; }
         public StaticCollider Collider;
@@ -55,6 +55,11 @@ namespace Info2021
             // move player with the platform
             translationOnNextFrame = VelPos.V/60;
             
+        }
+
+        public override void AddHelper(Level level) {
+            level.cinematicObjects.Add(this);
+            level.staticColliders.Add(Collider);
         }
     }
 }

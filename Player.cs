@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 namespace Info2021 {
-     class Player : DynamicObject, IAttachedColliderParent, IDrawable {
+     class Player : DynamicObject, IAttachedColliderParent, IDrawable, ILevelElement {
         // Position data
         public VelPos VelPos { get; set; }
         public override Vector2 Position => VelPos.P;

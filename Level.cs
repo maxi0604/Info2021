@@ -23,10 +23,10 @@ namespace Info2021
 
         public Vector2 spawnPosition { get; set; }
         public Vector2 camPos { get; set; }
-        public List<Tile> tiles { get; }
-        public List<StaticCollider> staticColliders { get; }
-        public List<DynamicObject> dynamicObjects { get; }
-        public List<CinematicObject> cinematicObjects { get; }
+        public List<Tile> tiles { get;  set; }
+        public List<StaticCollider> staticColliders { get; set; }
+        public List<DynamicObject> dynamicObjects { get; set; }
+        public List<CinematicObject> cinematicObjects { get; set; }
         public Background background { get; set; }
 
         
