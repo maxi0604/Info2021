@@ -84,21 +84,33 @@ namespace Info2021
                 
             }
             if(haveBecomeActive.Contains(InputEvent.Remove)) {
-                foreach(var x in level.dynamicObjects){
-                   if((x.Position - Position).Length() < 1) level.dynamicObjects.Remove(x);
-                    break;
+                for (int i = 0; i < level.dynamicObjects.Count; i++)
+                {
+                    if((level.dynamicObjects[i].Position - Position).Length() < 1) {
+                        level.dynamicObjects.RemoveAt(i);
+                        break;
+                    }
                 }
-                foreach(var x in level.cinematicObjects){
-                    if((x.Position - Position).Length() < 1) level.cinematicObjects.Remove(x);
-                    break;
+                for (int i = 0; i < level.cinematicObjects.Count; i++)
+                {
+                    if((level.cinematicObjects[i].Position - Position).Length() < 1) {
+                        level.cinematicObjects.RemoveAt(i);
+                        break;
+                    }
                 }
-                foreach(var x in level.tiles){
-                    if((x.Position - Position).Length() < 1) level.tiles.Remove(x);
-                    break;
+                for (int i = 0; i < level.tiles.Count; i++)
+                {
+                    if((level.tiles[i].Position - Position).Length() < 1) {
+                        level.tiles.RemoveAt(i);
+                        break;
+                    }
                 }
-                foreach(var x in level.staticColliders){
-                    if((x.TopLeft - Position).Length() < 1) level.staticColliders.Remove(x);
-                    break;
+                for (int i = 0; i < level.staticColliders.Count; i++)
+                {
+                    if((level.staticColliders[i].TopLeft - Position).Length() < 1) {
+                        level.staticColliders.RemoveAt(i);
+                        break;
+                    }
                 }
                 
             }
