@@ -47,17 +47,9 @@ namespace Info2021
                 },
                 new Background("background1"));
             platform.Add(a);
-            //using(Stream file = File.OpenWrite("testlevel"))
-            //  BinarySerializer.Serialize<Level>(a, file);
             // when the loading is funktioniering!!!!!1!!!!
-            a = BinarySerializer.Deserialize<Level>(File.OpenRead("testlevel"));
-            Level b = new Level(Vector2.Zero, Vector2.Zero, new List<Tile>(), new List<StaticCollider>(),
-            new List<DynamicObject>(), new List<CinematicObject>(), new Background("background1"));
-            foreach(var t in a.cinematicObjects) t.Add(b);
-            foreach(var t in a.dynamicObjects) t.Add(b);
-            foreach(var t in a.staticColliders) t.Add(b);
-            foreach(var t in a.tiles) t.Add(b);
-            return b;
+            
+            return Level.Load("testlevel");
         }
 
         public static (Tile, StaticCollider) GroundHelper(TileInfo info, int x, int y) {
