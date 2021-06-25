@@ -1,7 +1,6 @@
 using System;
 using static System.MathF;
 using Microsoft.Xna.Framework;
-using Info2021.Interfaces;
 namespace Info2021
 {
     class CinematicCollider

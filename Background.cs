@@ -1,10 +1,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Info2021.Interfaces;
 
 namespace Info2021
 {
-    class Background : Interfaces.IDrawable
+    class Background : IDrawable
     {
         public Texture2D texture;
 

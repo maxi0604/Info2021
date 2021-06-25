@@ -1,10 +1,9 @@
-using Info2021.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
-    class MovingPlatform : CinematicObject, Interfaces.ICinematicColliderParent
+    class MovingPlatform : CinematicObject, ICinematicColliderParent
     {
         public VelPos VelPos { get; set; }
         public StaticCollider Collider;

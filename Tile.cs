@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
-using Info2021.Interfaces;
 namespace Info2021
 {
-    class Tile : Interfaces.IDrawable
+    class Tile : IDrawable
     {
         public TileInfo Info  { get; }
         private (int, int) tilePos;

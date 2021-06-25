@@ -1,4 +1,3 @@
-using Info2021.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

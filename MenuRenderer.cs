@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
-    class MenuRenderer : Renderer, Interfaces.IRenderer
+    class MenuRenderer : Renderer, IRenderer
     {
         public MenuRenderer(SpriteBatch sprite) : base(sprite) {
             

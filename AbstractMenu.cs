@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Info2021.Interfaces;
 using System;
 namespace Info2021
 {
