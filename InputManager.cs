@@ -13,7 +13,8 @@ namespace Info2021
              {Keys.Up, InputEvent.Up},
              {Keys.Down, InputEvent.Down},
              {Keys.X, InputEvent.Jump},
-             {Keys.Escape, InputEvent.Escape}};
+             {Keys.Escape, InputEvent.Escape},
+             {Keys.Delete, InputEvent.Remove}};
 
         public static bool IsActive(InputEvent input) {
             var keys = Translator.Where(x => x.Value == input).Select(x => x.Key);

@@ -75,7 +75,32 @@ namespace Info2021
             if(haveBecomeActive.Contains(InputEvent.Down)) 
                 Position.Y += 16;
             if(haveBecomeActive.Contains(InputEvent.Jump)) {
-                level.AddSolidTile(new TileInfo(2,0), (int) Math.Floor(Position.X/16), (int) Math.Floor(Position.Y/16));
+                bool isThere = false;
+                foreach(var x in level.tiles){
+                    if((x.Position - Position).Length() < 1) isThere = true;
+                }
+                if(!isThere)
+                    level.AddSolidTile(new TileInfo(2,0), (int) Math.Floor(Position.X/16), (int) Math.Floor(Position.Y/16));
+                
+            }
+            if(haveBecomeActive.Contains(InputEvent.Remove)) {
+                foreach(var x in level.dynamicObjects){
+                   if((x.Position - Position).Length() < 1) level.dynamicObjects.Remove(x);
+                    break;
+                }
+                foreach(var x in level.cinematicObjects){
+                    if((x.Position - Position).Length() < 1) level.cinematicObjects.Remove(x);
+                    break;
+                }
+                foreach(var x in level.tiles){
+                    if((x.Position - Position).Length() < 1) level.tiles.Remove(x);
+                    break;
+                }
+                foreach(var x in level.staticColliders){
+                    if((x.TopLeft - Position).Length() < 1) level.staticColliders.Remove(x);
+                    break;
+                }
+                
             }
                 
        }
