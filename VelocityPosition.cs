@@ -1,9 +1,13 @@
 using System;
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 
 namespace Info2021 {
+    [DataContract]
     public readonly struct VelPos {
+        [DataMember]
         public Vector2 V { get; }
+        [DataMember]
         public Vector2 P { get; }
         public VelPos(Vector2 v, Vector2 p) {
             V = v;

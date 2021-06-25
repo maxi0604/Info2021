@@ -1,9 +1,17 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Runtime.Serialization;
+
 namespace Info2021
 {
-    record TileInfo(Texture2D Texture, float layer, int width, int height)
+    [DataContract]
+    class TileInfo
     {
+        [DataMember]
+        public float layer;
+        [DataMember]
+        public int width, height, tx, ty;
+        /*
         public TileInfo(ResourceAccessor resourceAccessor, string texturePath, float layer, int width, int height) : 
             this(resourceAccessor.LoadContent<Texture2D>(texturePath), layer, width, height)
             { }
@@ -19,8 +27,18 @@ namespace Info2021
                 height = Texture.Height;
                 width = Texture.Width;
         }
-        public TileInfo(ResourceAccessor resourceAccessor, int x, int y) : this(resourceAccessor.GetSprite(x,y), 0.1f, 16, 16) {
+        */ 
+        public TileInfo(int x, int y) : this(0.1f, 16, 16, x, y) {
 
+        }
+
+        public TileInfo(float layer, int width, int height, int tx, int ty)
+        {
+            this.layer = layer;
+            this.width = width;
+            this.height = height;
+            this.tx = tx;
+            this.ty = ty;
         }
     }
 }

@@ -1,20 +1,23 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Runtime.Serialization;
 
 namespace Info2021
 {
+    [DataContract]
     class Background : IDrawable
     {
-        public Texture2D texture;
+        [DataMember]
+        public string texturePath;
 
-        public Background(Texture2D texture)
+        public Background(string texturePath)
         {
-            this.texture = texture;
+            this.texturePath = texturePath;
         }
 
         public void Draw(IRenderer renderer, ResourceAccessor accessor, Vector2 camPos)
         {
-            renderer.Draw(camPos, texture, camPos, 0, Vector2.Zero, 1, 0.99f);
+            renderer.Draw(camPos, accessor.LoadContent<Texture2D>(texturePath), camPos, 0, Vector2.Zero, 1, 0.99f);
         }
 
         

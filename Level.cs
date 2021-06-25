@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.Xna.Framework;
 namespace Info2021
 {
-    [Serializable]
+    [DataContract]
     class Level
     {
         public Level(Vector2 spawnPosition, Vector2 camPos, List<Tile> tiles, List<StaticCollider> staticColliders,
@@ -20,13 +20,19 @@ namespace Info2021
             this.cinematicObjects = cinematicObjects;
             this.background = background;
         }
-
+        [DataMember]
         public Vector2 spawnPosition { get; set; }
+        [DataMember]
         public Vector2 camPos { get; set; }
+        [DataMember]
         public List<Tile> tiles { get;  set; }
+        [DataMember]
         public List<StaticCollider> staticColliders { get; set; }
+        [DataMember]
         public List<DynamicObject> dynamicObjects { get; set; }
+        [DataMember]
         public List<CinematicObject> cinematicObjects { get; set; }
+        [DataMember]
         public Background background { get; set; }
 
         
