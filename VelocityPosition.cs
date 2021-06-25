@@ -4,11 +4,11 @@ using Microsoft.Xna.Framework;
 
 namespace Info2021 {
     [DataContract]
-    public readonly struct VelPos {
+    public struct VelPos {
         [DataMember]
-        public Vector2 V { get; }
+        public Vector2 V { get; set; }
         [DataMember]
-        public Vector2 P { get; }
+        public Vector2 P { get; set; }
         public VelPos(Vector2 v, Vector2 p) {
             V = v;
             P = p;

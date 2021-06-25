@@ -7,6 +7,10 @@ using Microsoft.Xna.Framework;
 namespace Info2021
 {
     [DataContract]
+    [KnownType(typeof(Spikes))]
+    [KnownType(typeof(Goal))]
+    [KnownType(typeof(MovingPlatform))]
+    [KnownType(typeof(Spring))]
     class Level
     {
         public Level(Vector2 spawnPosition, Vector2 camPos, List<Tile> tiles, List<StaticCollider> staticColliders,

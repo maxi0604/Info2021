@@ -1,20 +1,27 @@
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
+    [DataContract]
     class Spikes : CinematicObject, ILevelElement
     {
-        public override Vector2 Position { get; }
+        [DataMember]
+        public override Vector2 Position { get; set; }
+        [DataMember]
+        private Vector2 topLeft;
+        [DataMember]
+        private Vector2 diag;
         // 0 = face left, 1 = face upwards, etc
+        [DataMember]
         int rotation;
 
         public Spikes(Vector2 position, int rotation)
         {
             Position = position;
             this.rotation = rotation;
-            Vector2 topLeft;
-            Vector2 diag;
+            
 
             // spikes are always "inside" the tile
             switch(rotation) {
@@ -52,6 +59,8 @@ namespace Info2021
         }
 
         public override void Update(float dt, Player player)
-        { }
+        {
+            CCollider = new CinematicCollider(this, topLeft, diag);
+        }
     }
 }

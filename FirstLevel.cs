@@ -42,13 +42,22 @@ namespace Info2021
                 new Spikes(new Vector2(5*16,13*16), 1),
                 new Spikes(new Vector2(6*16,13*16), 1),
                 new Goal(new Vector2(9*16, 10*16)),
-                new Spring(new Vector2(20*16, 12*16), 0),
+                new Spring(new Vector2(20*16,12*16), 0),
                 new Spring(new Vector2(19*16, 14*16), 3),                
                 },
                 new Background("background1"));
             platform.Add(a);
-            BinarySerializer.Serialize<Level>(a, File.OpenWrite("testlevel"));
-            return a;
+            //using(Stream file = File.OpenWrite("testlevel"))
+            //  BinarySerializer.Serialize<Level>(a, file);
+            // when the loading is funktioniering!!!!!1!!!!
+            a = BinarySerializer.Deserialize<Level>(File.OpenRead("testlevel"));
+            Level b = new Level(Vector2.Zero, Vector2.Zero, new List<Tile>(), new List<StaticCollider>(),
+            new List<DynamicObject>(), new List<CinematicObject>(), new Background("background1"));
+            foreach(var t in a.cinematicObjects) t.Add(b);
+            foreach(var t in a.dynamicObjects) t.Add(b);
+            foreach(var t in a.staticColliders) t.Add(b);
+            foreach(var t in a.tiles) t.Add(b);
+            return b;
         }
 
         public static (Tile, StaticCollider) GroundHelper(TileInfo info, int x, int y) {
