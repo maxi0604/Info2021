@@ -13,8 +13,11 @@ namespace Info2021
         
         private Menu menu;
         private PauseMenu pauseMenu;
+        private EditSelectionMenu editSelectionMenu;
         private GameState gameState = GameState.Menu;
         private LevelRunner levelRunner;
+        private Level level;
+        private LevelEditor levelEditor;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -39,6 +42,20 @@ namespace Info2021
             levelRunner = new LevelRunner(resourceAccessor, spriteBatch);
             menu = new Menu(spriteBatch, resourceAccessor);
             pauseMenu = new PauseMenu(spriteBatch, resourceAccessor);
+            levelEditor = new LevelEditor(resourceAccessor, spriteBatch);
+            editSelectionMenu = new EditSelectionMenu(spriteBatch, resourceAccessor);
+            try
+            {
+                level = Level.Load("levels/edit.lvl");    
+            }
+            catch (System.Exception)
+            {
+                
+                level = new Level(Vector2.Zero, Vector2.Zero, new List<Tile>(),
+                new List<StaticCollider>(), new List<DynamicObject>(), new List<CinematicObject>(),
+                new Background("background1"));
+            }
+            
             base.Initialize();
 
         }
@@ -59,7 +76,8 @@ namespace Info2021
                                 gameState = GameState.Init;
                                 break;
                             case MenuItem.LevelEdit:
-                                //TODO
+                                gameState = GameState.Edit;
+                                levelEditor.Initialize(level);
                                 break;
                             case MenuItem.Settings:
                                 //TODO
@@ -92,8 +110,9 @@ namespace Info2021
                     }
                     break;
                 case GameState.Init:
-                    Level firstLevel = FirstLevel.GetLevel(this);
-                    levelRunner.Initialize(firstLevel);
+                    
+                    //Level firstLevel = FirstLevel.GetLevel(this);
+                    levelRunner.Initialize(level);
                     gameState = GameState.InLevel;
                     break;
                 case GameState.InLevel:
@@ -110,6 +129,25 @@ namespace Info2021
                     break;
                 case GameState.BeatLevel:
                     gameState = GameState.Menu;
+                    break;
+                case GameState.Edit:
+                    if(InputManager.IsActive(InputEvent.Escape)) {
+                        level = levelEditor.RetrieveLevel();
+                        level.Save("levels/edit.lvl");
+                        gameState = GameState.Init;
+                    }
+                    if(InputManager.IsActive(InputEvent.Menu)) {
+                        gameState = GameState.EditSelectionMenu;
+                    }
+                    levelEditor.Update((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    break;
+                case GameState.EditSelectionMenu:
+                    editSelectionMenu.Update();
+                    LevelAddables addItem;
+                    if(editSelectionMenu.HasBeenSelected(out addItem)) {
+                        levelEditor.currentAddables = addItem;
+                        gameState = GameState.Edit;
+                    }
                     break;
                 default:
                     break;
@@ -135,6 +173,12 @@ namespace Info2021
                     break;
                 case GameState.Pause:
                     pauseMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    break;
+                case GameState.Edit:
+                    levelEditor.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    break;
+                case GameState.EditSelectionMenu:
+                    editSelectionMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 default:
                     break;

@@ -21,7 +21,6 @@ namespace Info2021
 
         List<CinematicObject> cinematicObjects;
         Background background;
-        public Vector2 CamPos { get => camPos; set => camPos = value; }
 
         private Player player;
         private bool initialized = false;
