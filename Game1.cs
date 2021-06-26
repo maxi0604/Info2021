@@ -7,10 +7,10 @@ namespace Info2021
 {
     class Game1 : Game
     {
+        public ResourceAccessor ResourceAccessor { get; private set; }
+        public SpriteFont Font { get; private set; }
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        public ResourceAccessor resourceAccessor;
-        
         private Menu menu;
         private PauseMenu pauseMenu;
         private EditSelectionMenu editSelectionMenu;
@@ -38,12 +38,12 @@ namespace Info2021
             int xc, yc;
             Texture2D[] textures = TextureHelper.Split(spriteSheet, 16, 16, out xc, out yc);
             
-            resourceAccessor = new ResourceAccessor(this, textures, xc, yc);
-            levelRunner = new LevelRunner(resourceAccessor, spriteBatch);
-            menu = new Menu(spriteBatch, resourceAccessor);
-            pauseMenu = new PauseMenu(spriteBatch, resourceAccessor);
-            levelEditor = new LevelEditor(resourceAccessor, spriteBatch);
-            editSelectionMenu = new EditSelectionMenu(spriteBatch, resourceAccessor);
+            ResourceAccessor = new ResourceAccessor(this, textures, xc, yc);
+            levelRunner = new LevelRunner(ResourceAccessor, spriteBatch);
+            menu = new Menu(spriteBatch, ResourceAccessor);
+            pauseMenu = new PauseMenu(spriteBatch, ResourceAccessor);
+            levelEditor = new LevelEditor(ResourceAccessor, spriteBatch);
+            editSelectionMenu = new EditSelectionMenu(spriteBatch, ResourceAccessor);
             try
             {
                 level = Level.Load("levels/edit.lvl");    
@@ -56,6 +56,7 @@ namespace Info2021
                 new Background("background1"));
             }
             
+            Font = Content.Load<SpriteFont>("MontserratBold");
             base.Initialize();
 
         }

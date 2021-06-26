@@ -13,17 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Character.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Character.png
 #begin 640x360.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -48,6 +37,25 @@
 /processorParam:TextureFormat=Color
 /build:background1.png
 
+#begin Character.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Character.png
+
+#begin Montserrat.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Montserrat.spritefont;MontserratBold.spritefont
+
 #begin spritesheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -59,3 +67,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:spritesheet.png
+

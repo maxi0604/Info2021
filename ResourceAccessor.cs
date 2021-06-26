@@ -4,10 +4,10 @@ namespace Info2021
 {
     class ResourceAccessor
     {
-        private Game game;
+        private Game1 game;
         public Texture2D[] SpriteSheet;
         private int xCount, yCount;
-        public ResourceAccessor(Game game_, Texture2D[] spritesheet, int xc, int yc) {
+        public ResourceAccessor(Game1 game_, Texture2D[] spritesheet, int xc, int yc) {
             game = game_;
             this.SpriteSheet = spritesheet;
             xCount = xc;
@@ -21,5 +21,7 @@ namespace Info2021
         public Texture2D GetSprite(int x, int y) {
             return SpriteSheet[y * xCount + x];
         }
+
+        public SpriteFont Font => game.Font;
     }
 }
