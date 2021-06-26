@@ -14,11 +14,38 @@ namespace Info2021
         BackgroundRenderer backgroundRenderer;
         DynamicRenderer dynamicRenderer;
 
+        int[] indices;
+        int indexIndex;
         Level level;
         Background background;
 
         Vector2 Position = Vector2.Zero;
+
+        public LevelAddables currentAddables;
         private static HashSet<InputEvent> haveBecomeActive = new HashSet<InputEvent>();
+
+        private Tile GetTile(int count) {
+            return new Tile(new TileInfo(count % 16, count / 16),
+                (int) Position.X/16, (int) Position.Y/16);
+        }
+
+        private CinematicObject GetCinematic(int count) {
+            CinematicObject[] allCinems =
+            {new Goal(Position),
+            new Spikes(Position, 0),
+            new Spikes(Position, 1),
+            new Spikes(Position, 2),
+            new Spikes(Position, 3),
+            new Spring(Position, 0),
+            new Spring(Position, 1),
+            new Spring(Position, 2),
+            new Spring(Position, 3),
+            new MovingPlatform(Position, 64 * Vector2.UnitX, 3),
+            new MovingPlatform(Position, 64 * Vector2.UnitY, 3),
+            new MovingPlatform(Position, -64 * Vector2.UnitX, 3),
+            new MovingPlatform(Position, -64 * Vector2.UnitY, 3)};
+            return allCinems[count % allCinems.Length];
+        }
 
         public LevelEditor(ResourceAccessor resourceAccessor, SpriteBatch spriteBatch) {
             this.resourceAccessor = resourceAccessor;
@@ -28,15 +55,18 @@ namespace Info2021
             dynamicRenderer = new DynamicRenderer(spriteBatch);
             background = new Background("background1");
             level = new Level(Vector2.Zero, Vector2.Zero, new List<Tile>(),
-            new List<StaticCollider>(), new List<DynamicObject>(), new List<CinematicObject>(),
-            background);
+                new List<StaticCollider>(), new List<DynamicObject>(), new List<CinematicObject>(),
+                background);
+            indices = new int[] {0,0,0,0};
         }
         public void Initialize() {
             if(level.dynamicObjects.Count > 0 && level.dynamicObjects[0] is Player) {
                 level.dynamicObjects.RemoveAt(0);
             }
+            
         }
         public void Update(float gameTime) {
+            indexIndex = (int) currentAddables;
 
             // change screen
             if(Position.X - camPos.X > 640) {
@@ -79,9 +109,29 @@ namespace Info2021
                 foreach(var x in level.tiles){
                     if((x.Position - Position).Length() < 1) isThere = true;
                 }
-                if(!isThere)
-                    level.AddSolidTile(new TileInfo(2,0), (int) Math.Floor(Position.X/16), (int) Math.Floor(Position.Y/16));
-                
+                foreach(var x in level.dynamicObjects){
+                    if((x.Position - Position).Length() < 1) isThere = true;
+                }
+                foreach(var x in level.cinematicObjects){
+                    if((x.Position - Position).Length() < 1) isThere = true;
+                }
+                if(!isThere) {
+                    switch(currentAddables) {
+                        case LevelAddables.Tile:
+                            level.AddSolidTile(new TileInfo(
+                                indices[(int) LevelAddables.Tile] % 16, indices[(int) LevelAddables.Tile]/16), (int) Math.Floor(Position.X/16), (int) Math.Floor(Position.Y/16));
+                            break;
+                        case LevelAddables.Cinematic:
+                            GetCinematic(indices[(int) LevelAddables.Cinematic]).Add(level);
+                            break;
+                        case LevelAddables.PlayerPos:
+                            level.spawnPosition = Position;
+                            break;
+                        case LevelAddables.CameraPos:
+                            level.camPos = Position;
+                            break;
+                    }
+                }
             }
             if(haveBecomeActive.Contains(InputEvent.Remove)) {
                 for (int i = 0; i < level.dynamicObjects.Count; i++)
@@ -114,6 +164,12 @@ namespace Info2021
                 }
                 
             }
+            if(haveBecomeActive.Contains(InputEvent.NextThing) && indices[indexIndex] < 256) {
+                indices[indexIndex]++;
+            }
+            if(haveBecomeActive.Contains(InputEvent.PreviousThing) && indices[indexIndex] > 0) {
+                indices[indexIndex]--;
+            }
                 
        }
 
@@ -132,7 +188,21 @@ namespace Info2021
                 cinematicObject.Draw(dynamicRenderer, resourceAccessor, camPos);
             }
             background.Draw(backgroundRenderer, resourceAccessor, camPos);
-            new Tile(new TileInfo(15,0), (int) Math.Floor(Position.X/16), (int) Math.Floor(Position.Y/16)).Draw(tileRenderer, resourceAccessor, camPos);
+            switch(currentAddables) {
+                case LevelAddables.Tile:
+                    GetTile(indices[indexIndex]).Draw(tileRenderer, resourceAccessor, camPos);
+                    break;
+                case LevelAddables.Cinematic:
+                    GetCinematic(indices[indexIndex]).Draw(dynamicRenderer, resourceAccessor, camPos);
+                    break;
+                case LevelAddables.PlayerPos:
+                    GetTile(101).Draw(tileRenderer, resourceAccessor, camPos); //character sprite
+                    break;
+                case LevelAddables.CameraPos:
+                    GetTile(12).Draw(tileRenderer, resourceAccessor, camPos); //remotely technological looking sprite
+                    break;                 
+            }
+            //new Tile(new TileInfo(tileIndex % 16, tileIndex/16), (int) Math.Floor(Position.X/16), (int) Math.Floor(Position.Y/16)).Draw(tileRenderer, resourceAccessor, camPos);
             spriteBatch.End();
         }
         

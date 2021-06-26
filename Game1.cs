@@ -13,6 +13,7 @@ namespace Info2021
         
         private Menu menu;
         private PauseMenu pauseMenu;
+        private EditSelectionMenu editSelectionMenu;
         private GameState gameState = GameState.Menu;
         private LevelRunner levelRunner;
         private Level level;
@@ -41,7 +42,8 @@ namespace Info2021
             levelRunner = new LevelRunner(resourceAccessor, spriteBatch);
             menu = new Menu(spriteBatch, resourceAccessor);
             pauseMenu = new PauseMenu(spriteBatch, resourceAccessor);
-            levelEditor  = new LevelEditor(resourceAccessor, spriteBatch);
+            levelEditor = new LevelEditor(resourceAccessor, spriteBatch);
+            editSelectionMenu = new EditSelectionMenu(spriteBatch, resourceAccessor);
             base.Initialize();
 
         }
@@ -96,6 +98,7 @@ namespace Info2021
                     }
                     break;
                 case GameState.Init:
+                    level = Level.Load("levels/edit.lvl");
                     //Level firstLevel = FirstLevel.GetLevel(this);
                     levelRunner.Initialize(level);
                     gameState = GameState.InLevel;
@@ -118,9 +121,21 @@ namespace Info2021
                 case GameState.Edit:
                     if(InputManager.IsActive(InputEvent.Escape)) {
                         level = levelEditor.RetrieveLevel();
+                        level.Save("levels/edit.lvl");
                         gameState = GameState.Init;
                     }
+                    if(InputManager.IsActive(InputEvent.Menu)) {
+                        gameState = GameState.EditSelectionMenu;
+                    }
                     levelEditor.Update((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    break;
+                case GameState.EditSelectionMenu:
+                    editSelectionMenu.Update();
+                    LevelAddables addItem;
+                    if(editSelectionMenu.HasBeenSelected(out addItem)) {
+                        levelEditor.currentAddables = addItem;
+                        gameState = GameState.Edit;
+                    }
                     break;
                 default:
                     break;
@@ -149,6 +164,9 @@ namespace Info2021
                     break;
                 case GameState.Edit:
                     levelEditor.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    break;
+                case GameState.EditSelectionMenu:
+                    editSelectionMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 default:
                     break;
