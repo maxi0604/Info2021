@@ -58,9 +58,7 @@ namespace Info2021
         }
         public void Initialize(Level level) {
             this.level = level;
-            if(level.dynamicObjects.Count > 0 && level.dynamicObjects[0] is Player) {
-                level.dynamicObjects.RemoveAt(0);
-            }
+            level.dynamicObjects.RemoveAll(x => x is Player);
             
         }
         public void Update(float gameTime) {
