@@ -11,6 +11,7 @@ namespace Info2021
         protected MenuRenderer menuRenderer;
         protected int activeIndex = 0;
         public A ActiveItem {get {return AllItems[activeIndex];}}
+        public abstract string[] Texts {get;}
         protected bool pressedJump = false;
         protected bool oldJump = false;
 
@@ -46,9 +47,14 @@ namespace Info2021
             if(pressedUp && !oldUp && activeIndex > 0) activeIndex--;
         }
 
-        public void Draw(IRenderer renderer, ResourceAccessor accessor, Vector2 camPos)
+        public void Draw(MenuRenderer renderer, ResourceAccessor accessor, Vector2 camPos)
         {
             renderer.Draw(camPos, accessor.GetSprite(14, 0), new Vector2(240, activeIndex * 50 + 80), 0, Vector2.Zero, 1, 0.0001f);
+            for (int i = 0; i < AllItems.Length; i++)
+            {
+                renderer.DrawText(new Vector2(300, i * 50 + 70), accessor.Font, Texts[i], Color.Black);
+            }
+            
         }
 
         public void Draw(float dt) {
