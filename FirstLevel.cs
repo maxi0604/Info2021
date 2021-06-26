@@ -49,7 +49,7 @@ namespace Info2021
             platform.Add(a);
             // when the loading is funktioniering!!!!!1!!!!
             
-            return Level.Load("testlevel");
+            return Level.Load("Levels/Test.lvl");
         }
 
         public static (Tile, StaticCollider) GroundHelper(TileInfo info, int x, int y) {
