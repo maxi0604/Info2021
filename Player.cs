@@ -6,7 +6,7 @@ namespace Info2021 {
      class Player : DynamicObject, IAttachedColliderParent, IDrawable, ILevelElement {
         // Position data
         public VelPos VelPos { get; set; }
-        public override Vector2 Position {get {return VelPos.P;} set {VelPos = VelPos.WithPosition(value);}}
+        public override Vector2 Position {get => VelPos.P; set => VelPos = VelPos.WithPosition(value); }
         // Collision
         readonly Vector2 hitbox = new Vector2(14, 16);
         public AttachedCollider Collider { get; }
