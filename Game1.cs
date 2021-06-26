@@ -44,6 +44,18 @@ namespace Info2021
             pauseMenu = new PauseMenu(spriteBatch, resourceAccessor);
             levelEditor = new LevelEditor(resourceAccessor, spriteBatch);
             editSelectionMenu = new EditSelectionMenu(spriteBatch, resourceAccessor);
+            try
+            {
+                level = Level.Load("levels/edit.lvl");    
+            }
+            catch (System.Exception)
+            {
+                
+                level = new Level(Vector2.Zero, Vector2.Zero, new List<Tile>(),
+                new List<StaticCollider>(), new List<DynamicObject>(), new List<CinematicObject>(),
+                new Background("background1"));
+            }
+            
             base.Initialize();
 
         }
@@ -65,7 +77,7 @@ namespace Info2021
                                 break;
                             case MenuItem.LevelEdit:
                                 gameState = GameState.Edit;
-                                levelEditor.Initialize();
+                                levelEditor.Initialize(level);
                                 break;
                             case MenuItem.Settings:
                                 //TODO
@@ -98,7 +110,7 @@ namespace Info2021
                     }
                     break;
                 case GameState.Init:
-                    level = Level.Load("levels/edit.lvl");
+                    
                     //Level firstLevel = FirstLevel.GetLevel(this);
                     levelRunner.Initialize(level);
                     gameState = GameState.InLevel;

@@ -54,12 +54,10 @@ namespace Info2021
             backgroundRenderer = new BackgroundRenderer(spriteBatch);
             dynamicRenderer = new DynamicRenderer(spriteBatch);
             background = new Background("background1");
-            level = new Level(Vector2.Zero, Vector2.Zero, new List<Tile>(),
-                new List<StaticCollider>(), new List<DynamicObject>(), new List<CinematicObject>(),
-                background);
             indices = new int[] {0,0,0,0};
         }
-        public void Initialize() {
+        public void Initialize(Level level) {
+            this.level = level;
             if(level.dynamicObjects.Count > 0 && level.dynamicObjects[0] is Player) {
                 level.dynamicObjects.RemoveAt(0);
             }
@@ -196,7 +194,7 @@ namespace Info2021
                     GetCinematic(indices[indexIndex]).Draw(dynamicRenderer, resourceAccessor, camPos);
                     break;
                 case LevelAddables.PlayerPos:
-                    GetTile(101).Draw(tileRenderer, resourceAccessor, camPos); //character sprite
+                    GetTile(109).Draw(tileRenderer, resourceAccessor, camPos); //character sprite
                     break;
                 case LevelAddables.CameraPos:
                     GetTile(12).Draw(tileRenderer, resourceAccessor, camPos); //remotely technological looking sprite
