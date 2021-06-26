@@ -1,12 +1,19 @@
 using System;
 using static System.MathF;
 using Microsoft.Xna.Framework;
+using System.Runtime.Serialization;
+
 namespace Info2021
 {
+    [DataContract]
     class CinematicCollider
     {
-        public ICinematicColliderParent Parent { get; }
+        [DataMember]
+        
+        public ICinematicColliderParent Parent { get; set; }
+        [DataMember]
         public Vector2 TopLeft;
+        [DataMember]
         Vector2 diagonal;
         public Vector2 BottomRight { get => TopLeft + diagonal; }
         public Vector2 Center { get => TopLeft + diagonal / 2; }

@@ -7,6 +7,10 @@ using Microsoft.Xna.Framework;
 namespace Info2021
 {
     [DataContract]
+    [KnownType(typeof(Spikes))]
+    [KnownType(typeof(Goal))]
+    [KnownType(typeof(MovingPlatform))]
+    [KnownType(typeof(Spring))]
     class Level
     {
         public Level(Vector2 spawnPosition, Vector2 camPos, List<Tile> tiles, List<StaticCollider> staticColliders,
@@ -35,7 +39,21 @@ namespace Info2021
         [DataMember]
         public Background background { get; set; }
 
-        
+        public static Level Load(string path) {
+            Level a = BinarySerializer.Deserialize<Level>(File.OpenRead(path));
+            Level b = new Level(Vector2.Zero, Vector2.Zero, new List<Tile>(), new List<StaticCollider>(),
+            new List<DynamicObject>(), new List<CinematicObject>(), new Background("background1"));
+            foreach(var t in a.cinematicObjects) t.Add(b);
+            foreach(var t in a.dynamicObjects) t.Add(b);
+            foreach(var t in a.staticColliders) t.Add(b);
+            foreach(var t in a.tiles) t.Add(b);
+            return b;
+        }
+
+        public void Save(string path) {
+            using(Stream file = File.OpenWrite(path))
+                BinarySerializer.Serialize<Level>(this, file);
+        }
 
     }
 }

@@ -1,8 +1,10 @@
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
+    [DataContract]
     class Goal : CinematicObject
     {
         public Goal(Vector2 position)
@@ -10,8 +12,8 @@ namespace Info2021
             Position = position;
             CCollider = new CinematicCollider(this, position, Vector2.One * 16);
         }
-
-        public override Vector2 Position { get; }
+        [DataMember]
+        public override Vector2 Position { get; set; }
         public override Texture2D GetTexture(ResourceAccessor resourceAccessor)
         {
             return resourceAccessor.GetSprite(4,5);

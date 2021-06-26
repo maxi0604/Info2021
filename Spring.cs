@@ -1,15 +1,24 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Runtime.Serialization;
 
 namespace Info2021
 {
+    [DataContract]
     class Spring : CinematicObject, ILevelElement
     {
-        public override Vector2 Position { get; }
+        [DataMember]
+        public override Vector2 Position { get; set; }
         private bool hasTouchedLastFrame, hasTouchedThisFrame;
+        [DataMember]
+        Vector2 topLeft;
+        [DataMember]
+        Vector2 diag;
+        [DataMember]
         private Vector2 direction;
         // 0 = face left, 1 = face upwards, etc
+        [DataMember]
         int rotation;
 
         public Spring(Vector2 position, int rotation)
@@ -18,8 +27,7 @@ namespace Info2021
             this.rotation = rotation;
             hasTouchedLastFrame = false;
             hasTouchedThisFrame = false;
-            Vector2 topLeft;
-            Vector2 diag;
+            
             switch(rotation) {
                 case 0:
                     topLeft = position + Vector2.UnitX * 8;
@@ -55,6 +63,7 @@ namespace Info2021
 
         public override void OnCollision(Player player)
         {
+            //CCollider = new CinematicCollider(this, topLeft, diag);
             float newVel = 0;
             if(player.OnGround())
                 // increase position by a bit to avoid ground issues

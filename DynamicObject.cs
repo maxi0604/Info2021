@@ -1,10 +1,13 @@
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 namespace Info2021
 {
+    [DataContract(IsReference = true)]
     abstract class DynamicObject : IHasPosition, IDrawable, ILevelElement
     {
-        public abstract Vector2 Position { get; }
+        [DataMember]
+        public abstract Vector2 Position { get; set; }
         public abstract Texture2D GetTexture(ResourceAccessor resourceAccessor);
         public abstract void Update(float dt, Player player);
         public void Draw(IRenderer renderer, ResourceAccessor accessor, Vector2 camPos)

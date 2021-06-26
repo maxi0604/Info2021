@@ -1,19 +1,27 @@
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021
 {
+    [DataContract]
     class MovingPlatform : CinematicObject, ICinematicColliderParent, ILevelElement
     {
+        [DataMember]
         public VelPos VelPos { get; set; }
+        [DataMember]
         public StaticCollider Collider;
-        public override Vector2 Position => VelPos.P;
+        public override Vector2 Position {get {return VelPos.P;} set {VelPos = VelPos.WithPosition(value);}}
+        [DataMember]
         CinematicCollider cinematicCollider;
         CinematicCollider ICinematicColliderParent.CCollider => cinematicCollider;
 
+        [DataMember]
         Vector2 translationOnNextFrame = Vector2.Zero;
 
+        [DataMember]
         public float MaxTime;
+        [DataMember]
         private float movingTime;
 
 
@@ -34,6 +42,7 @@ namespace Info2021
 
         public override void Update(float dt, Player player)
         {
+            //Collider = new StaticCollider(VelPos.P, VelPos.P + Vector2.One * 16);
             player.VelPos = player.VelPos.Translate(translationOnNextFrame);
             translationOnNextFrame = Vector2.Zero;
 
