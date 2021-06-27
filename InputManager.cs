@@ -20,9 +20,18 @@ namespace Info2021
              {Keys.Space, InputEvent.Menu},};
 
         public static bool IsActive(InputEvent input) {
+            if(input == InputEvent.Jump && Mouse.GetState().LeftButton == ButtonState.Pressed) {
+                return true;
+            }
+            if(input == InputEvent.Remove && Mouse.GetState().RightButton == ButtonState.Pressed) {
+                return true;
+            }
             var keys = Translator.Where(x => x.Value == input).Select(x => x.Key);
             return keys.Any(Keyboard.GetState().IsKeyDown);
         }       
+        
+        public static Vector2 MousePos => 
+            new Vector2(Mouse.GetState().X/2,Mouse.GetState().Y/2);
         
     }
 }

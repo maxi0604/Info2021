@@ -79,7 +79,7 @@ namespace Info2021
                     haveBecomeActive.Add(item);
                 }
             }
-
+            /*
             if(haveBecomeActive.Contains(InputEvent.Right)) 
                 Position.X += 16;
             if(haveBecomeActive.Contains(InputEvent.Left)) 
@@ -88,6 +88,10 @@ namespace Info2021
                 Position.Y -= 16;
             if(haveBecomeActive.Contains(InputEvent.Down)) 
                 Position.Y += 16;
+            */
+            Position = (InputManager.MousePos / 16);
+            Position.Floor();
+            Position *= 16;
             if(haveBecomeActive.Contains(InputEvent.Jump)) {
                 bool isThere = false;
                 foreach(var x in level.tiles){
