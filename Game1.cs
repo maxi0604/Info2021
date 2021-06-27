@@ -46,7 +46,7 @@ namespace Info2021
             editSelectionMenu = new EditSelectionMenu(spriteBatch, ResourceAccessor);
             try
             {
-                level = Level.Load("levels/edit.lvl");    
+                level = Level.Load("Levels/edit.lvl");    
             }
             catch (System.Exception)
             {
@@ -134,7 +134,7 @@ namespace Info2021
                 case GameState.Edit:
                     if(InputManager.IsActive(InputEvent.Escape)) {
                         level = levelEditor.RetrieveLevel();
-                        level.Save("levels/edit.lvl");
+                        level.Save("Levels/edit.lvl");
                         gameState = GameState.Init;
                     }
                     if(InputManager.IsActive(InputEvent.Menu)) {
