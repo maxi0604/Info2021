@@ -15,6 +15,8 @@ namespace Info2021
         private PauseMenu pauseMenu;
         private EditSelectionMenu editSelectionMenu;
         private EditorMenu editorMenu;
+
+        private LevelSelectMenu levelSelectMenu;
         private GameState gameState = GameState.Menu;
         private LevelRunner levelRunner;
         private Level level;
@@ -46,6 +48,7 @@ namespace Info2021
             levelEditor = new LevelEditor(ResourceAccessor, spriteBatch);
             editSelectionMenu = new EditSelectionMenu(spriteBatch, ResourceAccessor);
             editorMenu = new EditorMenu(spriteBatch, ResourceAccessor);
+            levelSelectMenu = new LevelSelectMenu(spriteBatch, ResourceAccessor);
             try
             {
                 level = Level.Load("Levels/edit.lvl");    
@@ -76,7 +79,9 @@ namespace Info2021
                     if(menu.HasBeenSelected(out item)) {
                         switch(item) {
                             case MenuItem.LevelSelect:
-                                gameState = GameState.Init;
+                                // prevents some double tapping bug
+                                System.Threading.Thread.Sleep(50);
+                                gameState = GameState.LevelSelect;
                                 break;
                             case MenuItem.LevelEdit:
                                 gameState = GameState.Edit;
@@ -182,6 +187,19 @@ namespace Info2021
                             }
                     }
                     break;
+                case GameState.LevelSelect:
+                    levelSelectMenu.Update();
+                    int selectedLevel;
+                    if(levelSelectMenu.HasBeenSelected(out selectedLevel)) {
+                        if(selectedLevel == 0) {
+                            gameState = GameState.Menu;
+                        } else {
+                            level = Level.Load("Levels/level" + selectedLevel.ToString() + ".lvl");
+                            gameState = GameState.Init;
+
+                        }
+                    }
+                    break;
                 default:
                     break;
             }        
@@ -215,6 +233,9 @@ namespace Info2021
                     break;
                 case GameState.EditMenu:
                     editorMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    break;
+                case GameState.LevelSelect:
+                    levelSelectMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 default:
                     break;
