@@ -27,8 +27,9 @@ namespace Info2021
         bool isAlive = true;
         bool hasBeatLevel = false;
 
-        public Player(Vector2 position)
-        {
+        bool moveRight = true;
+
+        public Player(Vector2 position) {
             Collider = new AttachedCollider(this, hitbox);
             VelPos = new VelPos(Vector2.Zero, position);
         }
@@ -45,15 +46,19 @@ namespace Info2021
 
             // Movement logic
             bool directionalMovement = true;
-            if (InputManager.IsActive(InputEvent.Right))
+            if (InputManager.IsActive(InputEvent.Right)) {
                 VelPos = VelPos.Accelerate(new Vector2(40f, 0));
+                moveRight = true;
+            }
             else if (InputManager.IsActive(InputEvent.Left))
+            {
                 VelPos = VelPos.Accelerate(new Vector2(-40f, 0));
+                moveRight = false;
+            }
             else
                 directionalMovement = false;
 
-            if (InputManager.IsActive(InputEvent.Down) && !fastFalling)
-            {
+            if(InputManager.IsActive(InputEvent.Down) && !fastFalling) {
                 StartFalling();
             }
             if (!InputManager.IsActive(InputEvent.Down) && fastFalling)
@@ -167,7 +172,11 @@ namespace Info2021
         public override Texture2D GetTexture(ResourceAccessor resourceAccessor)
         {
             // TODO: Animation depending on state
-            return resourceAccessor.LoadContent<Texture2D>("Character");
+            if(moveRight) {
+                return resourceAccessor.GetSprite(1, 14);
+            } else {
+                return resourceAccessor.GetSprite(2, 14);
+            }
         }
 
         public bool IsAlive()
