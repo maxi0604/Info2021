@@ -37,6 +37,9 @@ namespace Info2021
             cinematicObjects = level.cinematicObjects;
             background = level.background;
             tiles = level.tiles;
+
+            level.dynamicObjects.RemoveAll(x => x is Player);
+            
             player = new Player(level.spawnPosition);
             
             dynamicObjects.Insert(0, player);
