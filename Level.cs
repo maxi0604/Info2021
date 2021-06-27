@@ -29,7 +29,7 @@ namespace Info2021
         [DataMember]
         public Vector2 camPos { get; set; }
         [DataMember]
-        public List<Tile> tiles { get;  set; }
+        public List<Tile> tiles { get; set; }
         [DataMember]
         public List<StaticCollider> staticColliders { get; set; }
         [DataMember]
@@ -39,26 +39,29 @@ namespace Info2021
         [DataMember]
         public Background background { get; set; }
 
-        public static Level Load(string path) {
+        public static Level Load(string path)
+        {
             Level a = BinarySerializer.Deserialize<Level>(File.OpenRead(path));
             Level b = new Level(Vector2.Zero, Vector2.Zero, new List<Tile>(), new List<StaticCollider>(),
             new List<DynamicObject>(), new List<CinematicObject>(), new Background("background1"));
-            foreach(var t in a.cinematicObjects) t.Add(b);
-            foreach(var t in a.dynamicObjects) t.Add(b);
-            foreach(var t in a.staticColliders) t.Add(b);
-            foreach(var t in a.tiles) t.Add(b);
+            foreach (var t in a.cinematicObjects) t.Add(b);
+            foreach (var t in a.dynamicObjects) t.Add(b);
+            foreach (var t in a.staticColliders) t.Add(b);
+            foreach (var t in a.tiles) t.Add(b);
             b.spawnPosition = a.spawnPosition;
             b.camPos = a.camPos;
             return b;
         }
 
-        public void Save(string path) {
-            using(Stream file = File.Create(path))
+        public void Save(string path)
+        {
+            using (Stream file = File.Create(path))
                 BinarySerializer.Serialize<Level>(this, file);
         }
-        public void AddSolidTile(TileInfo info, int x, int y) {
+        public void AddSolidTile(TileInfo info, int x, int y)
+        {
             new Tile(info, x, y).Add(this);
-            new StaticCollider(new Vector2(16*x, 16*y), new Vector2(16*x+15, 16*y+15)).Add(this);
+            new StaticCollider(new Vector2(16 * x, 16 * y), new Vector2(16 * x + 15, 16 * y + 15)).Add(this);
         }
     }
 }

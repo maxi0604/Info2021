@@ -16,11 +16,13 @@ namespace Info2021
         }
 
         // Needed because interface implementations cannot necessarily be overridden
-        public virtual void AddHelper(Level level) {
+        public virtual void AddHelper(Level level)
+        {
             level.dynamicObjects.Add(this);
         }
-        public virtual void Add(Level level) {
-            
+        public virtual void Add(Level level)
+        {
+
             AddHelper(level);
         }
     }

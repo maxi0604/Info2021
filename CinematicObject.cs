@@ -10,7 +10,8 @@ namespace Info2021
 
         public abstract void OnCollision(Player player);
 
-        public override void AddHelper(Level level) {
+        public override void AddHelper(Level level)
+        {
             level.cinematicObjects.Add(this);
         }
     }

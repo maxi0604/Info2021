@@ -28,7 +28,7 @@ namespace Info2021
             IsMouseVisible = true;
         }
 
-       
+
         protected override void Initialize()
         {
             // Fixed resolution to avoid scaling
@@ -40,7 +40,7 @@ namespace Info2021
             Texture2D spriteSheet = Content.Load<Texture2D>("spritesheet");
             int xc, yc;
             Texture2D[] textures = TextureHelper.Split(spriteSheet, 16, 16, out xc, out yc);
-            
+
             ResourceAccessor = new ResourceAccessor(this, textures, xc, yc);
             levelRunner = new LevelRunner(ResourceAccessor, spriteBatch);
             menu = new Menu(spriteBatch, ResourceAccessor);
@@ -51,16 +51,16 @@ namespace Info2021
             levelSelectMenu = new LevelSelectMenu(spriteBatch, ResourceAccessor);
             try
             {
-                level = Level.Load("Levels/edit.lvl");    
+                level = Level.Load("Levels/edit.lvl");
             }
             catch (System.Exception)
             {
-                
+
                 level = new Level(Vector2.Zero, Vector2.Zero, new List<Tile>(),
                 new List<StaticCollider>(), new List<DynamicObject>(), new List<CinematicObject>(),
                 new Background("background1"));
             }
-            
+
             Font = Content.Load<SpriteFont>("MontserratBold");
             base.Initialize();
 
@@ -76,8 +76,10 @@ namespace Info2021
                     //TODO: menu
                     menu.Update();
                     MenuItem item;
-                    if(menu.HasBeenSelected(out item)) {
-                        switch(item) {
+                    if (menu.HasBeenSelected(out item))
+                    {
+                        switch (item)
+                        {
                             case MenuItem.LevelSelect:
                                 // prevents some double tapping bug
                                 System.Threading.Thread.Sleep(50);
@@ -93,15 +95,17 @@ namespace Info2021
                             case MenuItem.Exit:
                                 Exit();
                                 break;
-                            }
+                        }
                     }
                     break;
                 case GameState.Pause:
                     //TODO: menu
                     pauseMenu.Update();
                     PauseMenuItem pauseItem;
-                    if(pauseMenu.HasBeenSelected(out pauseItem)) {
-                        switch(pauseItem) {
+                    if (pauseMenu.HasBeenSelected(out pauseItem))
+                    {
+                        switch (pauseItem)
+                        {
                             case PauseMenuItem.Unpause:
                                 gameState = GameState.InLevel;
                                 break;
@@ -114,22 +118,22 @@ namespace Info2021
                             case PauseMenuItem.MainMenu:
                                 gameState = GameState.Menu;
                                 break;
-                            }
+                        }
                     }
                     break;
                 case GameState.Init:
-                    
+
                     //Level firstLevel = FirstLevel.GetLevel(this);
                     levelRunner.Initialize(level);
                     gameState = GameState.InLevel;
                     break;
                 case GameState.InLevel:
-                    levelRunner.Update((float) gameTime.ElapsedGameTime.TotalSeconds);
-                    if(InputManager.IsActive(InputEvent.Escape))
+                    levelRunner.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+                    if (InputManager.IsActive(InputEvent.Escape))
                         gameState = GameState.Pause;
-                    if(!levelRunner.IsAlive())
+                    if (!levelRunner.IsAlive())
                         gameState = GameState.Dead;
-                    if(levelRunner.HasReachedGoal())
+                    if (levelRunner.HasReachedGoal())
                         gameState = GameState.BeatLevel;
                     break;
                 case GameState.Dead:
@@ -139,18 +143,21 @@ namespace Info2021
                     gameState = GameState.Menu;
                     break;
                 case GameState.Edit:
-                    if(InputManager.IsActive(InputEvent.Escape)) {
+                    if (InputManager.IsActive(InputEvent.Escape))
+                    {
                         gameState = GameState.EditMenu;
                     }
-                    if(InputManager.IsActive(InputEvent.Menu)) {
+                    if (InputManager.IsActive(InputEvent.Menu))
+                    {
                         gameState = GameState.EditSelectionMenu;
                     }
-                    levelEditor.Update((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    levelEditor.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 case GameState.EditSelectionMenu:
                     editSelectionMenu.Update();
                     LevelAddables addItem;
-                    if(editSelectionMenu.HasBeenSelected(out addItem)) {
+                    if (editSelectionMenu.HasBeenSelected(out addItem))
+                    {
                         levelEditor.currentAddables = addItem;
                         gameState = GameState.Edit;
                     }
@@ -158,8 +165,10 @@ namespace Info2021
                 case GameState.EditMenu:
                     editorMenu.Update();
                     EditorMenuItem editorMenuItem;
-                    if(editorMenu.HasBeenSelected(out editorMenuItem)) {
-                        switch(editorMenuItem) {
+                    if (editorMenu.HasBeenSelected(out editorMenuItem))
+                    {
+                        switch (editorMenuItem)
+                        {
                             case EditorMenuItem.Continue:
                                 gameState = GameState.Edit;
                                 break;
@@ -175,7 +184,7 @@ namespace Info2021
                                 level.Save("Levels/backup" + System.DateTime.Now.ToString("s") + ".lvl");
                                 break;
                             case EditorMenuItem.Reset:
-                                level = new Level(Vector2.Zero, Vector2.Zero, 
+                                level = new Level(Vector2.Zero, Vector2.Zero,
                                 new List<Tile>(), new List<StaticCollider>(), new List<DynamicObject>(),
                                 new List<CinematicObject>(), new Background("background1"));
                                 levelEditor.Initialize(level);
@@ -184,16 +193,20 @@ namespace Info2021
                             case EditorMenuItem.MainMenu:
                                 gameState = GameState.Menu;
                                 break;
-                            }
+                        }
                     }
                     break;
                 case GameState.LevelSelect:
                     levelSelectMenu.Update();
                     int selectedLevel;
-                    if(levelSelectMenu.HasBeenSelected(out selectedLevel)) {
-                        if(selectedLevel == 0) {
+                    if (levelSelectMenu.HasBeenSelected(out selectedLevel))
+                    {
+                        if (selectedLevel == 0)
+                        {
                             gameState = GameState.Menu;
-                        } else {
+                        }
+                        else
+                        {
                             level = Level.Load("Levels/level" + selectedLevel.ToString() + ".lvl");
                             gameState = GameState.Init;
 
@@ -202,7 +215,7 @@ namespace Info2021
                     break;
                 default:
                     break;
-            }        
+            }
 
             base.Update(gameTime);
         }
@@ -213,36 +226,36 @@ namespace Info2021
             switch (gameState)
             {
                 case GameState.Menu:
-                    menu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    menu.Draw((float)gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 case GameState.Init:
                     break;
                 case GameState.InLevel:
-                    levelRunner.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    levelRunner.Draw((float)gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 case GameState.BeatLevel:
                     break;
                 case GameState.Pause:
-                    pauseMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    pauseMenu.Draw((float)gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 case GameState.Edit:
-                    levelEditor.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    levelEditor.Draw((float)gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 case GameState.EditSelectionMenu:
-                    editSelectionMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    editSelectionMenu.Draw((float)gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 case GameState.EditMenu:
-                    editorMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    editorMenu.Draw((float)gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 case GameState.LevelSelect:
-                    levelSelectMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    levelSelectMenu.Draw((float)gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 default:
                     break;
             }
-            
+
             base.Draw(gameTime);
-            
+
         }
 
 

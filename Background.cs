@@ -20,6 +20,6 @@ namespace Info2021
             renderer.Draw(camPos, accessor.LoadContent<Texture2D>(texturePath), camPos, 0, Vector2.Zero, 1, 0.99f);
         }
 
-        
+
     }
 }

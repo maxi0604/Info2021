@@ -21,10 +21,11 @@ namespace Info2021
         {
             Position = position;
             this.rotation = rotation;
-            
+
 
             // spikes are always "inside" the tile
-            switch(rotation) {
+            switch (rotation)
+            {
                 case 0:
                     topLeft = position + Vector2.UnitX * 12;
                     diag = new Vector2(2, 16);
@@ -39,7 +40,7 @@ namespace Info2021
                     break;
                 case 3:
                     topLeft = position + Vector2.UnitY * 12;
-                    diag = new Vector2(16,2);
+                    diag = new Vector2(16, 2);
                     break;
                 default:
                     throw new System.InvalidOperationException();
@@ -49,7 +50,7 @@ namespace Info2021
 
         public override Texture2D GetTexture(ResourceAccessor resourceAccessor)
         {
-            
+
             return resourceAccessor.GetSprite(13, 15 - rotation);
         }
 

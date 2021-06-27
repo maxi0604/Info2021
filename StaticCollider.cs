@@ -5,7 +5,8 @@ using Microsoft.Xna.Framework;
 namespace Info2021
 {
     [DataContract]
-    class StaticCollider : ILevelElement {
+    class StaticCollider : ILevelElement
+    {
         public StaticCollider(Vector2 topLeft, Vector2 bottomRight)
         {
             if (topLeft.X > bottomRight.X || topLeft.Y > bottomRight.Y)
@@ -20,7 +21,8 @@ namespace Info2021
         public Vector2 BottomRight { get; set; }
         public Vector2 Center { get => (TopLeft + BottomRight) / 2; }
 
-        public void Add(Level level) {
+        public void Add(Level level)
+        {
             level.staticColliders.Add(this);
         }
     }

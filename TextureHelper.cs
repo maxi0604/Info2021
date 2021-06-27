@@ -5,7 +5,8 @@ namespace Info2021
     static class TextureHelper
     {
         // https://gamedev.stackexchange.com/questions/11584/xna-splitting-one-large-texture-into-an-array-of-smaller-textures
-        public static Texture2D[] Split(Texture2D original, int partWidth, int partHeight, out int xCount, out int yCount) {
+        public static Texture2D[] Split(Texture2D original, int partWidth, int partHeight, out int xCount, out int yCount)
+        {
             yCount = original.Height / partHeight + (partHeight % original.Height == 0 ? 0 : 1);
             xCount = original.Height / partHeight + (partHeight % original.Height == 0 ? 0 : 1);
             Texture2D[] r = new Texture2D[xCount * yCount];//Number of parts = (area of original) / (area of each part).

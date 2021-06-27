@@ -11,7 +11,7 @@ namespace Info2021
         public VelPos VelPos { get; set; }
         [DataMember]
         public StaticCollider Collider;
-        public override Vector2 Position {get {return VelPos.P;} set {VelPos = VelPos.WithPosition(value);}}
+        public override Vector2 Position { get { return VelPos.P; } set { VelPos = VelPos.WithPosition(value); } }
         [DataMember]
         CinematicCollider cinematicCollider;
         CinematicCollider ICinematicColliderParent.CCollider => cinematicCollider;
@@ -30,14 +30,14 @@ namespace Info2021
             VelPos = new VelPos(velocity, position);
             Collider = new StaticCollider(VelPos.P, VelPos.P + Vector2.One * 16);
             cinematicCollider = new CinematicCollider(this, VelPos.P - Vector2.UnitY * 2, new Vector2(16, 8));
-            
+
             MaxTime = maxTime;
             movingTime = 0;
         }
 
         public override Texture2D GetTexture(ResourceAccessor resourceAccessor)
         {
-            return resourceAccessor.GetSprite(0,13);
+            return resourceAccessor.GetSprite(0, 13);
         }
 
         public override void Update(float dt, Player player)
@@ -46,7 +46,7 @@ namespace Info2021
             player.VelPos = player.VelPos.Translate(translationOnNextFrame);
             translationOnNextFrame = Vector2.Zero;
 
-            if(movingTime > MaxTime)
+            if (movingTime > MaxTime)
             {
                 movingTime = 0;
                 VelPos = VelPos.WithVelocity(-VelPos.V);
@@ -62,11 +62,12 @@ namespace Info2021
         public override void OnCollision(Player player)
         {
             // move player with the platform
-            translationOnNextFrame = VelPos.V/60;
-            
+            translationOnNextFrame = VelPos.V / 60;
+
         }
 
-        public override void AddHelper(Level level) {
+        public override void AddHelper(Level level)
+        {
             level.cinematicObjects.Add(this);
             level.staticColliders.Add(Collider);
         }

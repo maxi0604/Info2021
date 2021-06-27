@@ -9,7 +9,7 @@ namespace Info2021
         public static void Serialize<T>(T obj, Stream stream)
         {
             var serializer = new DataContractSerializer(typeof(T));
-            using (var writer = 
+            using (var writer =
                 XmlDictionaryWriter.CreateBinaryWriter(stream))
             {
                 serializer.WriteObject(writer, obj);
@@ -19,7 +19,7 @@ namespace Info2021
         public static T Deserialize<T>(Stream stream)
         {
             var serializer = new DataContractSerializer(typeof(T));
-            using (var reader = 
+            using (var reader =
                 XmlDictionaryReader.CreateBinaryReader(
                     stream, XmlDictionaryReaderQuotas.Max))
             {

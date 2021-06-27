@@ -27,8 +27,9 @@ namespace Info2021
                 height = Texture.Height;
                 width = Texture.Width;
         }
-        */ 
-        public TileInfo(int x, int y) : this(0.1f, 16, 16, x, y) {
+        */
+        public TileInfo(int x, int y) : this(0.1f, 16, 16, x, y)
+        {
 
         }
 

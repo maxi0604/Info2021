@@ -5,8 +5,9 @@ namespace Info2021
 {
     class DynamicRenderer : Renderer, IRenderer
     {
-        public DynamicRenderer(SpriteBatch sprite) : base(sprite) {
-            
+        public DynamicRenderer(SpriteBatch sprite) : base(sprite)
+        {
+
         }
         public void Draw(Vector2 cameraPosition, Texture2D texture, Vector2 position, float rotation, Vector2 origin, float scale, float layerDepth)
         {
