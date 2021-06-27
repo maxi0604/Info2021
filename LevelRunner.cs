@@ -38,7 +38,7 @@ namespace Info2021
             dynamicRenderer = new DynamicRenderer(spriteBatch);
         }
         public void Initialize(Level level) {
-
+            camTransFrames = 0;
             initialized = true;
             camPos = level.camPos;
             oldCamPos = camPos;
@@ -61,15 +61,15 @@ namespace Info2021
                 targetCamPos.X += 640;
                 transition = true;
             }
-            if(player.Position.X - targetCamPos.X < -16) {
+            if(player.Position.X - targetCamPos.X < 0) {
                 targetCamPos.X -= 640;
                 transition = true;
             }
-            if(player.Position.Y - targetCamPos.Y > 376) {
+            if(player.Position.Y - targetCamPos.Y > 360) {
                 targetCamPos.Y += 360;
                 transition = true;
             }
-            if(player.Position.Y - targetCamPos.Y < -16) {
+            if(player.Position.Y - targetCamPos.Y < 0) {
                 targetCamPos.Y -= 360;
                 transition = true;
             }
@@ -79,12 +79,13 @@ namespace Info2021
             }
 
             if (camTransFrames > 0) {
-                camPos = Vector2.Lerp(oldCamPos, targetCamPos, 1 - ((float)camTransFrames)/MAX_TRANS_FRAMES);
+                camPos = Vector2.Lerp(oldCamPos, targetCamPos, 1 - MathF.Pow(((float)camTransFrames)/MAX_TRANS_FRAMES, 2));
                 camTransFrames--;
             }
             else {
                 oldCamPos = targetCamPos;
             }
+
             for (int i = 0; i < dynamicObjects.Count; i++) {
                 // Do normal physics...
                 dynamicObjects[i].Update(gameTime, player);
