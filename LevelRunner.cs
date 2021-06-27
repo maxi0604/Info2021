@@ -11,6 +11,11 @@ namespace Info2021
         ResourceAccessor resourceAccessor;
         SpriteBatch spriteBatch;
         Vector2 camPos;
+        // TODO: Make this less janky
+        Vector2 targetCamPos;
+        Vector2 oldCamPos;
+        int camTransFrames;
+        const int MAX_TRANS_FRAMES = 20;
         TileRenderer tileRenderer;
         BackgroundRenderer backgroundRenderer;
         DynamicRenderer dynamicRenderer;
@@ -36,6 +41,8 @@ namespace Info2021
 
             initialized = true;
             camPos = level.camPos;
+            oldCamPos = camPos;
+            targetCamPos = camPos;
             dynamicObjects = level.dynamicObjects;
             staticColliders = level.staticColliders;
             cinematicObjects = level.cinematicObjects;
@@ -48,24 +55,36 @@ namespace Info2021
         public void Update(float gameTime) {
             if(!initialized) throw new System.InvalidOperationException();
 
+            bool transition = false;
             // change screen
-            if(player.Position.X - camPos.X > 640) {
-                
-                camPos.X += 640;
+            if(player.Position.X - targetCamPos.X > 640) {
+                targetCamPos.X += 640;
+                transition = true;
             }
-            if(player.Position.X - camPos.X < -16) {
-                
-                camPos.X -= 640;
+            if(player.Position.X - targetCamPos.X < -16) {
+                targetCamPos.X -= 640;
+                transition = true;
             }
-            if(player.Position.Y - camPos.Y > 376) {
-                
-                camPos.Y += 360;
+            if(player.Position.Y - targetCamPos.Y > 376) {
+                targetCamPos.Y += 360;
+                transition = true;
             }
-            if(player.Position.Y - camPos.Y < -16) {
-                
-                camPos.Y -= 360;
+            if(player.Position.Y - targetCamPos.Y < -16) {
+                targetCamPos.Y -= 360;
+                transition = true;
             }
-            
+
+            if (transition && camTransFrames == 0) {
+                camTransFrames = MAX_TRANS_FRAMES;
+            }
+
+            if (camTransFrames > 0) {
+                camPos = Vector2.Lerp(oldCamPos, targetCamPos, 1 - ((float)camTransFrames)/MAX_TRANS_FRAMES);
+                camTransFrames--;
+            }
+            else {
+                oldCamPos = targetCamPos;
+            }
             for (int i = 0; i < dynamicObjects.Count; i++) {
                 // Do normal physics...
                 dynamicObjects[i].Update(gameTime, player);
