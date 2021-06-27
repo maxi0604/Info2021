@@ -2,10 +2,8 @@ using System;
 using static System.MathF;
 using Microsoft.Xna.Framework;
 
-namespace Info2021
-{
-    class AttachedCollider
-    {
+namespace Info2021 {
+    class AttachedCollider {
         public IAttachedColliderParent Parent { get; }
         public Vector2 TopLeft { get => Parent.VelPos.P + offset; }
         Vector2 diagonal;
@@ -14,8 +12,7 @@ namespace Info2021
         public Vector2 Center { get => TopLeft + diagonal / 2; }
 
         public AttachedCollider(IAttachedColliderParent parent, Vector2 diagonal) : this(parent, diagonal, Vector2.Zero) { }
-        public AttachedCollider(IAttachedColliderParent parent, Vector2 diagonal, Vector2 offset)
-        {
+        public AttachedCollider(IAttachedColliderParent parent, Vector2 diagonal, Vector2 offset) {
             if (diagonal.X < 0 || diagonal.Y < 0)
                 throw new ArgumentOutOfRangeException("Diagonal vector has to be pointing from the top left to the bottom right.");
 
@@ -27,11 +24,9 @@ namespace Info2021
         // https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
         // https://www.metanetsoftware.com/2016/n-tutorial-a-collision-detection-and-response#section1
         // https://stackoverflow.com/questions/46172953/aabb-collision-resolution-slipping-sides
-        public bool CollideWith(StaticCollider other)
-        {
+        public bool CollideWith(StaticCollider other) {
             if (BottomRight.X <= other.TopLeft.X || TopLeft.X >= other.BottomRight.X
-                || BottomRight.Y <= other.TopLeft.Y || TopLeft.Y >= other.BottomRight.Y)
-            {
+                || BottomRight.Y <= other.TopLeft.Y || TopLeft.Y >= other.BottomRight.Y) {
                 // No collision took place.
                 return false;
             }
@@ -52,20 +47,17 @@ namespace Info2021
             Vector2 accelVel;
 
             // Set in which direction we need to go.
-            if (resolveAlongX)
-            {
+            if (resolveAlongX) {
                 accelVel = new Vector2(-oldVel.X, 0);
             }
-            else
-            {
+            else {
                 accelVel = new Vector2(0, -oldVel.Y);
             }
 
             // Only resolve the collision if we aren't moving outside of the object already anyway
             // i. e. if our velocity in the direction we are moving in isn't already pointing out of the other object
             // and we are moving fast enough to actually resolve the collision.
-            if (Vector2.Dot(oldVel, accelVel) / 60 < (resolveAlongX ? Abs(alongX) : Abs(alongY)))
-            {
+            if (Vector2.Dot(oldVel, accelVel) / 60 < (resolveAlongX ? Abs(alongX) : Abs(alongY))) {
                 Parent.VelPos = Parent.VelPos.Accelerate(accelVel);
 
                 // Push this collider out of the other one.

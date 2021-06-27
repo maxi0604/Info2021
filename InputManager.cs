@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-namespace Info2021
-{
-    public static class InputManager
-    {
+namespace Info2021 {
+    public static class InputManager {
         public static Dictionary<Keys, InputEvent> Translator { get; } = new Dictionary<Keys, InputEvent>()
             {{Keys.Left, InputEvent.Left},
              {Keys.Right, InputEvent.Right},
@@ -19,14 +17,11 @@ namespace Info2021
              {Keys.A, InputEvent.PreviousThing},
              {Keys.Space, InputEvent.Menu},};
 
-        public static bool IsActive(InputEvent input)
-        {
-            if (input == InputEvent.Jump && Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
+        public static bool IsActive(InputEvent input) {
+            if (input == InputEvent.Jump && Mouse.GetState().LeftButton == ButtonState.Pressed) {
                 return true;
             }
-            if (input == InputEvent.Remove && Mouse.GetState().RightButton == ButtonState.Pressed)
-            {
+            if (input == InputEvent.Remove && Mouse.GetState().RightButton == ButtonState.Pressed) {
                 return true;
             }
             var keys = Translator.Where(x => x.Value == input).Select(x => x.Key);

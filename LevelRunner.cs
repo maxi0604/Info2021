@@ -4,10 +4,8 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
-namespace Info2021
-{
-    class LevelRunner : LevelManager
-    {
+namespace Info2021 {
+    class LevelRunner : LevelManager {
         // TODO: Make this less janky
         Vector2 targetCamPos;
         Vector2 oldCamPos;
@@ -24,11 +22,9 @@ namespace Info2021
         private bool initialized = false;
 
         public LevelRunner(ResourceAccessor resourceAccessor, SpriteBatch spriteBatch) :
-            base(resourceAccessor, spriteBatch)
-        { }
+            base(resourceAccessor, spriteBatch) { }
 
-        public void Initialize(Level level)
-        {
+        public void Initialize(Level level) {
             camTransFrames = 0;
             initialized = true;
             camPos = level.camPos;
@@ -46,81 +42,67 @@ namespace Info2021
 
             dynamicObjects.Insert(0, player);
         }
-        public void Update(float gameTime)
-        {
+        public void Update(float gameTime) {
             if (!initialized) throw new System.InvalidOperationException();
 
             bool transition = false;
             // change screen
-            if (player.Position.X - targetCamPos.X > 640)
-            {
+            if (player.Position.X - targetCamPos.X > 640) {
                 targetCamPos.X += 640;
                 transition = true;
             }
-            if (player.Position.X - targetCamPos.X < 0)
-            {
+            if (player.Position.X - targetCamPos.X < 0) {
                 targetCamPos.X -= 640;
                 transition = true;
             }
-            if (player.Position.Y - targetCamPos.Y > 360)
-            {
+            if (player.Position.Y - targetCamPos.Y > 360) {
                 targetCamPos.Y += 360;
                 transition = true;
             }
-            if (player.Position.Y - targetCamPos.Y < 0)
-            {
+            if (player.Position.Y - targetCamPos.Y < 0) {
                 targetCamPos.Y -= 360;
                 transition = true;
             }
 
-            if (transition && camTransFrames == 0)
-            {
+            if (transition && camTransFrames == 0) {
                 camTransFrames = MAX_TRANS_FRAMES;
             }
 
-            if (camTransFrames > 0)
-            {
+            if (camTransFrames > 0) {
                 camPos = Vector2.Lerp(oldCamPos, targetCamPos, 1 - MathF.Pow(((float)camTransFrames) / MAX_TRANS_FRAMES, 2));
                 camTransFrames--;
             }
-            else
-            {
+            else {
                 oldCamPos = targetCamPos;
             }
 
-            for (int i = 0; i < dynamicObjects.Count; i++)
-            {
+            for (int i = 0; i < dynamicObjects.Count; i++) {
                 // Do normal physics...
                 dynamicObjects[i].Update(gameTime, player);
             }
-            foreach (CinematicObject cinematicObject in cinematicObjects)
-            {
+            foreach (CinematicObject cinematicObject in cinematicObjects) {
                 cinematicObject.Update(gameTime, player);
                 cinematicObject.CCollider.CollideWith(player);
             }
             // Then resolve collisions as suggested in https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
             // TODO: Generalize to multiple dynamic colliders and possibly even dynamic collider - dynamic collider collision.
-            foreach (StaticCollider staticCollider in staticColliders)
-            {
+            foreach (StaticCollider staticCollider in staticColliders) {
                 player.Collider.CollideWith(staticCollider);
             }
         }
 
 
 
-        public void Draw(float dt)
-        {
+        public void Draw(float dt) {
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
 
             DrawObjects(tiles, background, dynamicObjects, cinematicObjects);
             spriteBatch.End();
         }
-        public bool IsAlive()
-        {
+        public bool IsAlive() {
             return player.IsAlive();
         }
-        public bool HasReachedGoal()
-        {
+        public bool HasReachedGoal() {
             return player.HasBeatLevel();
         }
     }

@@ -3,10 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace Info2021
-{
-    class LevelEditor : LevelManager
-    {
+namespace Info2021 {
+    class LevelEditor : LevelManager {
         int[] indices;
 
         int indexIndex;
@@ -17,14 +15,12 @@ namespace Info2021
         public LevelAddables currentAddables;
         private static HashSet<InputEvent> haveBecomeActive = new HashSet<InputEvent>();
 
-        private Tile GetTile(int count, Vector2 position)
-        {
+        private Tile GetTile(int count, Vector2 position) {
             return new Tile(new TileInfo(count % 16, count / 16),
                 (int)position.X / 16, (int)position.Y / 16);
         }
 
-        private CinematicObject GetCinematic(int count, Vector2 position)
-        {
+        private CinematicObject GetCinematic(int count, Vector2 position) {
             CinematicObject[] allCinems =
             {new Goal(position),
             new Spikes(position, 0),
@@ -42,39 +38,32 @@ namespace Info2021
             return allCinems[count % allCinems.Length];
         }
 
-        public LevelEditor(ResourceAccessor resourceAccessor, SpriteBatch spriteBatch) : base(resourceAccessor, spriteBatch)
-        {
+        public LevelEditor(ResourceAccessor resourceAccessor, SpriteBatch spriteBatch) : base(resourceAccessor, spriteBatch) {
             indices = new int[] { 0, 0, 0, 0 };
             camPos = Vector2.Zero;
         }
-        public void Initialize(Level level)
-        {
+        public void Initialize(Level level) {
             this.level = level;
             level.dynamicObjects.RemoveAll(x => x is Player);
 
         }
-        public void Update(float gameTime)
-        {
+        public void Update(float gameTime) {
             indexIndex = (int)currentAddables;
 
             // change screen
-            if (Position.X - camPos.X > 640)
-            {
+            if (Position.X - camPos.X > 640) {
 
                 camPos.X += 640;
             }
-            if (Position.X - camPos.X < -16)
-            {
+            if (Position.X - camPos.X < -16) {
 
                 camPos.X -= 640;
             }
-            if (Position.Y - camPos.Y > 376)
-            {
+            if (Position.Y - camPos.Y > 376) {
 
                 camPos.Y += 360;
             }
-            if (Position.Y - camPos.Y < -16)
-            {
+            if (Position.Y - camPos.Y < -16) {
 
                 camPos.Y -= 360;
             }
@@ -82,10 +71,8 @@ namespace Info2021
 
             HashSet<InputEvent> oldActive = haveBecomeActive;
             haveBecomeActive = new HashSet<InputEvent>();
-            foreach (var item in (InputEvent[])Enum.GetValues(typeof(InputEvent)))
-            {
-                if ((InputManager.IsActive(item) && !oldActive.Contains(item)))
-                {
+            foreach (var item in (InputEvent[])Enum.GetValues(typeof(InputEvent))) {
+                if ((InputManager.IsActive(item) && !oldActive.Contains(item))) {
                     haveBecomeActive.Add(item);
                 }
             }
@@ -102,25 +89,19 @@ namespace Info2021
             Position = (InputManager.MousePos / 16);
             Position.Floor();
             Position *= 16;
-            if (haveBecomeActive.Contains(InputEvent.Jump))
-            {
+            if (haveBecomeActive.Contains(InputEvent.Jump)) {
                 bool isThere = false;
-                foreach (var x in level.tiles)
-                {
+                foreach (var x in level.tiles) {
                     if ((x.Position - Position).Length() < 1) isThere = true;
                 }
-                foreach (var x in level.dynamicObjects)
-                {
+                foreach (var x in level.dynamicObjects) {
                     if ((x.Position - Position).Length() < 1) isThere = true;
                 }
-                foreach (var x in level.cinematicObjects)
-                {
+                foreach (var x in level.cinematicObjects) {
                     if ((x.Position - Position).Length() < 1) isThere = true;
                 }
-                if (!isThere)
-                {
-                    switch (currentAddables)
-                    {
+                if (!isThere) {
+                    switch (currentAddables) {
                         case LevelAddables.Tile:
                             level.AddSolidTile(new TileInfo(
                                 indices[(int)LevelAddables.Tile] % 16, indices[(int)LevelAddables.Tile] / 16), (int)Math.Floor(Position.X / 16), (int)Math.Floor(Position.Y / 16));
@@ -137,55 +118,43 @@ namespace Info2021
                     }
                 }
             }
-            if (haveBecomeActive.Contains(InputEvent.Remove))
-            {
-                for (int i = 0; i < level.dynamicObjects.Count; i++)
-                {
-                    if ((level.dynamicObjects[i].Position - Position).Length() < 1)
-                    {
+            if (haveBecomeActive.Contains(InputEvent.Remove)) {
+                for (int i = 0; i < level.dynamicObjects.Count; i++) {
+                    if ((level.dynamicObjects[i].Position - Position).Length() < 1) {
                         level.dynamicObjects.RemoveAt(i);
                         break;
                     }
                 }
-                for (int i = 0; i < level.cinematicObjects.Count; i++)
-                {
-                    if ((level.cinematicObjects[i].Position - Position).Length() < 1)
-                    {
+                for (int i = 0; i < level.cinematicObjects.Count; i++) {
+                    if ((level.cinematicObjects[i].Position - Position).Length() < 1) {
                         level.cinematicObjects.RemoveAt(i);
                         break;
                     }
                 }
-                for (int i = 0; i < level.tiles.Count; i++)
-                {
-                    if ((level.tiles[i].Position - Position).Length() < 1)
-                    {
+                for (int i = 0; i < level.tiles.Count; i++) {
+                    if ((level.tiles[i].Position - Position).Length() < 1) {
                         level.tiles.RemoveAt(i);
                         break;
                     }
                 }
-                for (int i = 0; i < level.staticColliders.Count; i++)
-                {
-                    if ((level.staticColliders[i].TopLeft - Position).Length() < 1)
-                    {
+                for (int i = 0; i < level.staticColliders.Count; i++) {
+                    if ((level.staticColliders[i].TopLeft - Position).Length() < 1) {
                         level.staticColliders.RemoveAt(i);
                         break;
                     }
                 }
 
             }
-            if (haveBecomeActive.Contains(InputEvent.NextThing) && indices[indexIndex] < 256)
-            {
+            if (haveBecomeActive.Contains(InputEvent.NextThing) && indices[indexIndex] < 256) {
                 indices[indexIndex]++;
             }
-            if (haveBecomeActive.Contains(InputEvent.PreviousThing) && indices[indexIndex] > 0)
-            {
+            if (haveBecomeActive.Contains(InputEvent.PreviousThing) && indices[indexIndex] > 0) {
                 indices[indexIndex]--;
             }
 
         }
 
-        public void Draw(float totalSeconds)
-        {
+        public void Draw(float totalSeconds) {
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
 
             DrawObjects(level.tiles, level.background, level.dynamicObjects, level.cinematicObjects);
@@ -193,8 +162,7 @@ namespace Info2021
             GetTile(12, level.camPos).Draw(tileRenderer, resourceAccessor, camPos);
             GetTile(109, level.spawnPosition).Draw(tileRenderer, resourceAccessor, camPos);
 
-            switch (currentAddables)
-            {
+            switch (currentAddables) {
                 case LevelAddables.Tile:
                     GetTile(indices[indexIndex], Position).Draw(tileRenderer, resourceAccessor, camPos);
                     break;
@@ -211,8 +179,7 @@ namespace Info2021
             spriteBatch.End();
         }
 
-        public Level RetrieveLevel()
-        {
+        public Level RetrieveLevel() {
             return level;
         }
     }

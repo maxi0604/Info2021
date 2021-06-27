@@ -4,18 +4,15 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.Xna.Framework;
-namespace Info2021
-{
+namespace Info2021 {
     [DataContract]
     [KnownType(typeof(Spikes))]
     [KnownType(typeof(Goal))]
     [KnownType(typeof(MovingPlatform))]
     [KnownType(typeof(Spring))]
-    class Level
-    {
+    class Level {
         public Level(Vector2 spawnPosition, Vector2 camPos, List<Tile> tiles, List<StaticCollider> staticColliders,
-                List<DynamicObject> dynamicObjects, List<CinematicObject> cinematicObjects, Background background)
-        {
+                List<DynamicObject> dynamicObjects, List<CinematicObject> cinematicObjects, Background background) {
             this.spawnPosition = spawnPosition;
             this.camPos = camPos;
             this.tiles = tiles;
@@ -39,8 +36,7 @@ namespace Info2021
         [DataMember]
         public Background background { get; set; }
 
-        public static Level Load(string path)
-        {
+        public static Level Load(string path) {
             Level a = BinarySerializer.Deserialize<Level>(File.OpenRead(path));
             Level b = new Level(Vector2.Zero, Vector2.Zero, new List<Tile>(), new List<StaticCollider>(),
             new List<DynamicObject>(), new List<CinematicObject>(), new Background("background1"));
@@ -53,13 +49,11 @@ namespace Info2021
             return b;
         }
 
-        public void Save(string path)
-        {
+        public void Save(string path) {
             using (Stream file = File.Create(path))
                 BinarySerializer.Serialize<Level>(this, file);
         }
-        public void AddSolidTile(TileInfo info, int x, int y)
-        {
+        public void AddSolidTile(TileInfo info, int x, int y) {
             new Tile(info, x, y).Add(this);
             new StaticCollider(new Vector2(16 * x, 16 * y), new Vector2(16 * x + 15, 16 * y + 15)).Add(this);
         }

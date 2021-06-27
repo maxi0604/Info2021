@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-namespace Info2021
-{
-    static class TextureHelper
-    {
+namespace Info2021 {
+    static class TextureHelper {
         // https://gamedev.stackexchange.com/questions/11584/xna-splitting-one-large-texture-into-an-array-of-smaller-textures
-        public static Texture2D[] Split(Texture2D original, int partWidth, int partHeight, out int xCount, out int yCount)
-        {
+        public static Texture2D[] Split(Texture2D original, int partWidth, int partHeight, out int xCount, out int yCount) {
             yCount = original.Height / partHeight + (partHeight % original.Height == 0 ? 0 : 1);
             xCount = original.Height / partHeight + (partHeight % original.Height == 0 ? 0 : 1);
             Texture2D[] r = new Texture2D[xCount * yCount];//Number of parts = (area of original) / (area of each part).
@@ -18,8 +15,7 @@ namespace Info2021
 
             int index = 0;
             for (int y = 0; y < yCount * partHeight; y += partHeight)
-                for (int x = 0; x < xCount * partWidth; x += partWidth)
-                {
+                for (int x = 0; x < xCount * partWidth; x += partWidth) {
                     //The texture at coordinate {x, y} from the top-left of the original texture
                     Texture2D part = new Texture2D(original.GraphicsDevice, partWidth, partHeight);
                     //The data for part
@@ -27,8 +23,7 @@ namespace Info2021
 
                     //Fill the part data with colors from the original texture
                     for (int py = 0; py < partHeight; py++)
-                        for (int px = 0; px < partWidth; px++)
-                        {
+                        for (int px = 0; px < partWidth; px++) {
                             int partIndex = px + py * partWidth;
                             //If a part goes outside of the source texture, then fill the overlapping part with Color.Transparent
                             if (y + py >= original.Height || x + px >= original.Width)

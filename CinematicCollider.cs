@@ -3,11 +3,9 @@ using static System.MathF;
 using Microsoft.Xna.Framework;
 using System.Runtime.Serialization;
 
-namespace Info2021
-{
+namespace Info2021 {
     [DataContract]
-    class CinematicCollider
-    {
+    class CinematicCollider {
         [DataMember]
 
         public ICinematicColliderParent Parent { get; set; }
@@ -18,8 +16,7 @@ namespace Info2021
         public Vector2 BottomRight { get => TopLeft + diagonal; }
         public Vector2 Center { get => TopLeft + diagonal / 2; }
 
-        public CinematicCollider(ICinematicColliderParent parent, Vector2 topLeft, Vector2 diagonal)
-        {
+        public CinematicCollider(ICinematicColliderParent parent, Vector2 topLeft, Vector2 diagonal) {
             if (diagonal.X < 0 || diagonal.Y < 0)
                 throw new ArgumentOutOfRangeException("Diagonal vector has to be pointing from the top left to the bottom right.");
 
@@ -27,8 +24,7 @@ namespace Info2021
             this.TopLeft = topLeft;
             this.Parent = parent;
         }
-        public void CollideWith(Player player)
-        {
+        public void CollideWith(Player player) {
             if (BottomRight.X > player.Collider.TopLeft.X && TopLeft.X < player.Collider.BottomRight.X
                 && BottomRight.Y > player.Collider.TopLeft.Y && TopLeft.Y < player.Collider.BottomRight.Y)
                 Parent.OnCollision(player);

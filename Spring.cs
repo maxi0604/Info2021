@@ -3,11 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Runtime.Serialization;
 
-namespace Info2021
-{
+namespace Info2021 {
     [DataContract]
-    class Spring : CinematicObject, ILevelElement
-    {
+    class Spring : CinematicObject, ILevelElement {
         [DataMember]
         public override Vector2 Position { get; set; }
         private bool hasTouchedLastFrame, hasTouchedThisFrame;
@@ -21,15 +19,13 @@ namespace Info2021
         [DataMember]
         int rotation;
 
-        public Spring(Vector2 position, int rotation)
-        {
+        public Spring(Vector2 position, int rotation) {
             Position = position;
             this.rotation = rotation;
             hasTouchedLastFrame = false;
             hasTouchedThisFrame = false;
 
-            switch (rotation)
-            {
+            switch (rotation) {
                 case 0:
                     topLeft = position + Vector2.UnitX * 8;
                     diag = new Vector2(8, 16);
@@ -56,14 +52,12 @@ namespace Info2021
             CCollider = new CinematicCollider(this, topLeft, diag);
         }
 
-        public override Texture2D GetTexture(ResourceAccessor resourceAccessor)
-        {
+        public override Texture2D GetTexture(ResourceAccessor resourceAccessor) {
 
             return resourceAccessor.GetSprite(7, 15 - rotation);
         }
 
-        public override void OnCollision(Player player)
-        {
+        public override void OnCollision(Player player) {
             //CCollider = new CinematicCollider(this, topLeft, diag);
             float newVel = 0;
             if (player.OnGround())
@@ -79,8 +73,7 @@ namespace Info2021
                 if (Math.Sign(player.VelPos.V.X) == -Math.Sign(direction.X) && !player.OnGround())
                     newVel = -player.VelPos.V.X;
             player.VelPos = player.VelPos.WithVelocity(new Vector2(MathF.MaxMagnitude(direction.X * 400, newVel), player.VelPos.V.Y));
-            if (rotation % 2 == 1)
-            {
+            if (rotation % 2 == 1) {
                 if (Math.Sign(player.VelPos.V.Y) == -Math.Sign(direction.Y) && !player.OnGround())
                     newVel = -player.VelPos.V.Y;
                 player.VelPos = player.VelPos.WithVelocity(new Vector2(player.VelPos.V.X, MathF.MaxMagnitude(direction.Y * 400, newVel)));
@@ -89,8 +82,7 @@ namespace Info2021
             hasTouchedThisFrame = true;
         }
 
-        public override void Update(float dt, Player player)
-        {
+        public override void Update(float dt, Player player) {
             hasTouchedLastFrame = hasTouchedThisFrame;
             hasTouchedThisFrame = false;
         }

@@ -2,21 +2,16 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-namespace Info2021
-{
-    static class FirstLevel
-    {
-        public static Level GetLevel(Game1 game)
-        {
+namespace Info2021 {
+    static class FirstLevel {
+        public static Level GetLevel(Game1 game) {
             List<Tile> tiles = new List<Tile>();
             List<StaticCollider> staticColliders = new List<StaticCollider>();
-            for (int i = 0; i < 30; i++)
-            {
+            for (int i = 0; i < 30; i++) {
                 tiles.Add(new Tile(new TileInfo(2, 0), i, 15));
 
             }
-            for (int i = 0; i < 30; i++)
-            {
+            for (int i = 0; i < 30; i++) {
                 tiles.Add(new Tile(new TileInfo(0, 2), 30, i));
 
             }

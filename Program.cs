@@ -1,12 +1,9 @@
 ﻿using System;
 
-namespace Info2021
-{
-    public static class Program
-    {
+namespace Info2021 {
+    public static class Program {
         [STAThread]
-        static void Main()
-        {
+        static void Main() {
             using (var game = new Game1())
                 game.Run();
         }

@@ -1,7 +1,5 @@
-namespace Info2021
-{
-    public enum LevelAddables
-    {
+namespace Info2021 {
+    public enum LevelAddables {
         Tile, Cinematic, PlayerPos, CameraPos
     }
 }
