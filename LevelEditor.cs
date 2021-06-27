@@ -24,26 +24,26 @@ namespace Info2021
         public LevelAddables currentAddables;
         private static HashSet<InputEvent> haveBecomeActive = new HashSet<InputEvent>();
 
-        private Tile GetTile(int count) {
+        private Tile GetTile(int count, Vector2 position) {
             return new Tile(new TileInfo(count % 16, count / 16),
-                (int) Position.X/16, (int) Position.Y/16);
+                (int) position.X/16, (int) position.Y/16);
         }
 
-        private CinematicObject GetCinematic(int count) {
+        private CinematicObject GetCinematic(int count, Vector2 position) {
             CinematicObject[] allCinems =
-            {new Goal(Position),
-            new Spikes(Position, 0),
-            new Spikes(Position, 1),
-            new Spikes(Position, 2),
-            new Spikes(Position, 3),
-            new Spring(Position, 0),
-            new Spring(Position, 1),
-            new Spring(Position, 2),
-            new Spring(Position, 3),
-            new MovingPlatform(Position, 64 * Vector2.UnitX, 3),
-            new MovingPlatform(Position, 64 * Vector2.UnitY, 3),
-            new MovingPlatform(Position, -64 * Vector2.UnitX, 3),
-            new MovingPlatform(Position, -64 * Vector2.UnitY, 3)};
+            {new Goal(position),
+            new Spikes(position, 0),
+            new Spikes(position, 1),
+            new Spikes(position, 2),
+            new Spikes(position, 3),
+            new Spring(position, 0),
+            new Spring(position, 1),
+            new Spring(position, 2),
+            new Spring(position, 3),
+            new MovingPlatform(position, 64 * Vector2.UnitX, 3),
+            new MovingPlatform(position, 64 * Vector2.UnitY, 3),
+            new MovingPlatform(position, -64 * Vector2.UnitX, 3),
+            new MovingPlatform(position, -64 * Vector2.UnitY, 3)};
             return allCinems[count % allCinems.Length];
         }
 
@@ -118,7 +118,7 @@ namespace Info2021
                                 indices[(int) LevelAddables.Tile] % 16, indices[(int) LevelAddables.Tile]/16), (int) Math.Floor(Position.X/16), (int) Math.Floor(Position.Y/16));
                             break;
                         case LevelAddables.Cinematic:
-                            GetCinematic(indices[(int) LevelAddables.Cinematic]).Add(level);
+                            GetCinematic(indices[(int) LevelAddables.Cinematic], Position).Add(level);
                             break;
                         case LevelAddables.PlayerPos:
                             level.spawnPosition = Position;
@@ -183,19 +183,21 @@ namespace Info2021
             foreach(CinematicObject cinematicObject in level.cinematicObjects) {
                 cinematicObject.Draw(dynamicRenderer, resourceAccessor, camPos);
             }
+            GetTile(12, level.camPos).Draw(tileRenderer, resourceAccessor, camPos);
+            GetTile(109, level.spawnPosition).Draw(tileRenderer, resourceAccessor, camPos);
             background.Draw(backgroundRenderer, resourceAccessor, camPos);
             switch(currentAddables) {
                 case LevelAddables.Tile:
-                    GetTile(indices[indexIndex]).Draw(tileRenderer, resourceAccessor, camPos);
+                    GetTile(indices[indexIndex], Position).Draw(tileRenderer, resourceAccessor, camPos);
                     break;
                 case LevelAddables.Cinematic:
-                    GetCinematic(indices[indexIndex]).Draw(dynamicRenderer, resourceAccessor, camPos);
+                    GetCinematic(indices[indexIndex], Position).Draw(dynamicRenderer, resourceAccessor, camPos);
                     break;
                 case LevelAddables.PlayerPos:
-                    GetTile(109).Draw(tileRenderer, resourceAccessor, camPos); //character sprite
+                    GetTile(109, Position).Draw(tileRenderer, resourceAccessor, camPos); //character sprite
                     break;
                 case LevelAddables.CameraPos:
-                    GetTile(12).Draw(tileRenderer, resourceAccessor, camPos); //remotely technological looking sprite
+                    GetTile(12, Position).Draw(tileRenderer, resourceAccessor, camPos); //remotely technological looking sprite
                     break;                 
             }
             //new Tile(new TileInfo(tileIndex % 16, tileIndex/16), (int) Math.Floor(Position.X/16), (int) Math.Floor(Position.Y/16)).Draw(tileRenderer, resourceAccessor, camPos);

@@ -14,6 +14,9 @@ namespace Info2021
         private Menu menu;
         private PauseMenu pauseMenu;
         private EditSelectionMenu editSelectionMenu;
+        private EditorMenu editorMenu;
+
+        private LevelSelectMenu levelSelectMenu;
         private GameState gameState = GameState.Menu;
         private LevelRunner levelRunner;
         private Level level;
@@ -44,6 +47,8 @@ namespace Info2021
             pauseMenu = new PauseMenu(spriteBatch, ResourceAccessor);
             levelEditor = new LevelEditor(ResourceAccessor, spriteBatch);
             editSelectionMenu = new EditSelectionMenu(spriteBatch, ResourceAccessor);
+            editorMenu = new EditorMenu(spriteBatch, ResourceAccessor);
+            levelSelectMenu = new LevelSelectMenu(spriteBatch, ResourceAccessor);
             try
             {
                 level = Level.Load("Levels/edit.lvl");    
@@ -74,7 +79,9 @@ namespace Info2021
                     if(menu.HasBeenSelected(out item)) {
                         switch(item) {
                             case MenuItem.LevelSelect:
-                                gameState = GameState.Init;
+                                // prevents some double tapping bug
+                                System.Threading.Thread.Sleep(50);
+                                gameState = GameState.LevelSelect;
                                 break;
                             case MenuItem.LevelEdit:
                                 gameState = GameState.Edit;
@@ -133,9 +140,7 @@ namespace Info2021
                     break;
                 case GameState.Edit:
                     if(InputManager.IsActive(InputEvent.Escape)) {
-                        level = levelEditor.RetrieveLevel();
-                        level.Save("Levels/edit.lvl");
-                        gameState = GameState.Init;
+                        gameState = GameState.EditMenu;
                     }
                     if(InputManager.IsActive(InputEvent.Menu)) {
                         gameState = GameState.EditSelectionMenu;
@@ -148,6 +153,51 @@ namespace Info2021
                     if(editSelectionMenu.HasBeenSelected(out addItem)) {
                         levelEditor.currentAddables = addItem;
                         gameState = GameState.Edit;
+                    }
+                    break;
+                case GameState.EditMenu:
+                    editorMenu.Update();
+                    EditorMenuItem editorMenuItem;
+                    if(editorMenu.HasBeenSelected(out editorMenuItem)) {
+                        switch(editorMenuItem) {
+                            case EditorMenuItem.Continue:
+                                gameState = GameState.Edit;
+                                break;
+                            case EditorMenuItem.PlaySave:
+                                level = levelEditor.RetrieveLevel();
+                                level.Save("Levels/edit.lvl");
+                                gameState = GameState.Init;
+                                break;
+                            case EditorMenuItem.Save:
+                                level.Save("Levels/edit.lvl");
+                                break;
+                            case EditorMenuItem.Backup:
+                                level.Save("Levels/backup" + System.DateTime.Now.ToString("s") + ".lvl");
+                                break;
+                            case EditorMenuItem.Reset:
+                                level = new Level(Vector2.Zero, Vector2.Zero, 
+                                new List<Tile>(), new List<StaticCollider>(), new List<DynamicObject>(),
+                                new List<CinematicObject>(), new Background("background1"));
+                                levelEditor.Initialize(level);
+                                gameState = GameState.Edit;
+                                break;
+                            case EditorMenuItem.MainMenu:
+                                gameState = GameState.Menu;
+                                break;
+                            }
+                    }
+                    break;
+                case GameState.LevelSelect:
+                    levelSelectMenu.Update();
+                    int selectedLevel;
+                    if(levelSelectMenu.HasBeenSelected(out selectedLevel)) {
+                        if(selectedLevel == 0) {
+                            gameState = GameState.Menu;
+                        } else {
+                            level = Level.Load("Levels/level" + selectedLevel.ToString() + ".lvl");
+                            gameState = GameState.Init;
+
+                        }
                     }
                     break;
                 default:
@@ -180,6 +230,12 @@ namespace Info2021
                     break;
                 case GameState.EditSelectionMenu:
                     editSelectionMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    break;
+                case GameState.EditMenu:
+                    editorMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
+                    break;
+                case GameState.LevelSelect:
+                    levelSelectMenu.Draw((float) gameTime.ElapsedGameTime.TotalSeconds);
                     break;
                 default:
                     break;
