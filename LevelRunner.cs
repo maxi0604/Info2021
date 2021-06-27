@@ -6,20 +6,13 @@ using System.Collections.Generic;
 
 namespace Info2021
 {
-    class LevelRunner
+    class LevelRunner : LevelManager
     {
-        ResourceAccessor resourceAccessor;
-        SpriteBatch spriteBatch;
-        Vector2 camPos;
         // TODO: Make this less janky
         Vector2 targetCamPos;
         Vector2 oldCamPos;
         int camTransFrames;
         const int MAX_TRANS_FRAMES = 20;
-        TileRenderer tileRenderer;
-        BackgroundRenderer backgroundRenderer;
-        DynamicRenderer dynamicRenderer;
-
         List<Tile> tiles;
         List<StaticCollider> staticColliders;
         List<DynamicObject> dynamicObjects;
@@ -30,13 +23,9 @@ namespace Info2021
         private Player player;
         private bool initialized = false;
 
-        public LevelRunner(ResourceAccessor resourceAccessor, SpriteBatch spriteBatch) {
-            this.resourceAccessor = resourceAccessor;
-            this.spriteBatch = spriteBatch;
-            tileRenderer = new TileRenderer(spriteBatch);
-            backgroundRenderer = new BackgroundRenderer(spriteBatch);
-            dynamicRenderer = new DynamicRenderer(spriteBatch);
-        }
+        public LevelRunner(ResourceAccessor resourceAccessor, SpriteBatch spriteBatch) :
+            base(resourceAccessor, spriteBatch) {}
+        
         public void Initialize(Level level) {
 
             initialized = true;
@@ -105,17 +94,7 @@ namespace Info2021
         public void Draw(float dt) {
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
             
-            foreach(Tile tile in tiles) {
-                tile.Draw(tileRenderer, resourceAccessor, camPos);
-            }
-            
-            background.Draw(backgroundRenderer, resourceAccessor, camPos);
-            foreach(DynamicObject dynamicObject in dynamicObjects) {
-                dynamicObject.Draw(dynamicRenderer, resourceAccessor, camPos);
-            }
-            foreach(CinematicObject cinematicObject in cinematicObjects) {
-                cinematicObject.Draw(dynamicRenderer, resourceAccessor, camPos);
-            }
+            DrawObjects(tiles, background, dynamicObjects, cinematicObjects);
             spriteBatch.End();
         }
         public bool IsAlive() {
