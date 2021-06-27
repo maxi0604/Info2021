@@ -16,7 +16,7 @@ namespace Info2021
         public override Vector2 Position { get; set; }
         public override Texture2D GetTexture(ResourceAccessor resourceAccessor)
         {
-            return resourceAccessor.GetSprite(4,5);
+            return resourceAccessor.GetSprite(1,11);
         }
 
         public override void OnCollision(Player player)
