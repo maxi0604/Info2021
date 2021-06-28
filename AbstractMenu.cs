@@ -45,8 +45,8 @@ namespace Info2021 {
         }
 
         public void Draw(MenuRenderer renderer, ResourceAccessor accessor, Vector2 camPos) {
-            //renderer.Draw(camPos, accessor.GetSprite(14, 0), new Vector2(240, activeIndex * 50 + 80), 0, Vector2.Zero, 1, 0.0001f);
             for (int i = 0; i < AllItems.Length; i++) {
+                // Draw selected text in black, unselected in blue
                 renderer.DrawText(new Vector2(100, i * 50 + 20), accessor.Font, Texts[i], i == activeIndex ? Color.Black : Color.Blue);
             }
 

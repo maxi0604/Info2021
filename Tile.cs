@@ -2,7 +2,7 @@ using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 namespace Info2021 {
     [DataContract]
-    class Tile : IDrawable, ILevelElement {
+    class Tile : IDrawable, ILevelElement, IHasPosition {
         [DataMember]
         public TileInfo Info { get; set; }
         [DataMember]

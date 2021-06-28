@@ -68,7 +68,7 @@ namespace Info2021 {
                 camPos.Y -= 360;
             }
 
-
+            // do input every two frames
             HashSet<InputEvent> oldActive = haveBecomeActive;
             haveBecomeActive = new HashSet<InputEvent>();
             foreach (var item in (InputEvent[])Enum.GetValues(typeof(InputEvent))) {
@@ -76,35 +76,30 @@ namespace Info2021 {
                     haveBecomeActive.Add(item);
                 }
             }
-            /*
-            if(haveBecomeActive.Contains(InputEvent.Right)) 
-                Position.X += 16;
-            if(haveBecomeActive.Contains(InputEvent.Left)) 
-                Position.X -= 16;
-            if(haveBecomeActive.Contains(InputEvent.Up)) 
-                Position.Y -= 16;
-            if(haveBecomeActive.Contains(InputEvent.Down)) 
-                Position.Y += 16;
-            */
+            
             Position = (InputManager.MousePos / 16);
             Position.Floor();
             Position *= 16;
+
             if (haveBecomeActive.Contains(InputEvent.Jump)) {
+
+                // check whether space is already inhabited
                 bool isThere = false;
-                foreach (var x in level.tiles) {
+
+                List<IHasPosition> allThings = level.tiles.ConvertAll<IHasPosition>(x => (IHasPosition) x);
+                allThings.AddRange(level.dynamicObjects.ConvertAll<IHasPosition>(x => (IHasPosition) x));
+                allThings.AddRange(level.cinematicObjects.ConvertAll<IHasPosition>(x => (IHasPosition) x));
+                
+                foreach (var x in allThings) {
                     if ((x.Position - Position).Length() < 1) isThere = true;
                 }
-                foreach (var x in level.dynamicObjects) {
-                    if ((x.Position - Position).Length() < 1) isThere = true;
-                }
-                foreach (var x in level.cinematicObjects) {
-                    if ((x.Position - Position).Length() < 1) isThere = true;
-                }
+
                 if (!isThere) {
                     switch (currentAddables) {
                         case LevelAddables.Tile:
                             level.AddSolidTile(new TileInfo(
-                                indices[(int)LevelAddables.Tile] % 16, indices[(int)LevelAddables.Tile] / 16), (int)Math.Floor(Position.X / 16), (int)Math.Floor(Position.Y / 16));
+                                indices[(int)LevelAddables.Tile] % 16, indices[(int)LevelAddables.Tile] / 16),
+                                (int)Math.Floor(Position.X / 16), (int)Math.Floor(Position.Y / 16));
                             break;
                         case LevelAddables.Cinematic:
                             GetCinematic(indices[(int)LevelAddables.Cinematic], Position).Add(level);
@@ -137,12 +132,6 @@ namespace Info2021 {
                         break;
                     }
                 }
-                for (int i = 0; i < level.staticColliders.Count; i++) {
-                    if ((level.staticColliders[i].TopLeft - Position).Length() < 1) {
-                        level.staticColliders.RemoveAt(i);
-                        break;
-                    }
-                }
 
             }
             if (haveBecomeActive.Contains(InputEvent.NextThing) && indices[indexIndex] < 256) {
@@ -170,10 +159,10 @@ namespace Info2021 {
                     GetCinematic(indices[indexIndex], Position).Draw(dynamicRenderer, resourceAccessor, camPos);
                     break;
                 case LevelAddables.PlayerPos:
-                    GetTile(109, Position).Draw(tileRenderer, resourceAccessor, camPos); //character sprite
+                    GetTile(109, Position).Draw(tileRenderer, resourceAccessor, camPos); // character sprite
                     break;
                 case LevelAddables.CameraPos:
-                    GetTile(12, Position).Draw(tileRenderer, resourceAccessor, camPos); //remotely technological looking sprite
+                    GetTile(12, Position).Draw(tileRenderer, resourceAccessor, camPos); // remotely technological looking sprite
                     break;
             }
             spriteBatch.End();

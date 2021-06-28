@@ -38,6 +38,8 @@ namespace Info2021 {
 
         public static Level Load(string path) {
             Level a = BinarySerializer.Deserialize<Level>(File.OpenRead(path));
+
+            // create new level to add everything to in order to allow for initialization
             Level b = new Level(Vector2.Zero, Vector2.Zero, new List<Tile>(), new List<StaticCollider>(),
             new List<DynamicObject>(), new List<CinematicObject>(), new Background("background1"));
             foreach (var t in a.cinematicObjects) t.Add(b);
