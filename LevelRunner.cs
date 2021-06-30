@@ -27,7 +27,7 @@ namespace Info2021 {
         public void Initialize(Level level) {
             camTransFrames = 0;
             initialized = true;
-            camPos = level.camPos;
+            camPos = level.cameraPosition;
             oldCamPos = camPos;
             targetCamPos = camPos;
             dynamicObjects = level.dynamicObjects;

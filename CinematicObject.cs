@@ -2,9 +2,9 @@ using System.Runtime.Serialization;
 
 namespace Info2021 {
     [DataContract(IsReference = true)]
-    abstract class CinematicObject : DynamicObject, ICinematicColliderParent, ILevelElement {
+    abstract class CinematicObject : DynamicObject, ILevelElement {
         [DataMember]
-        public CinematicCollider CCollider { get; set; }
+        virtual public CinematicCollider CCollider { get; set; }
 
         public abstract void OnCollision(Player player);
 

@@ -4,15 +4,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021 {
     [DataContract]
-    class MovingPlatform : CinematicObject, ICinematicColliderParent, ILevelElement {
+    class MovingPlatform : CinematicObject, ILevelElement {
         [DataMember]
         public VelPos VelPos { get; set; }
         [DataMember]
         public StaticCollider Collider;
         public override Vector2 Position { get { return VelPos.P; } set { VelPos = VelPos.WithPosition(value); } }
-        [DataMember]
-        CinematicCollider cinematicCollider;
-        CinematicCollider ICinematicColliderParent.CCollider => cinematicCollider;
+        //[DataMember]
+        //public CinematicCollider CCollider;
+        //override CinematicCollider CCollider => cinematicCollider;
 
         [DataMember]
         Vector2 translationOnNextFrame = Vector2.Zero;
@@ -26,7 +26,7 @@ namespace Info2021 {
         public MovingPlatform(Vector2 position, Vector2 velocity, float maxTime) {
             VelPos = new VelPos(velocity, position);
             Collider = new StaticCollider(VelPos.P, VelPos.P + Vector2.One * 16);
-            cinematicCollider = new CinematicCollider(this, VelPos.P - Vector2.UnitY * 2, new Vector2(16, 8));
+            CCollider = new CinematicCollider(this, VelPos.P - Vector2.UnitY * 2, new Vector2(16, 8));
 
             MaxTime = maxTime;
             movingTime = 0;
@@ -48,8 +48,8 @@ namespace Info2021 {
             VelPos = VelPos.ApplyVelocity(dt);
             Collider.TopLeft = Position;
             Collider.BottomRight = Position + Vector2.One * 16;
-            cinematicCollider.TopLeft = VelPos.P - Vector2.UnitY * 2;
-            CCollider = cinematicCollider;
+            CCollider.TopLeft = VelPos.P - Vector2.UnitY * 2;
+            //CCollider = cinematicCollider;
             movingTime += dt;
         }
 

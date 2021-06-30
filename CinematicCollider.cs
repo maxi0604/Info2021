@@ -8,7 +8,7 @@ namespace Info2021 {
     class CinematicCollider {
         [DataMember]
 
-        public ICinematicColliderParent Parent { get; set; }
+        public CinematicObject Parent { get; set; }
         [DataMember]
         public Vector2 TopLeft;
         [DataMember]
@@ -16,7 +16,7 @@ namespace Info2021 {
         public Vector2 BottomRight { get => TopLeft + diagonal; }
         public Vector2 Center { get => TopLeft + diagonal / 2; }
 
-        public CinematicCollider(ICinematicColliderParent parent, Vector2 topLeft, Vector2 diagonal) {
+        public CinematicCollider(CinematicObject parent, Vector2 topLeft, Vector2 diagonal) {
             if (diagonal.X < 0 || diagonal.Y < 0)
                 throw new ArgumentOutOfRangeException("Diagonal vector has to be pointing from the top left to the bottom right.");
 

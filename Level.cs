@@ -14,7 +14,7 @@ namespace Info2021 {
         public Level(Vector2 spawnPosition, Vector2 camPos, List<Tile> tiles, List<StaticCollider> staticColliders,
                 List<DynamicObject> dynamicObjects, List<CinematicObject> cinematicObjects, Background background) {
             this.spawnPosition = spawnPosition;
-            this.camPos = camPos;
+            this.cameraPosition = camPos;
             this.tiles = tiles;
             this.staticColliders = staticColliders;
             this.dynamicObjects = dynamicObjects;
@@ -24,7 +24,7 @@ namespace Info2021 {
         [DataMember]
         public Vector2 spawnPosition { get; set; }
         [DataMember]
-        public Vector2 camPos { get; set; }
+        public Vector2 cameraPosition { get; set; }
         [DataMember]
         public List<Tile> tiles { get; set; }
         [DataMember]
@@ -47,7 +47,7 @@ namespace Info2021 {
             foreach (var t in a.staticColliders) t.Add(b);
             foreach (var t in a.tiles) t.Add(b);
             b.spawnPosition = a.spawnPosition;
-            b.camPos = a.camPos;
+            b.cameraPosition = a.cameraPosition;
             return b;
         }
 

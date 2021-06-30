@@ -108,7 +108,7 @@ namespace Info2021 {
                             level.spawnPosition = Position;
                             break;
                         case LevelAddables.CameraPos:
-                            level.camPos = Position;
+                            level.cameraPosition = Position;
                             break;
                     }
                 }
@@ -148,7 +148,7 @@ namespace Info2021 {
 
             DrawObjects(level.tiles, level.background, level.dynamicObjects, level.cinematicObjects);
 
-            GetTile(12, level.camPos).Draw(tileRenderer, resourceAccessor, camPos);
+            GetTile(12, level.cameraPosition).Draw(tileRenderer, resourceAccessor, camPos);
             GetTile(109, level.spawnPosition).Draw(tileRenderer, resourceAccessor, camPos);
 
             switch (currentAddables) {
