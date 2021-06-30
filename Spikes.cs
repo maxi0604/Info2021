@@ -23,7 +23,7 @@ namespace Info2021 {
             // spikes are always "inside" the tile
             switch (rotation) {
                 case 0:
-                    topLeft = position + Vector2.UnitX * 12;
+                    topLeft = position + Vector2.UnitX * 14;
                     diag = new Vector2(2, 16);
                     break;
                 case 1:
@@ -35,7 +35,7 @@ namespace Info2021 {
                     diag = new Vector2(2, 16);
                     break;
                 case 3:
-                    topLeft = position + Vector2.UnitY * 12;
+                    topLeft = position + Vector2.UnitY * 14;
                     diag = new Vector2(16, 2);
                     break;
                 default:
