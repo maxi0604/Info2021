@@ -144,7 +144,7 @@ namespace Info2021 {
                 jumping = false; // jump ends when falling
                 return;
             }
-            VelPos = VelPos.Accelerate(new Vector2(0, accel - gravity));
+            VelPos = VelPos.Accelerate(new Vector2(0, accel - gravity)); // additional offset to the acceleration
 
 
 

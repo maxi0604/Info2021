@@ -31,9 +31,9 @@ namespace Info2021 {
             new Spring(position, 1),
             new Spring(position, 2),
             new Spring(position, 3),
-            new MovingPlatform(position, 64 * Vector2.UnitX, 3),
-            new MovingPlatform(position, 64 * Vector2.UnitY, 3),
-            new MovingPlatform(position, -64 * Vector2.UnitX, 3),
+            //new MovingPlatform(position, 64 * Vector2.UnitX, 3),
+            //new MovingPlatform(position, 64 * Vector2.UnitY, 3),
+            //new MovingPlatform(position, -64 * Vector2.UnitX, 3),
             new MovingPlatform(position, -64 * Vector2.UnitY, 3)};
             return allCinems[count % allCinems.Length];
         }
@@ -115,20 +115,25 @@ namespace Info2021 {
             }
             if (haveBecomeActive.Contains(InputEvent.Remove)) {
                 for (int i = 0; i < level.dynamicObjects.Count; i++) {
-                    if ((level.dynamicObjects[i].Position - Position).Length() < 1) {
+                    if ((level.dynamicObjects[i].Position - Position).Length() < 8) {
                         level.dynamicObjects.RemoveAt(i);
                         break;
                     }
                 }
                 for (int i = 0; i < level.cinematicObjects.Count; i++) {
-                    if ((level.cinematicObjects[i].Position - Position).Length() < 1) {
+                    if ((level.cinematicObjects[i].Position - Position).Length() < 8) {
                         level.cinematicObjects.RemoveAt(i);
                         break;
                     }
                 }
                 for (int i = 0; i < level.tiles.Count; i++) {
-                    if ((level.tiles[i].Position - Position).Length() < 1) {
+                    if ((level.tiles[i].Position - Position).Length() < 8) {
                         level.tiles.RemoveAt(i);
+                        break;
+                    }
+                } for (int i = 0; i < level.staticColliders.Count; i++) {
+                    if ((level.staticColliders[i].TopLeft - Position).Length() < 8) {
+                        level.staticColliders.RemoveAt(i);
                         break;
                     }
                 }

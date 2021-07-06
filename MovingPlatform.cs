@@ -7,7 +7,6 @@ namespace Info2021 {
     class MovingPlatform : CinematicObject, ILevelElement {
         [DataMember]
         public VelPos VelPos { get; set; }
-        [DataMember]
         public StaticCollider Collider;
         public override Vector2 Position { get { return VelPos.P; } set { VelPos = VelPos.WithPosition(value); } }
         //[DataMember]
@@ -33,7 +32,7 @@ namespace Info2021 {
         }
 
         public override Texture2D GetTexture(ResourceAccessor resourceAccessor) {
-            return resourceAccessor.GetSprite(0, 13);
+            return resourceAccessor.GetSprite(0, 0);
         }
 
         public override void Update(float dt, Player player) {
@@ -60,6 +59,7 @@ namespace Info2021 {
         }
 
         public override void AddHelper(Level level) {
+            Collider = new StaticCollider(VelPos.P, VelPos.P + Vector2.One * 16);
             level.cinematicObjects.Add(this);
             level.staticColliders.Add(Collider);
         }

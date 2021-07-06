@@ -40,7 +40,7 @@ namespace Info2021 {
             // our current speed in this. Otherwise, velocity could be lost wrongly.
             // For example, consider jumping next to a wall to our right while holding right.
             // When we reach the top left corner, our penetration depth in the x direction will
-            // be larger than in the y direction. (We already have applied our movement.)
+            // be larger than in the y direction. (We have already applied our movement.)
             // This will make the program falsely attempt to resolve the collision in the y direction,
             // leading to an unjustified loss of vertical momentum.
             bool resolveAlongX = Abs(alongX + oldVel.X / 60) < Abs(alongY + oldVel.Y / 60);

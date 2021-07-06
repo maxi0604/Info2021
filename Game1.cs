@@ -77,6 +77,7 @@ namespace Info2021 {
                                 break;
                             case MenuItem.LevelEdit:
                                 gameState = GameState.Edit;
+                                level = Level.Load("Levels/edit.lvl");
                                 levelEditor.Initialize(level);
                                 break;
                             case MenuItem.Settings:

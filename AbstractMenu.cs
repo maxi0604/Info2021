@@ -26,13 +26,12 @@ namespace Info2021 {
             menuRenderer = new MenuRenderer(spriteBatch);
         }
 
-        // Do  not question the compiler's wisdom
         public bool HasBeenSelected(out A item) {
             item = ActiveItem;
             return !oldJump && pressedJump;
         }
 
-#nullable disable
+
         public void Update() {
             oldJump = pressedJump;
             pressedJump = InputManager.IsActive(InputEvent.Jump);
