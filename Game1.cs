@@ -65,7 +65,6 @@ namespace Info2021 {
 
             switch (gameState) {
                 case GameState.Menu:
-                    //TODO: menu
                     menu.Update();
                     MenuItem item;
                     if (menu.HasBeenSelected(out item)) {
@@ -80,9 +79,6 @@ namespace Info2021 {
                                 level = Level.Load("Levels/edit.lvl");
                                 levelEditor.Initialize(level);
                                 break;
-                            case MenuItem.Settings:
-                                //TODO
-                                break;
                             case MenuItem.Exit:
                                 Exit();
                                 break;
@@ -90,7 +86,6 @@ namespace Info2021 {
                     }
                     break;
                 case GameState.Pause:
-                    //TODO: menu
                     pauseMenu.Update();
                     PauseMenuItem pauseItem;
                     if (pauseMenu.HasBeenSelected(out pauseItem)) {
@@ -100,9 +95,6 @@ namespace Info2021 {
                                 break;
                             case PauseMenuItem.Retry:
                                 gameState = GameState.Init;
-                                break;
-                            case PauseMenuItem.Settings:
-                                //TODO
                                 break;
                             case PauseMenuItem.MainMenu:
                                 gameState = GameState.Menu;
