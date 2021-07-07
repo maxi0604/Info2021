@@ -68,6 +68,7 @@ namespace Info2021 {
                 camTransFrames = MAX_TRANS_FRAMES;
             }
 
+            // smooth transitions from screen to screen
             if (camTransFrames > 0) {
                 camPos = Vector2.Lerp(oldCamPos, targetCamPos, 1 - MathF.Pow(((float)camTransFrames) / MAX_TRANS_FRAMES, 2));
                 camTransFrames--;

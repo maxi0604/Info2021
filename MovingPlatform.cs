@@ -36,7 +36,6 @@ namespace Info2021 {
         }
 
         public override void Update(float dt, Player player) {
-            //Collider = new StaticCollider(VelPos.P, VelPos.P + Vector2.One * 16);
             player.VelPos = player.VelPos.Translate(translationOnNextFrame);
             translationOnNextFrame = Vector2.Zero;
 
@@ -48,7 +47,6 @@ namespace Info2021 {
             Collider.TopLeft = Position;
             Collider.BottomRight = Position + Vector2.One * 16;
             CCollider.TopLeft = VelPos.P - Vector2.UnitY * 2;
-            //CCollider = cinematicCollider;
             movingTime += dt;
         }
 

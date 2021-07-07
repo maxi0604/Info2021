@@ -58,7 +58,6 @@ namespace Info2021 {
         }
 
         public override void OnCollision(Player player) {
-            //CCollider = new CinematicCollider(this, topLeft, diag);
             float newVel = 0;
             if (player.OnGround())
                 // increase position by a bit to avoid ground issues

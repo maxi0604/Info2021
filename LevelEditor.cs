@@ -31,9 +31,9 @@ namespace Info2021 {
             new Spring(position, 1),
             new Spring(position, 2),
             new Spring(position, 3),
-            //new MovingPlatform(position, 64 * Vector2.UnitX, 3),
-            //new MovingPlatform(position, 64 * Vector2.UnitY, 3),
-            //new MovingPlatform(position, -64 * Vector2.UnitX, 3),
+            new MovingPlatform(position, 64 * Vector2.UnitX, 3),
+            new MovingPlatform(position, 64 * Vector2.UnitY, 3),
+            new MovingPlatform(position, -64 * Vector2.UnitX, 3),
             new MovingPlatform(position, -64 * Vector2.UnitY, 3)};
             return allCinems[count % allCinems.Length];
         }
@@ -77,6 +77,7 @@ namespace Info2021 {
                 }
             }
             
+            // align the editing position to the tile grid
             Position = (InputManager.MousePos / 16);
             Position.Floor();
             Position *= 16;
@@ -86,11 +87,13 @@ namespace Info2021 {
                 // check whether space is already inhabited
                 bool isThere = false;
 
+                // since the only property all things possess is having a position, conversions are needed
                 List<IHasPosition> allThings = level.tiles.ConvertAll<IHasPosition>(x => (IHasPosition) x);
                 allThings.AddRange(level.dynamicObjects.ConvertAll<IHasPosition>(x => (IHasPosition) x));
                 allThings.AddRange(level.cinematicObjects.ConvertAll<IHasPosition>(x => (IHasPosition) x));
                 
                 foreach (var x in allThings) {
+                    // account for floating point issues
                     if ((x.Position - Position).Length() < 1) isThere = true;
                 }
 
@@ -113,6 +116,8 @@ namespace Info2021 {
                     }
                 }
             }
+
+            // remove everything near cursor
             if (haveBecomeActive.Contains(InputEvent.Remove)) {
                 for (int i = 0; i < level.dynamicObjects.Count; i++) {
                     if ((level.dynamicObjects[i].Position - Position).Length() < 8) {
@@ -139,6 +144,7 @@ namespace Info2021 {
                 }
 
             }
+            
             if (haveBecomeActive.Contains(InputEvent.NextThing) && indices[indexIndex] < 256) {
                 indices[indexIndex]++;
             }
@@ -156,6 +162,7 @@ namespace Info2021 {
             GetTile(12, level.cameraPosition).Draw(tileRenderer, resourceAccessor, camPos);
             GetTile(109, level.spawnPosition).Draw(tileRenderer, resourceAccessor, camPos);
 
+            // draw preview of what you are about to add
             switch (currentAddables) {
                 case LevelAddables.Tile:
                     GetTile(indices[indexIndex], Position).Draw(tileRenderer, resourceAccessor, camPos);
