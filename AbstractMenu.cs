@@ -33,6 +33,7 @@ namespace Info2021 {
 
 
         public void Update() {
+            // check whether button is now pressed and was not pressed on last frame
             oldJump = pressedJump;
             pressedJump = InputManager.IsActive(InputEvent.Jump);
             oldUp = pressedUp;

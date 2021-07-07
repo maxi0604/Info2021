@@ -68,11 +68,13 @@ namespace Info2021 {
             if (hasTouchedLastFrame) return;
 
 
-            if (rotation % 2 == 0)
+            if (rotation % 2 == 0) {
                 // if you're moving against the spring, reverse that velocity, otherwise gain some
                 if (Math.Sign(player.VelPos.V.X) == -Math.Sign(direction.X) && !player.OnGround())
                     newVel = -player.VelPos.V.X;
-            player.VelPos = player.VelPos.WithVelocity(new Vector2(MathF.MaxMagnitude(direction.X * 400, newVel), player.VelPos.V.Y));
+                player.VelPos = player.VelPos.WithVelocity(new Vector2(MathF.MaxMagnitude(direction.X * 400, newVel), player.VelPos.V.Y));
+            }
+
             if (rotation % 2 == 1) {
                 if (Math.Sign(player.VelPos.V.Y) == -Math.Sign(direction.Y) && !player.OnGround())
                     newVel = -player.VelPos.V.Y;

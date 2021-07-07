@@ -64,7 +64,7 @@ namespace Info2021 {
                 OnInitialGroundCollision();
             }
 
-            // Air resistance
+            // Air resistance, moving allows for lower friction
             if (directionalMovement)
                 VelPos = VelPos.Accelerate(new Vector2(-0.1f * VelPos.V.X, 0));
             else
@@ -151,7 +151,7 @@ namespace Info2021 {
         }
 
         public override Texture2D GetTexture(ResourceAccessor resourceAccessor) {
-            // TODO: Animation depending on state
+            // pick sprite depending on direction
             if (moveRight) {
                 return resourceAccessor.GetSprite(1, 14);
             }
