@@ -4,6 +4,7 @@ using System;
 namespace Info2021 {
     abstract class AbstractMenu<A> {
 
+        // A represents the possible menu items without any further restrictions
         protected SpriteBatch spriteBatch;
         protected ResourceAccessor resourceAccessor;
         protected MenuRenderer menuRenderer;

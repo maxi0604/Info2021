@@ -107,6 +107,4 @@ namespace Info2021 {
             return player.HasBeatLevel();
         }
     }
-
-
 }

@@ -76,7 +76,7 @@ namespace Info2021 {
                     haveBecomeActive.Add(item);
                 }
             }
-            
+
             // align the editing position to the tile grid
             Position = (InputManager.MousePos / 16);
             Position.Floor();
@@ -88,10 +88,10 @@ namespace Info2021 {
                 bool isThere = false;
 
                 // since the only property all things possess is having a position, conversions are needed
-                List<IHasPosition> allThings = level.tiles.ConvertAll<IHasPosition>(x => (IHasPosition) x);
-                allThings.AddRange(level.dynamicObjects.ConvertAll<IHasPosition>(x => (IHasPosition) x));
-                allThings.AddRange(level.cinematicObjects.ConvertAll<IHasPosition>(x => (IHasPosition) x));
-                
+                List<IHasPosition> allThings = level.tiles.ConvertAll<IHasPosition>(x => (IHasPosition)x);
+                allThings.AddRange(level.dynamicObjects.ConvertAll<IHasPosition>(x => (IHasPosition)x));
+                allThings.AddRange(level.cinematicObjects.ConvertAll<IHasPosition>(x => (IHasPosition)x));
+
                 foreach (var x in allThings) {
                     // account for floating point issues
                     if ((x.Position - Position).Length() < 1) isThere = true;
@@ -136,7 +136,8 @@ namespace Info2021 {
                         level.tiles.RemoveAt(i);
                         break;
                     }
-                } for (int i = 0; i < level.staticColliders.Count; i++) {
+                }
+                for (int i = 0; i < level.staticColliders.Count; i++) {
                     if ((level.staticColliders[i].TopLeft - Position).Length() < 8) {
                         level.staticColliders.RemoveAt(i);
                         break;
@@ -144,7 +145,7 @@ namespace Info2021 {
                 }
 
             }
-            
+
             if (haveBecomeActive.Contains(InputEvent.NextThing) && indices[indexIndex] < 256) {
                 indices[indexIndex]++;
             }

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Info2021 {
     class BackgroundRenderer : Renderer, IRenderer {
-        
+
         public BackgroundRenderer(SpriteBatch sprite) : base(sprite) {
 
         }
