@@ -8,17 +8,24 @@ namespace Info2021 {
         protected SpriteBatch spriteBatch;
         protected ResourceAccessor resourceAccessor;
         protected MenuRenderer menuRenderer;
+        // selected menu option number
         protected int activeIndex = 0;
+        // selected menu option
         public A ActiveItem { get { return AllItems[activeIndex]; } }
+        // list of displayed Texts for each menu
         public abstract string[] Texts { get; }
         protected bool pressedJump = false;
+        // was it pressed in the last Frame
         protected bool oldJump = false;
 
         protected bool pressedUp = false;
+        // was it pressed in the last Frame
         protected bool oldUp = false;
 
         protected bool pressedDown = false;
+        // was it pressed in the last Frame
         protected bool oldDown = false;
+        // all options of one specific menu-state?
         public abstract A[] AllItems { get; }
 
         public AbstractMenu(SpriteBatch spriteBatch, ResourceAccessor resourceAccessor) {
@@ -26,7 +33,8 @@ namespace Info2021 {
             this.resourceAccessor = resourceAccessor;
             menuRenderer = new MenuRenderer(spriteBatch);
         }
-
+        // gets called in Game1.cs
+        // item becomes ActiveItem, which is determined by acticeIndex(public A ActiveItem { get { return AllItems[activeIndex]; } }), which is updated by Update()
         public bool HasBeenSelected(out A item) {
             item = ActiveItem;
             return !oldJump && pressedJump;
@@ -35,12 +43,15 @@ namespace Info2021 {
 
         public void Update() {
             // check whether button is now pressed and was not pressed on last frame
+            // oldJump takes value of previos frame, oldUp takes ...
             oldJump = pressedJump;
+            // current value gets checked ...
             pressedJump = InputManager.IsActive(InputEvent.Jump);
             oldUp = pressedUp;
             pressedUp = InputManager.IsActive(InputEvent.Up);
             oldDown = pressedDown;
             pressedDown = InputManager.IsActive(InputEvent.Down);
+            // when down button is pressed and was not pressed in previous frame and the next index would not exeed the number possible indexes
             if (pressedDown && !oldDown && activeIndex < AllItems.Length - 1) activeIndex++;
             if (pressedUp && !oldUp && activeIndex > 0) activeIndex--;
         }
