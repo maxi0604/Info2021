@@ -6,14 +6,19 @@
     Implementiert wird ein Plattformer-Spiel, vom Spielverlauf ähnlich zu anderen Spielen des Genres wie z. B. \emph{Celeste} oder \emph{N++}.
     Folgende Komponenten sind dabei inbegriffen:
     \begin{itemize}
-        \item Spielmenü
-        \item Pausemenü
-        \item rudimentärer Level-Editor
+        \item Spielmenü, welches eine Level-Auswahl sowie Zugriff zum Editor ermöglicht
+        \item Pausemenü, um aus einem Level zurück zum Hauptmenü zu gelangen
+        \item rudimentärer Level-Editor, in welchem es möglich ist, die meisten Spielelemente hinzuzufügen und Level zu speichern
         \item Level, die sich über mehrere Bildschirme hinweg erstrecken
         \item Speicherung der editierten Level
         \item Angemessene Bewegung
         \item 2D-Grafik
-        \item Dynamische Elemente
+        \item Dynamische Elemente wie \begin{itemize}
+            \item Gefahren für den Spieler, welche den Zustand im Level zurücksetzen
+            \item Ziele eines Levels
+            \item Sprungfedern, welche in eine gegebene Richtung beschleunigen
+            \item sich selbst bewegende Plattformen, die mit dem Spieler interagieren
+        \end{itemize}
     \end{itemize}
 
     \section{Pflichtenheft}
@@ -29,15 +34,25 @@
         \item Physikalische Simulation mit \begin{itemize}
             \item Impuls und Beschleunigung
             \item Kollision (z. B. mit dem Boden) und richtige Bewegung der kollidierenden Objekte
-            \item Bewegung durch Spielereingabe
+            \item Reibung sowie Gravitation
+            \item Bewegung und Sprünge durch den Spieler
         \end{itemize}
         \item Steuerung (z. B. mit den Pfeiltasten)
-        \item Verhalten von Spielelementen wie \begin{itemize}
-            \item Gefahren für den Spieler
-            \item Ziele eines Levels
-            \item Sprungfedern
-            \item sich selbst bewegende Plattformen
+        \item Verhalten der erwähnten Spielelemente einschließlich \begin{itemize}
+            \item Wiederholtes Laden eines Levels und Zurücksetzen von Positionen u.ä. bei Kontakt mit Gefahren
+            \item Übergang ins Hauptmenü bei Berühren des Ziels
+            \item Beschleunigung des Spielers in eine ausgewählte Richtung bei Kontakt mit Sprungfedern
+            \item Periodische Richtungsänderung der beweglichen Plattformen sowie Bewegung des Spielers bei Kontakt
         \end{itemize}
-        \item Verknüpfung von Eingabe, Logik und grafischer Darstellung
+        \item Rendering der Spielelemente unter Berücksichtigung von \begin{itemize}
+            \item Texturen und Positionen der einzelnen Elemente
+            \item Von der Spielerposition abhängige Kameraposition
+            \item Objektabhängige Zustände wie die Bewegungsrichtung der Spielfigur
+            \item Ausrichtung der Levelhintergründe
+        \end{itemize}
+        \item Verknüpfung von Eingabe, Logik und grafischer Darstellung und damit \begin{itemize}
+            \item Übergang zwischen Menüs und eigentlichem Spiel
+            \item Laden der ausgewählten Level und ihrer Komponenten
+            \end{itemize}
     \end{itemize}
 \end{document}
