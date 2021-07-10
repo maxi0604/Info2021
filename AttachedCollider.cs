@@ -24,11 +24,11 @@ namespace Info2021 {
         // https://spicyyoghurt.com/tutorials/html5-javascript-game-development/collision-detection-physics
         // https://www.metanetsoftware.com/2016/n-tutorial-a-collision-detection-and-response#section1
         // https://stackoverflow.com/questions/46172953/aabb-collision-resolution-slipping-sides
-        public bool CollideWith(StaticCollider other) {
+        public void CollideWith(StaticCollider other) {
             if (BottomRight.X <= other.TopLeft.X || TopLeft.X >= other.BottomRight.X
                 || BottomRight.Y <= other.TopLeft.Y || TopLeft.Y >= other.BottomRight.Y) {
                 // No collision took place.
-                return false;
+                return;
             }
 
             Vector2 oldVel = Parent.VelPos.V;
@@ -69,7 +69,7 @@ namespace Info2021 {
 
             Parent.OnCollision(alongX, alongY, accelVel);
 
-            return true;
+            return;
         }
     }
 }
