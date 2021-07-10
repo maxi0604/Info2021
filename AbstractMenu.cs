@@ -25,7 +25,7 @@ namespace Info2021 {
         protected bool pressedDown = false;
         // was it pressed in the last Frame
         protected bool oldDown = false;
-        // all options of one specific menu-state?
+        // all options of one specific menu-state
         public abstract A[] AllItems { get; }
 
         public AbstractMenu(SpriteBatch spriteBatch, ResourceAccessor resourceAccessor) {
@@ -51,7 +51,7 @@ namespace Info2021 {
             pressedUp = InputManager.IsActive(InputEvent.Up);
             oldDown = pressedDown;
             pressedDown = InputManager.IsActive(InputEvent.Down);
-            // when down button is pressed and was not pressed in previous frame and the next index would not exeed the number possible indexes
+            // when down button is pressed and was not pressed in previous frame and the next index would not exeed the number possible Items
             if (pressedDown && !oldDown && activeIndex < AllItems.Length - 1) activeIndex++;
             if (pressedUp && !oldUp && activeIndex > 0) activeIndex--;
         }

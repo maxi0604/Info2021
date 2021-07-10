@@ -11,7 +11,7 @@ namespace Info2021 {
         private Vector2 topLeft;
         [DataMember]
         private Vector2 diag;
-        // 0 = face left, 1 = face upwards, etc
+        // 0 = face left, 1 = face downwards, etc
         [DataMember]
         int rotation;
 
@@ -22,18 +22,22 @@ namespace Info2021 {
 
             // spikes are always "inside" the tile
             switch (rotation) {
+                // face left
                 case 0:
                     topLeft = position + Vector2.UnitX * 14;
                     diag = new Vector2(2, 16);
                     break;
+                // face down
                 case 1:
                     topLeft = position;
                     diag = new Vector2(16, 2);
                     break;
+                // face right
                 case 2:
                     topLeft = position;
                     diag = new Vector2(2, 16);
                     break;
+                // face up
                 case 3:
                     topLeft = position + Vector2.UnitY * 14;
                     diag = new Vector2(16, 2);
@@ -41,6 +45,7 @@ namespace Info2021 {
                 default:
                     throw new System.InvalidOperationException();
             }
+            // create new CinematicColider with priviously defined parameters
             CCollider = new CinematicCollider(this, topLeft, diag);
         }
 

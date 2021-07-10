@@ -36,18 +36,23 @@ namespace Info2021 {
         }
 
         public override void Update(float dt, Player player) {
+            // move player
             player.VelPos = player.VelPos.Translate(translationOnNextFrame);
+            // reset value
             translationOnNextFrame = Vector2.Zero;
-
+            // if stoppingtime is reached reverse Velosity of Platform
             if (movingTime > MaxTime) {
                 movingTime = 0;
                 VelPos = VelPos.WithVelocity(-VelPos.V);
             }
+            // move platform by translating by v * dt
             VelPos = VelPos.ApplyVelocity(dt);
+            // Update hitbox acording to the priviously updated VelPos
             Collider.TopLeft = Position;
             Collider.BottomRight = Position + Vector2.One * 16;
             CCollider.TopLeft = VelPos.P - Vector2.UnitY * 2;
-            movingTime += dt;
+            // update movingTime
+            movingTime = movingTime + dt;
         }
 
         public override void OnCollision(Player player) {
