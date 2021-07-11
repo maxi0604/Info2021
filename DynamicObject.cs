@@ -5,6 +5,7 @@ namespace Info2021 {
     [DataContract(IsReference = true)]
     abstract class DynamicObject : IHasPosition, IDrawable, ILevelElement {
         [DataMember]
+        // tile position has to be overriden by inheriting classes
         public abstract Vector2 Position { get; set; }
         public abstract Texture2D GetTexture(ResourceAccessor resourceAccessor);
         public abstract void Update(float dt, Player player);

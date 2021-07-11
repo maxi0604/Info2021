@@ -57,7 +57,8 @@ namespace Info2021 {
 
         public override void OnCollision(Player player) {
             // move player with the platform
-            translationOnNextFrame = VelPos.V / 60;
+            // v * 1/60 = dx
+            translationOnNextFrame = VelPos.V / 60; 
 
         }
 

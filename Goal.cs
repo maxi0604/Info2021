@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Info2021 {
     [DataContract]
     class Goal : CinematicObject {
+        // 
         public Goal(Vector2 position) {
             Position = position;
             CCollider = new CinematicCollider(this, position, Vector2.One * 16);

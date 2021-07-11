@@ -25,7 +25,7 @@ namespace Info2021 {
         protected bool pressedDown = false;
         // was it pressed in the last Frame
         protected bool oldDown = false;
-        // all options of one specific menu-state
+        // all options of one specific menustate
         public abstract A[] AllItems { get; }
 
         public AbstractMenu(SpriteBatch spriteBatch, ResourceAccessor resourceAccessor) {
@@ -37,6 +37,7 @@ namespace Info2021 {
         // item becomes ActiveItem, which is determined by acticeIndex(public A ActiveItem { get { return AllItems[activeIndex]; } }), which is updated by Update()
         public bool HasBeenSelected(out A item) {
             item = ActiveItem;
+            // return true if "x" is pressed and was not pressed in privious frame (if true game state changes accordingly)
             return !oldJump && pressedJump;
         }
 

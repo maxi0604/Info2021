@@ -6,8 +6,10 @@ namespace Info2021 {
     [DataContract]
     class Spikes : CinematicObject, ILevelElement {
         [DataMember]
+        // position of 16 * 16 tile it is inside of (overriden from DynamicObjekt)
         public override Vector2 Position { get; set; }
         [DataMember]
+        //actual topLeft of hitbox
         private Vector2 topLeft;
         [DataMember]
         private Vector2 diag;
@@ -53,7 +55,7 @@ namespace Info2021 {
 
             return resourceAccessor.GetSprite(13, 15 - rotation);
         }
-
+        // overriden from Cinematic Objekt
         public override void OnCollision(Player player) {
             player.Die();
         }

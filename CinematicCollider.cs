@@ -25,6 +25,7 @@ namespace Info2021 {
             this.Parent = parent;
         }
         public void CollideWith(Player player) {
+            // check whether hitboxes of player and objekt are inside of each outher
             if (BottomRight.X > player.Collider.TopLeft.X && TopLeft.X < player.Collider.BottomRight.X
                 && BottomRight.Y > player.Collider.TopLeft.Y && TopLeft.Y < player.Collider.BottomRight.Y)
                 Parent.OnCollision(player);
