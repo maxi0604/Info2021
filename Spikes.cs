@@ -6,7 +6,7 @@ namespace Info2021 {
     [DataContract]
     class Spikes : CinematicObject, ILevelElement {
         [DataMember]
-        // position of 16 * 16 tile it is inside of (overriden from DynamicObjekt)
+        // position of 16 * 16 tile it is inside of (overridden from DynamicObject)
         public override Vector2 Position { get; set; }
         [DataMember]
         //actual topLeft of hitbox
@@ -47,7 +47,7 @@ namespace Info2021 {
                 default:
                     throw new System.InvalidOperationException();
             }
-            // create new CinematicColider with priviously defined parameters
+            // create new CinematicCollider with previously defined parameters
             CCollider = new CinematicCollider(this, topLeft, diag);
         }
 
@@ -55,7 +55,7 @@ namespace Info2021 {
 
             return resourceAccessor.GetSprite(13, 15 - rotation);
         }
-        // overriden from Cinematic Objekt
+        // overriden from cinematic object
         public override void OnCollision(Player player) {
             player.Die();
         }

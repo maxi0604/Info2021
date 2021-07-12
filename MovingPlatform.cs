@@ -9,9 +9,6 @@ namespace Info2021 {
         public VelPos VelPos { get; set; }
         public StaticCollider Collider;
         public override Vector2 Position { get { return VelPos.P; } set { VelPos = VelPos.WithPosition(value); } }
-        //[DataMember]
-        //public CinematicCollider CCollider;
-        //override CinematicCollider CCollider => cinematicCollider;
 
         [DataMember]
         Vector2 translationOnNextFrame = Vector2.Zero;

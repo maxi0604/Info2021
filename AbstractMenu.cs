@@ -44,15 +44,15 @@ namespace Info2021 {
 
         public void Update() {
             // check whether button is now pressed and was not pressed on last frame
-            // oldJump takes value of previos frame, oldUp takes ...
+            // oldJump takes value of previous frame, oldUp takes ...
             oldJump = pressedJump;
-            // current value gets checked ...
+            // current value gets checked
             pressedJump = InputManager.IsActive(InputEvent.Jump);
             oldUp = pressedUp;
             pressedUp = InputManager.IsActive(InputEvent.Up);
             oldDown = pressedDown;
             pressedDown = InputManager.IsActive(InputEvent.Down);
-            // when down button is pressed and was not pressed in previous frame and the next index would not exeed the number possible Items
+            // when down button is pressed and was not pressed in previous frame and the next index would not exceed the number possible Items
             if (pressedDown && !oldDown && activeIndex < AllItems.Length - 1) activeIndex++;
             if (pressedUp && !oldUp && activeIndex > 0) activeIndex--;
         }
