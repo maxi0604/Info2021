@@ -44,7 +44,7 @@ namespace Info2021 {
             }
             // move platform by translating by v * dt
             VelPos = VelPos.ApplyVelocity(dt);
-            // Update hitbox acording to the priviously updated VelPos
+            // Update hitbox according to the priviously updated VelPos
             Collider.TopLeft = Position;
             Collider.BottomRight = Position + Vector2.One * 16;
             CCollider.TopLeft = VelPos.P - Vector2.UnitY * 2;
