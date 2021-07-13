@@ -1,3 +1,5 @@
+// Gehört zu Maxi
+
 using Microsoft.Xna.Framework;
 namespace Info2021 {
     interface IAttachedColliderParent {

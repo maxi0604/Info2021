@@ -1,3 +1,5 @@
+// Gehört zu Johannes bzw. Maxi
+
 using System.Runtime.Serialization;
 
 namespace Info2021 {

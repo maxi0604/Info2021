@@ -1,3 +1,5 @@
+// Gehört zu Johannes bzw. Arvid (Grafik)
+
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;

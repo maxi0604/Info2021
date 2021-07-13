@@ -1,3 +1,5 @@
+// Gehört zu Arvid
+
 using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 namespace Info2021 {

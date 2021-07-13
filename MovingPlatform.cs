@@ -1,3 +1,5 @@
+// Gehört zu Johannes bzw. (nur AddHelper) Arvid
+
 using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -1,3 +1,4 @@
+// Gehört zu Johannes
 using Microsoft.Xna.Framework.Graphics;
 namespace Info2021 {
     class EditorMenu : AbstractMenu<EditorMenuItem> {

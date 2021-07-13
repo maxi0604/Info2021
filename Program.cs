@@ -1,4 +1,6 @@
-﻿using System;
+﻿// gehört zu Klemens
+
+using System;
 
 namespace Info2021 {
     public static class Program {
