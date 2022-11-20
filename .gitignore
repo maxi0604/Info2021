@@ -13,3 +13,5 @@ Content/bin
 *.fdb_latexmk
 *.log
 *.fls
+
+.mgstats
