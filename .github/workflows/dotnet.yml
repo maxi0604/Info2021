@@ -27,6 +27,6 @@ jobs:
         # Artifact name
         name: build-result
         # A file, directory or wildcard pattern that describes what to upload
-        path: bin/Debug/net5.0
+        path: bin/Debug/net6.0
         # Days to keep build artifact
         retention-days: 1
