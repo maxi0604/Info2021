@@ -1,10 +1,8 @@
 // Gehört hauptsächlich zu Arvid
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.Xna.Framework;
 namespace Info2021 {
     [DataContract]
